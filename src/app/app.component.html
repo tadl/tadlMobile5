@@ -8,7 +8,7 @@
       </ion-header>
       <ion-content>
         <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages" menu="left">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of mainPages" menu="left">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
@@ -26,9 +26,16 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-menu-toggle auto-hide="false" menu="right">
-          <ion-item>Hello</ion-item>
-        </ion-menu-toggle>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of acctPages" menu="right">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
