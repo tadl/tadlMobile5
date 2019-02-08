@@ -11,18 +11,18 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
   public mainPages = [
     { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Search Catalog', url: '/search', icon: '' },
-    { title: 'Hours & Locations', url: '/locations', icon: '' },
-    { title: 'Account', url: '/account', icon: '' },
-    { title: 'Events', url: '/events', icon: '' },
-    { title: 'News', url: '/news', icon: '' },
-    { title: 'Featured Items', url: '/featured', icon: '' },
+    { title: 'Search Catalog', url: '/search', icon: 'search' },
+    { title: 'Hours & Locations', url: '/locations', icon: 'compass' },
+    { title: 'Account', url: '/account', icon: 'person' },
+    { title: 'Events', url: '/events', icon: 'calendar' },
+    { title: 'News', url: '/news', icon: 'megaphone' },
+    { title: 'Featured Items', url: '/featured', icon: 'star' },
   ];
 
   public acctPages = [
-    { title: 'Checkouts', url: '/checkouts', icon: '' },
-    { title: 'Holds', url: '/holds', icon: '' },
-    { title: 'Library Card', url: '/barcode', icon: '' },
+    { title: 'Checkouts', url: '/checkouts' },
+    { title: 'Holds', url: '/holds' },
+    { title: 'Library Card', url: '/barcode' },
   ];
 
   constructor(
