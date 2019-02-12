@@ -22,10 +22,12 @@
     <ion-menu side="end" menuId="right">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Account</ion-title>
+          <ion-title *ngIf="user.logged_in == true">Account</ion-title>
+          <ion-title *ngIf="user.logged_in == false">Log in</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+
+      <ion-content *ngIf="user.logged_in == true">
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of acctPages" menu="right">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
@@ -36,6 +38,15 @@
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
+      <ion-content *ngIf="user.logged_in == false">
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" menu="right">
+            <ion-item>FORM</ion-item>
+            <ion-item>BUTTON</ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
   </ion-split-pane>
