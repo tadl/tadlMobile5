@@ -15,7 +15,6 @@ const routes: Routes = [
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
   },
-  { path: 'barcode', loadChildren: './barcode/barcode.module#BarcodePageModule' },
   { path: 'checkouts', loadChildren: './checkouts/checkouts.module#CheckoutsPageModule' },
   { path: 'events', loadChildren: './events/events.module#EventsPageModule' },
   { path: 'featured', loadChildren: './featured/featured.module#FeaturedPageModule' },

@@ -25,7 +25,6 @@ export class AppComponent {
   public acctPages = [
     { title: 'Checkouts', url: '/checkouts' },
     { title: 'Holds', url: '/holds' },
-    { title: 'Library Card', url: '/barcode' },
   ];
 
   constructor(
