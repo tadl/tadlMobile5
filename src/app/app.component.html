@@ -22,8 +22,7 @@
     <ion-menu side="end" menuId="right">
       <ion-header>
         <ion-toolbar>
-          <ion-title *ngIf="user.logged_in == true">Account</ion-title>
-          <ion-title *ngIf="user.logged_in == false">Log in</ion-title>
+          <ion-title>Account</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -41,8 +40,15 @@
       <ion-content *ngIf="user.logged_in == false">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
-            <ion-item>FORM</ion-item>
-            <ion-item>BUTTON</ion-item>
+            <ion-item>
+              <ion-label>Username</ion-label>
+              <ion-input type="text" name="username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Password</ion-label>
+              <ion-input type="password" name="password"></ion-input>
+            </ion-item>
+            <ion-button expand="full" color="primary"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
