@@ -28,6 +28,7 @@
 
       <ion-content *ngIf="user.logged_in == true">
         <ion-list>
+          <ion-label padding>Logged in as {{user.full_name}}</ion-label>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of acctPages" menu="right">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-label>
@@ -36,21 +37,24 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+        <ion-button expand="full" color="danger" (click)="user.logout()"><ion-ripple-effect></ion-ripple-effect>Log Out</ion-button>
+        <ion-label padding color="danger">{{user.logout_error}}</ion-label>
       </ion-content>
       <ion-content *ngIf="user.logged_in == false">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
             <ion-item>
               <ion-label>Username</ion-label>
-              <ion-input type="text" name="username"></ion-input>
+              <ion-input type="text" name="username" [(ngModel)]="user.username"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>Password</ion-label>
-              <ion-input type="password" name="password"></ion-input>
+              <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
             </ion-item>
-            <ion-button expand="full" color="primary"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
+            <ion-button expand="full" color="primary" (click)="user.login()"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
           </ion-menu-toggle>
         </ion-list>
+        <ion-label padding color="danger">{{user.login_error}}</ion-label>
       </ion-content>
 
     </ion-menu>

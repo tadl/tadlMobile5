@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms' 
+
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -23,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     HttpClientModule,
     HttpModule,
+    FormsModule,
   ],
   providers: [
     Globals,
