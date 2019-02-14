@@ -21,7 +21,8 @@ const routes: Routes = [
   { path: 'featured', loadChildren: './featured/featured.module#FeaturedPageModule' },
   { path: 'holds', loadChildren: './holds/holds.module#HoldsPageModule' },
   { path: 'news', loadChildren: './news/news.module#NewsPageModule' },
-  { path: 'search', loadChildren: './search/search.module#SearchPageModule' }
+  { path: 'search', loadChildren: './search/search.module#SearchPageModule' },
+  { path: 'locations', loadChildren: './locations/locations.module#LocationsPageModule' }
 ];
 
 @NgModule({
