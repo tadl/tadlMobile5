@@ -15,6 +15,7 @@ export class CheckoutsPage implements OnInit {
     public globals: Globals,
     public user: User,
     private http: HttpClient,
+    public events: Events,
   ) { }
 
   get_checkouts() {
