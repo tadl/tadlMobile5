@@ -17,24 +17,23 @@ export class HoldsPage implements OnInit {
     private http: HttpClient,
   ) { }
 
-
-  get_holds(ready = false){
+  get_holds(ready = false) {
     let params = new HttpParams()
       .set("token", this.user.token)
       .set("v", "5");
-    if(ready == true){
+    if (ready == true) {
       var url = this.globals.catalog_api_host + 'holds_pickup.json'
-    }else{
+    } else {
       var url = this.globals.catalog_api_host + 'holds.json'
     }
     this.http.get(url, {params: params})
       .subscribe(data =>{
-        if(data['holds'] && data['user']){
+        if (data['holds'] && data['user']) {
           this.user.holds = data['holds']
-          this.user.holds.forEach(function (h){
+          this.user.holds.forEach(function (h) {
             h['cover'] = "https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/" + h['id'].toString()
           });
-        }else{
+        } else {
           //need to handle when token has expired 
         }
       },
@@ -43,10 +42,9 @@ export class HoldsPage implements OnInit {
       })
   }
 
-
   ngOnInit() {
-    if(this.user.token && this.user.token != ''){
-      this.get_holds()
+    if (this.user.token) {
+      this.get_holds();
     }
   }
 
