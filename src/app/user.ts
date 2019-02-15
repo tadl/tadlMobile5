@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ActionSheetController, Events, ModalController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
 })
@@ -38,12 +39,18 @@ export class User {
   checkout_messages: string;
   checkout_errors: Array<{any}> = [];
 
-  //still need to save username and hashed password to local storage
-  login(){
-    let params = new HttpParams()
-      .set("username", this.username)
-      .set("password", this.password)
-      .set("v", "5");
+  login(auto = false){
+    if(auto == true ){
+      var params = new HttpParams()
+        .set("username", this.username)
+        .set("md5password", this.hashed_password)
+        .set("v", "5");
+    }else{
+      var params = new HttpParams()
+        .set("username", this.username)
+        .set("password", this.password)
+        .set("v", "5");
+    }
     let url = this.globals.catalog_api_host + 'login.json'
     this.http.get(url, {params: params})
       .subscribe(data =>{
@@ -61,7 +68,9 @@ export class User {
           this.login_error = ""
           this.logout_error = ""
           this.storage.set('username', this.username);
-          this.storage.set('password', this.password);
+          if(auto == false){
+            this.storage.set('hashed_password', Md5.hashStr(this.password));
+          }
           this.events.publish('logged_in');
         }else{
           this.login_error = "Invalid username and/or password"
@@ -76,9 +85,9 @@ export class User {
     this.storage.get('username').then((val) =>{
       this.username = val
       if(typeof this.username != 'undefined' && this.username){
-        this.storage.get('password').then((val) =>{
-          this.password = val
-          this.login()
+        this.storage.get('hashed_password').then((val) =>{
+          this.hashed_password = val
+          this.login(true)
         })
       }else{
         this.username = ''

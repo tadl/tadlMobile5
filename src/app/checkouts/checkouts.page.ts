@@ -15,6 +15,7 @@ export class CheckoutsPage implements OnInit {
     public globals: Globals,
     public user: User,
     private http: HttpClient,
+    public events: Events,
   ) { }
 
   get_checkouts() {
@@ -43,6 +44,9 @@ export class CheckoutsPage implements OnInit {
     } else {
       console.log('viewing a page you cannot view unless logged in');
     }
+    this.events.subscribe('logged_in', () => {
+      this.get_checkouts()
+    })
   }
 
 }

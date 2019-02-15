@@ -50,7 +50,6 @@ export class HoldsPage implements OnInit {
     this.events.subscribe('logged_in', () => {
       this.get_holds()
     })
-
   }
 
 }
