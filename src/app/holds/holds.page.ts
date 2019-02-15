@@ -22,11 +22,10 @@ export class HoldsPage implements OnInit {
     let params = new HttpParams()
       .set("token", this.user.token)
       .set("v", "5");
-    let url = ''
     if(ready == true){
-      let url = this.globals.catalog_api_host + 'holds_pickup.json'
+      var url = this.globals.catalog_api_host + 'holds_pickup.json'
     }else{
-      let url = this.globals.catalog_api_host + 'holds.json'
+      var url = this.globals.catalog_api_host + 'holds.json'
     }
     this.http.get(url, {params: params})
       .subscribe(data =>{
