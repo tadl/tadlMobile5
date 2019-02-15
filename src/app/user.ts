@@ -41,7 +41,7 @@ export class User {
       .set("username", this.username)
       .set("password", this.password)
       .set("v", "5");
-    let url = this.globals.catalog_api_host + '/login.json'
+    let url = this.globals.catalog_api_host + 'login.json'
     this.http.get(url, {params: params})
       .subscribe(data =>{
         if(data['token']){
