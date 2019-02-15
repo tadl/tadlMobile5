@@ -45,7 +45,7 @@ export class CheckoutsPage implements OnInit {
       console.log('viewing a page you cannot view unless logged in');
     }
     this.events.subscribe('logged_in', () => {
-      this.get_holds()
+      this.get_checkouts()
     })
   }
 
