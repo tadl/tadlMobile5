@@ -15,6 +15,7 @@ export class HoldsPage implements OnInit {
     public globals: Globals,
     public user: User,
     private http: HttpClient,
+    public events: Events,
   ) { }
 
 
@@ -48,6 +49,10 @@ export class HoldsPage implements OnInit {
     if(this.user.token && this.user.token != ''){
       this.get_holds()
     }
+    this.events.subscribe('logged_in', () => {
+      this.get_holds()
+    })
+
   }
 
 }

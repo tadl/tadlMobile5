@@ -1,6 +1,8 @@
 {
   "name": "tadlMobile5",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "24d4815d"
 }

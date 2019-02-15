@@ -1,6 +1,7 @@
 import { Globals } from './globals';
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ActionSheetController, Events, ModalController, ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,7 +11,9 @@ export class User {
   pages = {};
   constructor(
     public globals: Globals,
+    public events: Events,
     private http: HttpClient,
+    private storage: Storage,
   ) {
   }
 
@@ -57,6 +60,9 @@ export class User {
           this.default_pickup = data['pickup_library']
           this.login_error = ""
           this.logout_error = ""
+          this.storage.set('username', this.username);
+          this.storage.set('password', this.password);
+          this.events.publish('logged_in');
         }else{
           this.login_error = "Invalid username and/or password"
         }
@@ -64,6 +70,20 @@ export class User {
       (err) =>{
         this.login_error = this.globals.server_error_msg
       })
+  }
+
+  autolog(){
+    this.storage.get('username').then((val) =>{
+      this.username = val
+      if(typeof this.username != 'undefined' && this.username){
+        this.storage.get('password').then((val) =>{
+          this.password = val
+          this.login()
+        })
+      }else{
+        this.username = ''
+      }
+    })
   }
 
   logout(){
@@ -86,6 +106,9 @@ export class User {
           this.card = ''
           this.overdue = ''
           this.default_pickup = ''
+          this.holds = []
+          this.checkouts = []
+          this.storage.clear()
         }
       },
       (err) =>{
