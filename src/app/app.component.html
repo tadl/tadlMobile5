@@ -45,13 +45,13 @@
           <ion-menu-toggle auto-hide="false" menu="right">
             <ion-item>
               <ion-label>Username</ion-label>
-              <ion-input type="text" name="username" [(ngModel)]="user.username"></ion-input>
+              <ion-input type="text" name="username" [(ngModel)]="user.username" (click)="$event.stopPropagation();"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>Password</ion-label>
-              <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
+              <ion-input type="password" name="password" [(ngModel)]="user.password" (click)="$event.stopPropagation();"></ion-input>
             </ion-item>
-            <ion-button expand="full" color="primary" (click)="user.login()"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
+            <ion-button expand="full" color="primary" (click)="$event.stopPropagation();user.login();"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
           </ion-menu-toggle>
         </ion-list>
         <ion-label padding color="danger">{{user.login_error}}</ion-label>
