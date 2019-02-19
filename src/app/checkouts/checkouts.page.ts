@@ -4,6 +4,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ActionSheetController, Events, ModalController, ToastController } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
+import { LoadingService } from '../services/loading/loading.service';
+
 @Component({
   selector: 'app-checkouts',
   templateUrl: './checkouts.page.html',
@@ -15,6 +17,7 @@ export class CheckoutsPage implements OnInit {
     public globals: Globals,
     public user: User,
     private http: HttpClient,
+    private loading: LoadingService,
     public events: Events,
   ) { }
 
@@ -22,6 +25,7 @@ export class CheckoutsPage implements OnInit {
     let params = new HttpParams()
       .set("token", this.user.token)
       .set("v", "5");
+    this.loading.present('Loading Checkouts...');
     var url = this.globals.catalog_api_host + 'checkouts.json'
     this.http.get(url, {params: params})
       .subscribe(data =>{
@@ -30,11 +34,14 @@ export class CheckoutsPage implements OnInit {
           this.user.checkouts.forEach(function (h) {
             h['cover'] = "https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/" + h['id'].toString()
           });
+          this.loading.dismiss();
         } else {
+          this.loading.dismiss();
           //need to handle when token has expired
         }
       },
       (err) =>{
+        this.loading.dismiss();
         //need to handle with a generic server error toast
       })
   }

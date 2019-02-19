@@ -4,6 +4,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ActionSheetController, Events, ModalController, ToastController } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
+import { LoadingService } from '../services/loading/loading.service';
+
 @Component({
   selector: 'app-holds',
   templateUrl: './holds.page.html',
@@ -15,6 +17,7 @@ export class HoldsPage implements OnInit {
     public globals: Globals,
     public user: User,
     private http: HttpClient,
+    private loading: LoadingService,
     public events: Events,
   ) { }
 
@@ -22,6 +25,7 @@ export class HoldsPage implements OnInit {
     let params = new HttpParams()
       .set("token", this.user.token)
       .set("v", "5");
+    this.loading.present('Loading Holds...');
     if (ready == true) {
       var url = this.globals.catalog_api_host + 'holds_pickup.json'
     } else {
@@ -34,11 +38,14 @@ export class HoldsPage implements OnInit {
           this.user.holds.forEach(function (h) {
             h['cover'] = "https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/" + h['id'].toString()
           });
+          this.loading.dismiss();
         } else {
+          this.loading.dismiss();
           //need to handle when token has expired 
         }
       },
       (err) =>{
+        this.loading.dismiss();
         //need to handle with a generic server error toast
       })
   }
