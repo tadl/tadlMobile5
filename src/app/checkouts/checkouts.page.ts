@@ -26,13 +26,13 @@ export class CheckoutsPage implements OnInit {
       .set("token", this.user.token)
       .set("v", "5");
     this.loading.present('Loading Checkouts...');
-    var url = this.globals.catalog_api_host + 'checkouts.json'
+    var url = this.globals.catalog_api_host + 'checkouts.json';
     this.http.get(url, {params: params})
-      .subscribe(data =>{
+      .subscribe(data => {
         if (data['checkouts'] && data['user']) {
-          this.user.checkouts = data['checkouts']
+          this.user.checkouts = data['checkouts'];
           this.user.checkouts.forEach(function (h) {
-            h['cover'] = "https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/" + h['id'].toString()
+            h['cover'] = "https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/" + h['id'].toString();
           });
           this.loading.dismiss();
         } else {
@@ -40,11 +40,12 @@ export class CheckoutsPage implements OnInit {
           //need to handle when token has expired
         }
       },
-      (err) =>{
+      (err) => {
         this.loading.dismiss();
         //need to handle with a generic server error toast
       })
   }
+
   ngOnInit() {
     if (this.user.token) {
       this.get_checkouts();
@@ -52,8 +53,8 @@ export class CheckoutsPage implements OnInit {
       console.log('viewing a page you cannot view unless logged in');
     }
     this.events.subscribe('logged_in', () => {
-      this.get_checkouts()
-    })
+      this.get_checkouts();
+    });
   }
 
 }
