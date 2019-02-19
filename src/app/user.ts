@@ -6,6 +6,7 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 import { Md5 } from 'ts-md5/dist/md5';
 
 import { LoadingService } from './services/loading/loading.service';
+import { ToastService } from './services/toast/toast.service';
 
 @Component({
 })
@@ -18,6 +19,7 @@ export class User {
     private http: HttpClient,
     private storage: Storage,
     private loading: LoadingService,
+    private toast: ToastService,
   ) {
   }
 
@@ -78,8 +80,8 @@ export class User {
           this.events.publish('logged_in');
           this.loading.dismiss();
         }else{
-          this.login_error = "Invalid username and/or password"
           this.loading.dismiss();
+          this.toast.present("Invalid username and/or password");
         }
       },
       (err) =>{

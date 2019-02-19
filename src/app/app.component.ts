@@ -22,11 +22,6 @@ export class AppComponent {
     { title: 'Featured Items', url: '/featured', icon: 'star' },
   ];
 
-  public acctPages = [
-    { title: 'Checkouts', url: '/checkouts' },
-    { title: 'Holds', url: '/holds' },
-  ];
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,

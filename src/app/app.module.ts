@@ -14,6 +14,7 @@ import { User } from './user';
 import { Item } from './item';
 
 import { LoadingService } from './services/loading/loading.service';
+import { ToastService } from './services/toast/toast.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +38,7 @@ import { AppRoutingModule } from './app-routing.module';
     StatusBar,
     SplashScreen,
     LoadingService,
+    ToastService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
