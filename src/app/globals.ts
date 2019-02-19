@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 
 export class Globals {
-  constructor() {
-  }
+  constructor() { }
 
   public system_short_name: string = 'TADL';
   public catalog_host: string = 'catalog.tadl.org';

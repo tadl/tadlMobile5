@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
 
+import { LoadingService } from './services/loading/loading.service';
+
 @Component({
 })
 
@@ -15,6 +17,7 @@ export class User {
     public events: Events,
     private http: HttpClient,
     private storage: Storage,
+    private loading: LoadingService,
   ) {
   }
 
@@ -51,6 +54,7 @@ export class User {
         .set("password", this.password)
         .set("v", "5");
     }
+    this.loading.present('Logging in...');
     let url = this.globals.catalog_api_host + 'login.json'
     this.http.get(url, {params: params})
       .subscribe(data =>{
@@ -72,8 +76,10 @@ export class User {
             this.storage.set('hashed_password', Md5.hashStr(this.password));
           }
           this.events.publish('logged_in');
+          this.loading.dismiss();
         }else{
           this.login_error = "Invalid username and/or password"
+          this.loading.dismiss();
         }
       },
       (err) =>{

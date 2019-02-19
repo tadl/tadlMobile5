@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms' 
 
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -13,6 +12,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Globals } from './globals';
 import { User } from './user';
 import { Item } from './item';
+
+import { LoadingService } from './services/loading/loading.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
     Item,
     StatusBar,
     SplashScreen,
+    LoadingService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -28,7 +28,6 @@
 
       <ion-content *ngIf="user.logged_in == true">
         <ion-list>
-          <ion-label padding>Logged in as {{user.full_name}}</ion-label>
           <ion-menu-toggle auto-hide="false" menu="right">
             <ion-item [routerDirection]="'root'" [routerLink]="'/checkouts'">
               <ion-label>
