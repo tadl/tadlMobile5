@@ -12,7 +12,7 @@ export class Globals {
   public logo_file_name: string = 'logo.png'; /* redirected by nginx */
   public square_logo_file_name: string = 'logo-clock-only.png'; /* redirected by nginx */
   public news_category_exclude: string = '93'; /* 93=Announcement */
-  public server_error_msg: string = "Server Error"
+  public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute";
   public multi_location: boolean = true;
   public all_locations_value: string = '22';
   public pickup_locations: Array<{name: string, code: string}> = [

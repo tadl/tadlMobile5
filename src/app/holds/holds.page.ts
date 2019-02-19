@@ -5,6 +5,7 @@ import { AlertController, LoadingController, ActionSheetController, Events, Moda
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { LoadingService } from '../services/loading/loading.service';
+import { ToastService } from '../services/toast/toast.service';
 
 @Component({
   selector: 'app-holds',
@@ -18,6 +19,7 @@ export class HoldsPage implements OnInit {
     public user: User,
     private http: HttpClient,
     private loading: LoadingService,
+    private toast: ToastService,
     public events: Events,
   ) { }
 
@@ -46,7 +48,7 @@ export class HoldsPage implements OnInit {
       },
       (err) =>{
         this.loading.dismiss();
-        //need to handle with a generic server error toast
+        this.toast.present(this.globals.server_error_msg);
       })
   }
 
