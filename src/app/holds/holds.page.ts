@@ -17,10 +17,10 @@ export class HoldsPage implements OnInit {
   constructor(
     public globals: Globals,
     public user: User,
-    private http: HttpClient,
-    private loading: LoadingService,
-    private toast: ToastService,
+    public loading: LoadingService,
+    public toast: ToastService,
     public events: Events,
+    private http: HttpClient,
   ) { }
 
   get_holds(ready = false) {

@@ -18,19 +18,16 @@
 
 <ion-content>
 
-  <ion-list *ngFor="let e of events">
+  <ion-list>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title [innerHTML]="e.title"></ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-thumbnail slot="start" *ngIf="e.image && e.image.extension != 'pdf'">
-          <img [src]="e.image.sizes.thumbnail.url">
-        </ion-thumbnail>
-        <ion-note *ngIf="e.venue">{{e.venue.venue}}</ion-note>
-      </ion-card-content>
-    </ion-card>
+    <ion-item *ngFor="let event of this.events" (tap)="itemTapped($event, event)">
+      <ion-thumbnail item-start *ngIf="event.image && event.image.extension != 'pdf'">
+        <img src="{{event.image.sizes.thumbnail.url}}" />
+      </ion-thumbnail>
+      <h2 [innerHTML]="event.title"></h2>
+      <h4 [innerHTML]="hi"></h4>
+      <p *ngIf="event.venue">{{event.venue.venue}}</p>
+    </ion-item>
 
   </ion-list>
 

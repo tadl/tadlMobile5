@@ -21,9 +21,9 @@ export class EventsPage implements OnInit {
 
   constructor(
     public globals: Globals,
+    public loading: LoadingService,
+    public toast: ToastService,
     private http: HttpClient,
-    private loading: LoadingService,
-    private toast: ToastService,
   ) { }
 
   get_events(page, loc?) {
@@ -33,27 +33,26 @@ export class EventsPage implements OnInit {
     if (loc) { params.venue = loc; }
     console.log(params);
 
-    this.loading.present('Loading Events...').then(() => {
-      this.http.get(this.url, {params: params})
-        .subscribe(data => {
-          if (data['events']) {
-            this.events = data['events'];
-            console.log(this.events);
-            this.loading.dismiss();
-          } else {
-            // something really weird happened.
-            this.loading.dismiss();
-            this.toast.present(this.globals.server_error_msg);
-          }
-        }, (err) => {
+    this.http.get(this.url, {params: params})
+      .subscribe(data => {
+        if (data['events']) {
+          this.events = data['events'];
+          console.log(this.events);
+          this.loading.dismiss();
+        } else {
+          // something really weird happened.
           this.loading.dismiss();
           this.toast.present(this.globals.server_error_msg);
-        });
-    });
+        }
+      }, (err) => {
+        this.loading.dismiss();
+        this.toast.present(this.globals.server_error_msg);
+      });
 
   }
 
   ngOnInit() {
+    this.loading.present('Loading Events...');
     this.get_events(this.page);
   }
 

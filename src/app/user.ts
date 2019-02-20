@@ -58,8 +58,8 @@ export class User {
         .set("password", this.password)
         .set("v", "5");
     }
-    this.loading.present('Logging in...');
     let url = this.globals.catalog_api_host + 'login.json';
+    this.loading.present('Logging in...');
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['token']) {
@@ -88,6 +88,7 @@ export class User {
         }
       },
       (err) => {
+        this.loading.dismiss();
         this.login_error = this.globals.server_error_msg;
       });
   }

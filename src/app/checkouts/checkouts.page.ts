@@ -17,18 +17,18 @@ export class CheckoutsPage implements OnInit {
   constructor(
     public globals: Globals,
     public user: User,
-    private http: HttpClient,
-    private loading: LoadingService,
-    private toast: ToastService,
+    public loading: LoadingService,
+    public toast: ToastService,
     public events: Events,
+    private http: HttpClient,
   ) { }
 
   get_checkouts() {
     let params = new HttpParams()
       .set("token", this.user.token)
       .set("v", "5");
-    this.loading.present('Loading Checkouts...');
     var url = this.globals.catalog_api_host + 'checkouts.json';
+    this.loading.present('Loading Checkouts...');
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['checkouts'] && data['user']) {
@@ -45,7 +45,7 @@ export class CheckoutsPage implements OnInit {
       (err) => {
         this.loading.dismiss();
         this.toast.present(this.globals.server_error_msg);
-      })
+      });
   }
 
   ngOnInit() {
