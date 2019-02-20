@@ -34,6 +34,7 @@ export class User {
   holds_ready: string;
   overdue: string;
   fines: string;
+  fines_exist: boolean = false;
   card: string;
   token: string;
   default_pickup: string;
@@ -43,6 +44,7 @@ export class User {
   checkouts: Array<{any}> = [];
   checkout_messages: string;
   checkout_errors: Array<{any}> = [];
+  greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
 
   login(auto = false) {
     if (auto == true ) {
@@ -68,6 +70,7 @@ export class User {
           this.holds_count = data['holds'];
           this.holds_ready = data['holds_ready'];
           this.fines = data['fines'];
+          if (parseFloat(this.fines) == parseFloat('0.00')) { this.fines_exist = true; }
           this.card = data['card'];
           this.overdue = data['overdue'];
           this.default_pickup = data['pickup_library'];

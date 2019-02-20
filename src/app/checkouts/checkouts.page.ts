@@ -1,7 +1,7 @@
 import { Globals } from '../globals';
 import { User } from '../user';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, LoadingController, ActionSheetController, Events, ModalController, ToastController } from '@ionic/angular';
+import { Events } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { LoadingService } from '../services/loading/loading.service';

@@ -15,6 +15,7 @@ export class Globals {
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute";
   public multi_location: boolean = true;
   public all_locations_value: string = '22';
+  public greetings: Array<any> = ['Hello', 'Hola', 'Bonjour', 'Hej', 'Guten tag', 'Ciao', 'Ahoj', 'Sveiki', 'Bok', 'Salut', 'Komentari', 'Tere'];
   public pickup_locations: Array<{name: string, code: string}> = [
     { name: 'Woodmere', code: '23' },
     { name: 'Interlochen', code: '24' },
