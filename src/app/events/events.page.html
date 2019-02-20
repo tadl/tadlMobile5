@@ -15,6 +15,23 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
+
+<ion-content>
+
+  <ion-list *ngFor="let e of events">
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title [innerHTML]="e.title"></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-thumbnail slot="start" *ngIf="e.image && e.image.extension != 'pdf'">
+          <img [src]="e.image.sizes.thumbnail.url">
+        </ion-thumbnail>
+        <ion-note *ngIf="e.venue">{{e.venue.venue}}</ion-note>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-list>
 
 </ion-content>

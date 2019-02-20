@@ -20,12 +20,12 @@
   <ion-grid>
     <ion-row *ngIf="!user.logged_in">
       <ion-col size="12">
-        <ion-img [src]="'https://'+globals.website_host+'/'+globals.logo_file_name"></ion-img>
+        <ion-img [src]="globals.logo_url"></ion-img>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="user.logged_in">
       <ion-col size="3">
-        <ion-img [src]="'https://'+globals.website_host+'/'+globals.square_logo_file_name"></ion-img>
+        <ion-img [src]="globals.square_logo_url"></ion-img>
       </ion-col>
       <ion-col size="9">
         <h2>{{ user.greeting }}, {{ user.username }}!</h2>

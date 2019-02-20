@@ -6,28 +6,20 @@ import { LoadingController } from '@ionic/angular';
 })
 export class LoadingService {
 
-  isLoading = false;
+/*  isLoading = false; */
 
   constructor(
     public loadingController: LoadingController,
   ) { }
 
   async present(message = "One moment...") {
-    this.isLoading = true;
-    return await this.loadingController.create({
+    const loading = await this.loadingController.create({
       message: message,
-    }).then(a => {
-      a.present().then(() => {
-        console.log('presented');
-        if (!this.isLoading) {
-          a.dismiss().then(() => console.log('abort presenting'));
-        }
-      });
-    })
+    });
+    return await loading.present().then(() => console.log('presented'));
   }
 
   async dismiss() {
-    this.isLoading = false;
     return await this.loadingController.dismiss().then(() => console.log('dismissed'));
   }
 
