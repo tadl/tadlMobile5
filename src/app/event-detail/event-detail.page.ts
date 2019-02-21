@@ -12,6 +12,7 @@ export class EventDetailPage implements OnInit {
   title: string;
   description: string;
   start_date: string;
+  image: string;
   venue: string;
 
   constructor(

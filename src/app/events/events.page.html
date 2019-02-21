@@ -24,9 +24,11 @@
 
   <ion-list *ngIf="this.events">
 
-    <ion-item *ngFor="let event of this.events" (click)="view_details(event.id,event.title,event.description,event.start_date,event.venue.venue)">
-      <ion-thumbnail item-start *ngIf="event.image && event.image.extension != 'pdf'">
-        <img src="{{event.image.sizes.thumbnail.url}}" />
+    <ion-item *ngFor="let event of this.events" (click)="view_details(event.id,event.title,event.description,event.start_date,event.image.url,event.venue.venue)">
+      <ion-thumbnail slot="start" *ngIf="event.image && event.image.extension != 'pdf'">
+        <ion-img [src]="event.image.sizes.thumbnail.url"></ion-img>
+      </ion-thumbnail>
+      <ion-thumbnail slot="start" *ngIf="!event.image || event.image.extension == 'pdf'">
       </ion-thumbnail>
       <ion-label text-wrap>
         <ion-text>

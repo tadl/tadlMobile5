@@ -54,7 +54,7 @@ export class EventsPage implements OnInit {
       });
   }
 
-  async view_details(id,title,description,start_date,venue) {
+  async view_details(id,title,description,start_date,image,venue) {
     const modal = await this.modalController.create({
       component: EventDetailPage,
       componentProps: {
@@ -62,6 +62,7 @@ export class EventsPage implements OnInit {
         "title": title,
         "description": description,
         "start_date": start_date,
+        "image": image,
         "venue": venue,
       }
     });
