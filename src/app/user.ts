@@ -16,10 +16,10 @@ export class User {
   constructor(
     public globals: Globals,
     public events: Events,
+    public loading: LoadingService,
+    public toast: ToastService,
     private http: HttpClient,
     private storage: Storage,
-    private loading: LoadingService,
-    private toast: ToastService,
   ) {
   }
 
