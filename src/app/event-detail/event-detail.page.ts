@@ -8,18 +8,14 @@ import { ModalController } from '@ionic/angular';
 })
 export class EventDetailPage implements OnInit {
 
-  id: string;
-  title: string;
-  description: string;
-  start_date: string;
-  image: string;
-  venue: string;
+  event: any;
 
   constructor(
     private modalController: ModalController,
   ) { }
 
   ngOnInit() {
+    console.log(this.event);
   }
 
   async closeModal() {

@@ -8,11 +8,11 @@
 </ion-header>
 
 <ion-content padding>
-<img [src]="image">
-<p>id: {{id}}</p>
-<p>title: {{title}}</p>
-<p>description: <span [innerHTML]="description"></span></p>
-<p>start_date: {{start_date}}</p>
-<p>venue: {{venue}}</p>
+<img [src]="event.image.url" *ngIf="event.image.url">
+<p>id: {{event.id}}</p>
+<p>title: {{event.title}}</p>
+<p>description: <span [innerHTML]="event.description"></span></p>
+<p>start_date: {{event.start_date}}</p>
+<p>venue: {{event.venue.venue}}</p>
 
 </ion-content>
