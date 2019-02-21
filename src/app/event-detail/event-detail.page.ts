@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-event-detail',
@@ -16,16 +16,9 @@ export class EventDetailPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private navParams: NavParams,
   ) { }
 
   ngOnInit() {
-    console.table(this.navParams);
-    this.id = this.navParams.data.id;
-    this.title = this.navParams.data.title;
-    this.description = this.navParams.data.description;
-    this.start_date = this.navParams.data.start_date;
-    this.venue = this.navParams.data.venue;
   }
 
   async closeModal() {
