@@ -16,7 +16,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <div *ngIf="!this.events">
     Events aren't loaded yet.
@@ -24,18 +24,20 @@
 
   <ion-list *ngIf="this.events">
 
-    <ion-item *ngFor="let event of this.events" (click)="view_details(event.id,event.title,event.description,event.start_date,event.image.url,event.venue.venue)">
+    <ion-item *ngFor="let event of this.events" (click)="view_details(event.id,event.title,event.description,event.start_date,event.image.url,event.venue.venue)" detail="true">
       <ion-thumbnail slot="start" *ngIf="event.image && event.image.extension != 'pdf'">
         <ion-img [src]="event.image.sizes.thumbnail.url"></ion-img>
       </ion-thumbnail>
       <ion-thumbnail slot="start" *ngIf="!event.image || event.image.extension == 'pdf'">
       </ion-thumbnail>
-      <ion-label text-wrap>
+      <ion-label>
         <ion-text>
           <h2 [innerHTML]="event.title"></h2>
         </ion-text>
-        <!-- <ion-note [innerHTML]="hi"></ion-note> -->
-        <ion-text color="secondary" *ngIf="event.venue">
+        <ion-text>
+          <p [innerHTML]="globals.format_date(event.start_date, 'event')"></p>
+        </ion-text>
+        <ion-text color="medium" *ngIf="event.venue">
           <p>{{event.venue.venue}}</p>
         </ion-text>
       </ion-label>

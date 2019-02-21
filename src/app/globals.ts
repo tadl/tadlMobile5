@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { format, formatDistance, formatRelative, subDays, parseISO } from 'date-fns';
 
 @Injectable()
 
@@ -27,5 +28,9 @@ export class Globals {
     { name: 'East Bay', code: '28' }
   ];
 
-
+  format_date(str, fmt?) {
+    if (fmt == "event") {
+      return format(parseISO(str), 'EEE LLLL do, h:mm a');
+    }
+  }
 }
