@@ -10,7 +10,10 @@ const routes: Routes = [
   { path: 'holds', loadChildren: './holds/holds.module#HoldsPageModule' },
   { path: 'news', loadChildren: './news/news.module#NewsPageModule' },
   { path: 'search', loadChildren: './search/search.module#SearchPageModule' },
-  { path: 'locations', loadChildren: './locations/locations.module#LocationsPageModule' }
+  { path: 'locations', loadChildren: './locations/locations.module#LocationsPageModule' },
+  { path: 'event-detail', loadChildren: './event-detail/event-detail.module#EventDetailPageModule' },
+  { path: 'news-detail', loadChildren: './news-detail/news-detail.module#NewsDetailPageModule' },
+  { path: 'item-detail', loadChildren: './item-detail/item-detail.module#ItemDetailPageModule' }
 ];
 
 @NgModule({

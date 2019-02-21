@@ -15,7 +15,7 @@ export class LoadingService {
   async present(message = "One moment...") {
     this.isLoading++;
     if (this.isLoading > 1) {
-      this.loadingController.dismiss();
+      this.dismiss();
     }
     return await this.loadingController.create({
       message: message,

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Event Detail</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()" class="button button-clear">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<p>id: {{id}}</p>
+<p>title: {{title}}</p>
+<p>description: <span [innerHTML]="description"></span></p>
+<p>start_date: {{start_date}}</p>
+<p>venue: {{venue}}</p>
+
+</ion-content>

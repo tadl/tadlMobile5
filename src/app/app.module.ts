@@ -18,6 +18,9 @@ import { ToastService } from './services/toast/toast.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EventDetailPageModule } from './event-detail/event-detail.module';
+import { NewsDetailPageModule } from './news-detail/news-detail.module';
+import { ItemDetailPageModule } from './item-detail/item-detail.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +33,9 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     HttpModule,
     FormsModule,
+    EventDetailPageModule,
+    NewsDetailPageModule,
+    ItemDetailPageModule,
   ],
   providers: [
     Globals,

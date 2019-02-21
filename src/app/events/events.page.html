@@ -20,13 +20,19 @@
 
   <ion-list>
 
-    <ion-item *ngFor="let event of this.events" (tap)="itemTapped($event, event)">
+    <ion-item *ngFor="let event of this.events" (click)="view_details(event.id,event.title,event.description,event.start_date,event.venue.venue)">
       <ion-thumbnail item-start *ngIf="event.image && event.image.extension != 'pdf'">
         <img src="{{event.image.sizes.thumbnail.url}}" />
       </ion-thumbnail>
-      <h2 [innerHTML]="event.title"></h2>
-      <h4 [innerHTML]="hi"></h4>
-      <p *ngIf="event.venue">{{event.venue.venue}}</p>
+      <ion-label text-wrap>
+        <ion-text>
+          <h2 [innerHTML]="event.title"></h2>
+        </ion-text>
+        <!-- <ion-note [innerHTML]="hi"></ion-note> -->
+        <ion-text color="secondary" *ngIf="event.venue">
+          <p>{{event.venue.venue}}</p>
+        </ion-text>
+      </ion-label>
     </ion-item>
 
   </ion-list>

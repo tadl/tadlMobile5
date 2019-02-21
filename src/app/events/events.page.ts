@@ -6,6 +6,9 @@ import { Globals } from '../globals';
 import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 
+import { ModalController } from '@ionic/angular';
+import { EventDetailPage } from '../event-detail/event-detail.page';
+
 @Component({
   selector: 'app-events',
   templateUrl: './events.page.html',
@@ -23,10 +26,11 @@ export class EventsPage implements OnInit {
     public globals: Globals,
     public loading: LoadingService,
     public toast: ToastService,
+    public modalController: ModalController,
     private http: HttpClient,
   ) { }
 
-  get_events(page, loc?) {
+  async get_events(page, loc?) {
     this.in_progress = true;
 
     let params = { "per_page": "20", "start_date": "now", }
@@ -48,7 +52,27 @@ export class EventsPage implements OnInit {
         this.loading.dismiss();
         this.toast.present(this.globals.server_error_msg);
       });
+  }
 
+  async view_details(id,title,description,start_date,venue) {
+    const modal = await this.modalController.create({
+      component: EventDetailPage,
+      componentProps: {
+        "id": id,
+        "title": title,
+        "description": description,
+        "start_date": start_date,
+        "venue": venue,
+      }
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        console.log('Modal sent data: ', dataReturned);
+      }
+    });
+
+    return await modal.present();
   }
 
   ngOnInit() {
