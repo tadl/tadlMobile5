@@ -33,8 +33,15 @@ export class EventsPage implements OnInit {
   async get_events(page, loc?) {
     this.in_progress = true;
 
-    let params = { "per_page": "20", "start_date": "now", }
-    if (loc) { params.venue = loc; }
+    let params = new HttpParams()
+      .set("per_page", "20")
+      .set("start_date", "now");
+
+    if (loc) {
+      params.append("venue", loc);
+    }
+
+
     console.log(params);
 
     this.http.get(this.url, {params: params})
