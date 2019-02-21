@@ -80,8 +80,9 @@ export class User {
           if (auto == false) {
             this.storage.set('hashed_password', Md5.hashStr(this.password));
           }
-          this.events.publish('logged_in');
-          this.loading.dismiss();
+          this.loading.dismiss().then(() => {
+            this.events.publish('logged_in');
+          });
         } else {
           this.loading.dismiss();
           this.toast.present("Invalid username and/or password");

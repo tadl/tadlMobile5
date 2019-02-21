@@ -18,7 +18,11 @@
 
 <ion-content>
 
-  <ion-list>
+  <div *ngIf="!this.events">
+    Events aren't loaded yet.
+  </div>
+
+  <ion-list *ngIf="this.events">
 
     <ion-item *ngFor="let event of this.events" (click)="view_details(event.id,event.title,event.description,event.start_date,event.venue.venue)">
       <ion-thumbnail item-start *ngIf="event.image && event.image.extension != 'pdf'">

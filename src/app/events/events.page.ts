@@ -76,8 +76,9 @@ export class EventsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading.present('Loading Events...');
-    this.get_events(this.page);
+    this.loading.present('Loading Events...').then(() => {
+      this.get_events(this.page);
+    });
   }
 
 }
