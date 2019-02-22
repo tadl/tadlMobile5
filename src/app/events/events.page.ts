@@ -22,7 +22,6 @@ export class EventsPage implements OnInit {
   events: any;
   location: any = '';
   page: any = 1;
-  in_progress: boolean = false;
   loading_more: boolean = false;
   infinite: any;
 
@@ -39,18 +38,7 @@ export class EventsPage implements OnInit {
     this.page++;
     this.loading_more = true;
     this.infinite = infiniteScroll;
-
     this.get_events(this.page, this.location);
-    /* .then(data => {
-      let length = data.length;
-      if (length == 0) {
-        infiniteScroll.target.complete();
-        infiniteScroll.target.disabled = true;
-        return;
-      }
-      this.events.push.apply(this.events, data['events']);
-      infiniteScroll.target.complete();
-    }); */
   }
 
   get_events(page, loc?) {
@@ -62,31 +50,37 @@ export class EventsPage implements OnInit {
 
     this.http.get(this.url, {params: params})
       .subscribe(data => {
-        if (data['events']) {
+        if (data.events) {
           if (this.loading_more) {
-            this.events.push.apply(this.events, data['events']);
+            this.events.push.apply(this.events, data.events);
+            this.infinite.target.complete();
+            this.loading_more = false;
+            if (!data.next_rest_url) { this.infinite.target.disabled = true; }
+          } else {
+            this.events = data.events;
+            this.loading.dismiss();
+          }
+
+        } else {
+          if (this.loading_more) {
             this.infinite.target.complete();
             this.loading_more = false;
           } else {
-            this.events = data['events'];
             this.loading.dismiss();
           }
-        } else {
-          this.loading.dismiss();
           this.toast.present(this.globals.server_error_msg);
         }
+
       }, (err) => {
-        this.loading.dismiss();
+        if (this.loading_more) {
+          this.infinite.target.complete();
+          this.loading_more = false;
+        } else {
+          this.loading.dismiss();
+        }
         this.toast.present(this.globals.server_error_msg);
       });
-
   }
-
-
-
-
-
-
 
   async view_details(event) {
     const modal = await this.modalController.create({
@@ -103,15 +97,10 @@ export class EventsPage implements OnInit {
     return await modal.present();
   }
 
-
-
   ngOnInit() {
     this.loading.present('Loading Events...').then(() => {
       this.get_events(this.page, this.location);
     });
   }
-
-
-
 
 }
