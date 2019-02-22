@@ -12,7 +12,7 @@ export class Globals {
   public website_host: string = 'www.tadl.org';
   public events_api_url: string = 'https://www.tadl.org/wp-json/tribe/events/v1/events';
   public news_category_exclude: string = '93'; /* 93=Announcement */
-  public news_api_url: string = 'https://www.tadl.org/wp-json/wp/v2/posts?per_page=20&categories_exclude=' + this.news_category_exclude;
+  public news_api_url: string = 'https://www.tadl.org/wp-json/wp/v2/posts';
   public logo_url: string = 'https://www.tadl.org/logo.png'; /* redirected by nginx */
   public square_logo_url: string = 'https://www.tadl.org/logo-clock-only.png'; /* redirected by nginx */
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute";
@@ -37,6 +37,8 @@ export class Globals {
       return format(parseISO(str), 'LLLL do');
     } else if (fmt == "eventdetailtime") {
       return format(parseISO(str), 'h:mm a');
+    } else if (fmt == "news") {
+      return format(parseISO(str), 'LLLL do, h:mm a');
     }
 
   }

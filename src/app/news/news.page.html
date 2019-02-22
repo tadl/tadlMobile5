@@ -15,6 +15,37 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ion-content padding>
+
+  <div *ngIf="!this.news">
+    News posts aren't loaded yet.
+  </div>
+
+  <ion-list *ngIf="this.news">
+
+    <ion-item *ngFor="let post of this.news" (click)="view_details(post)" detail="true">
+      <ion-thumbnail slot="start">
+        <ion-img *ngIf="post.featured_image_urls.thumbnail" [src]="post.featured_image_urls.thumbnail"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <ion-text>
+          <h2 [innerHTML]="post.title.rendered"></h2>
+        </ion-text>
+        <ion-text>
+          <p [innerHTML]="post.excerpt.rendered"></p>
+        </ion-text>
+        <ion-text color="medium">
+          <p>Posted {{this.globals.format_date(post.date, 'news')}}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="load_more_data($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more events ...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

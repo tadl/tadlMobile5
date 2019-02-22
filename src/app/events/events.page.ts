@@ -50,14 +50,14 @@ export class EventsPage implements OnInit {
 
     this.http.get(this.url, {params: params})
       .subscribe(data => {
-        if (data.events) {
+        if (data['events']) {
           if (this.loading_more) {
-            this.events.push.apply(this.events, data.events);
+            this.events.push.apply(this.events, data['events']);
             this.infinite.target.complete();
             this.loading_more = false;
-            if (!data.next_rest_url) { this.infinite.target.disabled = true; }
+            if (!data['next_rest_url']) { this.infinite.target.disabled = true; }
           } else {
-            this.events = data.events;
+            this.events = data['events'];
             this.loading.dismiss();
           }
 
