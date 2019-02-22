@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Globals } from './globals';
@@ -12,25 +12,21 @@ import { Item } from './item';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  public mainPages = [
-    { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Search Catalog', url: '/search', icon: 'search' },
-    { title: 'Hours & Locations', url: '/locations', icon: 'compass' },
-    { title: 'Account', url: '/account', icon: 'person' },
-    { title: 'Events', url: '/events', icon: 'calendar' },
-    { title: 'News', url: '/news', icon: 'megaphone' },
-    { title: 'Featured Items', url: '/featured', icon: 'star' },
-  ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private menu: MenuController,
     public globals: Globals,
     public user: User,
     public item: Item,
   ) {
     this.initializeApp();
+  }
+
+  open_account_menu() {
+    this.menu.open('right');
   }
 
   initializeApp() {
