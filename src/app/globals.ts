@@ -31,6 +31,13 @@ export class Globals {
   format_date(str, fmt?) {
     if (fmt == "event") {
       return format(parseISO(str), 'EEE LLLL do, h:mm a');
+    } else if (fmt == "eventdetailday") {
+      return format(parseISO(str), 'EEEE');
+    } else if (fmt == "eventdetaildate") {
+      return format(parseISO(str), 'LLLL do');
+    } else if (fmt == "eventdetailtime") {
+      return format(parseISO(str), 'h:mm a');
     }
+
   }
 }

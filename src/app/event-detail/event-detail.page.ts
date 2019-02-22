@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
+import { Globals } from '../globals';
+
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.page.html',
@@ -12,10 +14,10 @@ export class EventDetailPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
+    public globals: Globals,
   ) { }
 
   ngOnInit() {
-    console.log(this.event);
   }
 
   async closeModal() {

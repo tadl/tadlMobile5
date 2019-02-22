@@ -41,14 +41,10 @@ export class EventsPage implements OnInit {
       params.append("venue", loc);
     }
 
-
-    console.log(params);
-
     this.http.get(this.url, {params: params})
       .subscribe(data => {
         if (data['events']) {
           this.events = data['events'];
-          console.log(this.events);
           this.loading.dismiss();
         } else {
           // something really weird happened.
