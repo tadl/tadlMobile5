@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Globals } from '../globals';
@@ -6,7 +7,6 @@ import { Globals } from '../globals';
 import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 
-import { ModalController } from '@ionic/angular';
 import { EventDetailPage } from '../event-detail/event-detail.page';
 
 @Component({
@@ -14,13 +14,17 @@ import { EventDetailPage } from '../event-detail/event-detail.page';
   templateUrl: './events.page.html',
   styleUrls: ['./events.page.scss'],
 })
+
 export class EventsPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   url: string = this.globals.events_api_url;
   events: any;
   location: any = '';
   page: any = 1;
   in_progress: boolean = false;
+  loading_more: boolean = false;
+  infinite: any;
 
   constructor(
     public globals: Globals,
@@ -30,24 +34,44 @@ export class EventsPage implements OnInit {
     private http: HttpClient,
   ) { }
 
-  async get_events(page, loc?) {
-    this.in_progress = true;
 
+  load_more_data(infiniteScroll) {
+    this.page++;
+    this.loading_more = true;
+    this.infinite = infiniteScroll;
+
+    this.get_events(this.page, this.location);
+    /* .then(data => {
+      let length = data.length;
+      if (length == 0) {
+        infiniteScroll.target.complete();
+        infiniteScroll.target.disabled = true;
+        return;
+      }
+      this.events.push.apply(this.events, data['events']);
+      infiniteScroll.target.complete();
+    }); */
+  }
+
+  get_events(page, loc?) {
     let params = new HttpParams()
+      .set("page", page)
       .set("per_page", "20")
       .set("start_date", "now");
-
-    if (loc) {
-      params.append("venue", loc);
-    }
+    if (loc) { params.append("venue", loc); }
 
     this.http.get(this.url, {params: params})
       .subscribe(data => {
         if (data['events']) {
-          this.events = data['events'];
-          this.loading.dismiss();
+          if (this.loading_more) {
+            this.events.push.apply(this.events, data['events']);
+            this.infinite.target.complete();
+            this.loading_more = false;
+          } else {
+            this.events = data['events'];
+            this.loading.dismiss();
+          }
         } else {
-          // something really weird happened.
           this.loading.dismiss();
           this.toast.present(this.globals.server_error_msg);
         }
@@ -55,7 +79,14 @@ export class EventsPage implements OnInit {
         this.loading.dismiss();
         this.toast.present(this.globals.server_error_msg);
       });
+
   }
+
+
+
+
+
+
 
   async view_details(event) {
     const modal = await this.modalController.create({
@@ -64,20 +95,23 @@ export class EventsPage implements OnInit {
         "event": event,
       }
     });
-
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
         console.log('Modal sent data: ', dataReturned);
       }
     });
-
     return await modal.present();
   }
 
+
+
   ngOnInit() {
     this.loading.present('Loading Events...').then(() => {
-      this.get_events(this.page);
+      this.get_events(this.page, this.location);
     });
   }
+
+
+
 
 }
