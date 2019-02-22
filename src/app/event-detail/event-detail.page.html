@@ -26,7 +26,7 @@
         <h2>WHEN</h2>
         <div [innerHTML]="this.globals.format_date(event.start_date, 'eventdetailday')"></div>
         <div [innerHTML]="this.globals.format_date(event.start_date, 'eventdetaildate')"></div>
-        <div text-lowercase [innerHTML]="this.globals.format_date(event.start_date, 'eventdetailtime')"></div>
+        <div [innerHTML]="this.globals.format_date(event.start_date, 'eventdetailtime')"></div>
       </ion-col>
       <ion-col size="6">
         <h2>WHERE</h2>
