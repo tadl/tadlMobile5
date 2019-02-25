@@ -71,11 +71,12 @@ export class NewsPage implements OnInit {
       }, (err) => {
         if (this.loading_more) {
           this.infinite.target.complete();
+          this.infinite.target.disabled = true;
           this.loading_more = false;
         } else {
           this.loading.dismiss();
+          this.toast.present(this.globals.server_error_msg);
         }
-        this.toast.present(this.globals.server_error_msg);
       });
   }
 
