@@ -21,7 +21,8 @@ export class HoldsPage implements OnInit {
     public toast: ToastService,
     public events: Events,
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   get_holds(ready = false) {
     let params = new HttpParams()
@@ -40,7 +41,7 @@ export class HoldsPage implements OnInit {
           this.loading.dismiss();
         } else {
           this.loading.dismiss();
-          //need to handle when token has expired 
+          //need to handle when token has expired
         }
       },
       (err) =>{
@@ -53,9 +54,11 @@ export class HoldsPage implements OnInit {
     if (this.user.token) {
       this.get_holds();
     }
+
     this.events.subscribe('logged_in', () => {
-      this.get_holds()
-    })
+      this.get_holds();
+    });
+
   }
 
 }

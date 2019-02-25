@@ -21,7 +21,8 @@ export class CheckoutsPage implements OnInit {
     public toast: ToastService,
     public events: Events,
     private http: HttpClient,
-  ) { }
+  ) { 
+  }
 
   get_checkouts() {
     let params = new HttpParams()
@@ -48,12 +49,12 @@ export class CheckoutsPage implements OnInit {
   ngOnInit() {
     if (this.user.token) {
       this.get_checkouts();
-    } else {
-      console.log('viewing a page you cannot view unless logged in');
     }
-    this.events.subscribe('logged_in', () => {
+
+    events.subscribe('logged_in', () => {
       this.get_checkouts();
     });
+
   }
 
 }

@@ -112,7 +112,7 @@ export class User {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
-    let url = this.globals.catalog_api_host + '/logout.json';
+    let url = this.globals.catalog_logout_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data["success"] || data["error"] == "not logged in or invalid token") {
