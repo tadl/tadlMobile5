@@ -21,6 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { EventDetailPageModule } from './event-detail/event-detail.module';
 import { NewsDetailPageModule } from './news-detail/news-detail.module';
 import { ItemDetailPageModule } from './item-detail/item-detail.module';
+import { CardPageModule } from './card/card.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { ItemDetailPageModule } from './item-detail/item-detail.module';
     EventDetailPageModule,
     NewsDetailPageModule,
     ItemDetailPageModule,
+    CardPageModule,
   ],
   providers: [
     Globals,
