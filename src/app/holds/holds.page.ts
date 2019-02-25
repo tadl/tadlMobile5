@@ -29,17 +29,14 @@ export class HoldsPage implements OnInit {
       .set("v", "5");
     this.loading.present('Loading Holds...');
     if (ready == true) {
-      var url = this.globals.catalog_api_host + 'holds_pickup.json'
+      var url = this.globals.catalog_holds_pickup_url;
     } else {
-      var url = this.globals.catalog_api_host + 'holds.json'
+      var url = this.globals.catalog_holds_url;
     }
     this.http.get(url, {params: params})
       .subscribe(data =>{
         if (data['holds'] && data['user']) {
           this.user.holds = data['holds']
-          this.user.holds.forEach(function (h) {
-            h['cover'] = "https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/" + h['id'].toString()
-          });
           this.loading.dismiss();
         } else {
           this.loading.dismiss();

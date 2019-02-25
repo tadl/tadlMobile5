@@ -58,7 +58,7 @@ export class User {
         .set("password", this.password)
         .set("v", "5");
     }
-    let url = this.globals.catalog_api_host + 'login.json';
+    let url = this.globals.catalog_login_url;
     this.loading.present('Logging in...');
     this.http.get(url, {params: params})
       .subscribe(data => {

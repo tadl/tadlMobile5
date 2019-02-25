@@ -27,15 +27,12 @@ export class CheckoutsPage implements OnInit {
     let params = new HttpParams()
       .set("token", this.user.token)
       .set("v", "5");
-    var url = this.globals.catalog_api_host + 'checkouts.json';
+    var url = this.globals.catalog_checkouts_url;
     this.loading.present('Loading Checkouts...');
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['checkouts'] && data['user']) {
           this.user.checkouts = data['checkouts'];
-          this.user.checkouts.forEach(function (h) {
-            h['cover'] = "https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/" + h['id'].toString();
-          });
           this.loading.dismiss();
         } else {
           this.loading.dismiss();

@@ -7,8 +7,9 @@ export class Globals {
   constructor() { }
 
   /* customizable variables */
-  public catalog_host: string = 'catalog-preview.appstwo.tadl.org';
-  public website_host: string = 'www.tadl.org';
+  public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
+  public catalog_covers_host: string = 'catalog.tadl.org'; /* hostname for catalog extras */
+  public website_host: string = 'www.tadl.org'; /* hostname for website */
 
   public system_short_name: string = 'TADL';
   public multi_location: boolean = true;
@@ -20,14 +21,26 @@ export class Globals {
   public greetings: Array<any> = ['Hello', 'Hi', 'Greetings', 'Hiya', 'Yo', 'Howdy'];
 
   /* catalog things */
-  public catalog_api_host: string = 'https://' + this.catalog_host + '/';
+  public catalog_schema: string = 'https://';
+  public catalog_api_base: string = this.catalog_schema + this.catalog_host;
+  public catalog_covers_base: string = this.catalog_schema + this.catalog_covers_host + '/opac/extras/ac/jacket';
+
+  public catalog_login_url: string = this.catalog_api_base + '/login.json';
+  public catalog_holds_url: string = this.catalog_api_base + '/holds.json';
+  public catalog_holds_pickup_url: string = this.catalog_api_base + '/holds_pickup.json';
+  public catalog_checkouts_url: string = this.catalog_api_base + '/checkouts.json';
+
+  public catalog_covers_small: string = this.catalog_covers_base + '/small/r/';
+  public catalog_covers_medium: string = this.catalog_covers_base + '/medium/r/';
+  public catalog_covers_large: string = this.catalog_covers_base + '/large/r/';
 
   /* website things */
-  public events_api_url: string = 'https://' + this.website_host + '/wp-json/tribe/events/v1/events';
-  public news_api_url: string = 'https://' + this.website_host + '/wp-json/wp/v2/posts';
-  public hours_locations_url: string = 'https://' + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
-  public logo_url: string = 'https://' + this.website_host + '/logo.png'; /* redirected by nginx */
-  public square_logo_url: string = 'https://' + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
+  public website_schema: string = 'https://';
+  public events_api_url: string = this.website_schema + this.website_host + '/wp-json/tribe/events/v1/events';
+  public news_api_url: string = this.website_schema + this.website_host + '/wp-json/wp/v2/posts';
+  public hours_locations_url: string = this.website_schema + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
+  public logo_url: string = this.website_schema + this.website_host + '/logo.png'; /* redirected by nginx */
+  public square_logo_url: string = this.website_schema + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
 
   public pickup_locations: Array<{name: string, code: string}> = [
     { name: 'Woodmere', code: '23' },
