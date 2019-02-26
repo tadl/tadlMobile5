@@ -1,11 +1,13 @@
-import { Globals } from '../globals';
-import { User } from '../user';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, ActionSheetController, Events, ModalController, ToastController } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
+
+import { Globals } from '../globals';
+import { User } from '../user';
+import { Item } from '../item';
 
 @Component({
   selector: 'app-holds',
@@ -17,6 +19,7 @@ export class HoldsPage implements OnInit {
   constructor(
     public globals: Globals,
     public user: User,
+    public item: Item,
     public loading: LoadingService,
     public toast: ToastService,
     public events: Events,
@@ -49,6 +52,7 @@ export class HoldsPage implements OnInit {
         this.toast.present(this.globals.server_error_msg);
       })
   }
+
 
   ngOnInit() {
     if (this.user.token) {

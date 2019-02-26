@@ -48,7 +48,7 @@
             <ion-button expand="full" *ngIf="hold.hold_status != 'Suspended' && !hold.queue_status.startsWith('Ready')" (click)="user.suspend_hold(hold.hold_id)">Suspend</ion-button>
           </ion-col>
           <ion-col size="4">
-            <ion-button expand="full" (click)='item.details(hold.id)'>Details</ion-button>
+            <ion-button expand="full" (click)='item.details(hold)'>Details</ion-button>
           </ion-col>
           <ion-col size="4">
             <ion-button expand="full" (click)="this.cancel_hold(hold.hold_id, hold.title)">Cancel</ion-button>
