@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 import { CardPage } from './card.page';
 
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxBarcodeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [CardPage]

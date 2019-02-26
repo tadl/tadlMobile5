@@ -70,6 +70,7 @@ export class User {
           this.holds_count = data['holds'];
           this.holds_ready = data['holds_ready'];
           this.fines = data['fines'];
+          if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
           if (parseFloat(this.fines) == parseFloat('0.00')) { this.fines_exist = true; }
           this.card = data['card'];
           this.overdue = data['overdue'];

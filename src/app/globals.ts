@@ -7,17 +7,20 @@ export class Globals {
   constructor() { }
 
   /* customizable variables */
+  /* basic information */
   public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
   public catalog_covers_host: string = 'catalog.tadl.org'; /* hostname for catalog extras */
   public website_host: string = 'www.tadl.org'; /* hostname for website */
-
   public system_short_name: string = 'TADL';
-  public multi_location: boolean = true;
   public all_locations_value: string = '22';
-
   public news_category_exclude: string = '93'; /* 93=Announcement */
 
-  public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute";
+  /* feature toggles */
+  public multi_location: boolean = true;
+  public use_melcat: boolean = true;
+
+  /* customizable strings */
+  public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute.";
   public greetings: Array<any> = ['Hello', 'Hi', 'Greetings', 'Hiya', 'Yo', 'Howdy'];
 
   /* catalog things */
