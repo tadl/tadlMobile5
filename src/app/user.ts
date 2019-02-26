@@ -40,6 +40,7 @@ export class User {
   default_pickup: string;
   login_error: string;
   logout_error: string;
+  melcat_id: string;
   holds: Array<{any}> = [];
   checkouts: Array<{any}> = [];
   checkout_messages: string;
