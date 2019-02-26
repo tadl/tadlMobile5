@@ -22,7 +22,7 @@
     <h5 *ngIf="author">{{item.author}}</h5>
     <h6 *ngIf="item.abstract">Description</h6>
     <p *ngIf="item.abstract" padding-bottom class="item-description" [id]="item.id + '-abstract'">
-      <!-- showAbstract() | truncate : 250 -->
+      {{ showAbstract(item) | truncate : 250 }}
       <button ion-button small float-right color="light" *ngIf="item.abstract.length > 250" (click)='globals.show_more(id, "abstract")'>Show More</button>
     </p>
     <div *ngIf="item.abstract" padding-bottom class="item-description" [id]="item.id + '-abstract-full'" style="display: none">
@@ -33,7 +33,7 @@
     </div>
     <h6 *ngIf="item.contents">Contents</h6>
     <p *ngIf="item.contents" class="item-contents" [id]="item.id + '-content'">
-      <!-- showContents() | truncate : 250 -->
+      {{ showContents(item) | truncate : 250 }}
       <button ion-button small float-right color="light" *ngIf="item.contents.length > 250" (click)='globals.show_more(item.id, "content")'>Show More</button>
     </p>
     <div *ngIf="item.contents" class="item-contents" [id]="item.id + '-content-full'" style="display: none">

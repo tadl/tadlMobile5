@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { TruncateModule } from '@yellowspot/ng-truncate';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    TruncateModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ItemDetailPage]

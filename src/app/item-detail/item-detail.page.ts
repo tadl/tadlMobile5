@@ -27,4 +27,24 @@ export class ItemDetailPage implements OnInit {
     await this.modalController.dismiss(onClosedData);
   }
 
+  showContents(item) {
+    var output = '';
+    if (item.contents_array[1] == null) {
+      output = item.contents;
+    } else {
+      output = item.contents_array.join('</p><p>');
+    }
+    return output;
+  }
+  showAbstract(item) {
+    var output = '';
+    if (item.abstract_array[1] == null) {
+      output = item.abstract;
+    } else {
+      output = item.abstract_array.join('</p><p>');
+    }
+    return output;
+  }
+
+
 }
