@@ -68,11 +68,14 @@ export class Globals {
     } else if (fmt == "news") {
       return format(parseISO(str), 'LLLL do, h:mm a');
     }
+  }
 
     show_more(id) {
-    }
-    show_less(id) {
+      console.log('show more');
     }
 
-  }
+    show_less(id) {
+      console.log('show less');
+    }
+
 }
