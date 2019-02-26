@@ -69,5 +69,10 @@ export class Globals {
       return format(parseISO(str), 'LLLL do, h:mm a');
     }
 
+    show_more(id) {
+    }
+    show_less(id) {
+    }
+
   }
 }

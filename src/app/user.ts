@@ -110,7 +110,7 @@ export class User {
     });
   }
 
-  logout(){
+  logout() {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -138,5 +138,8 @@ export class User {
       (err) => {
         this.logout_error = this.globals.server_error_msg;
       });
+  }
+
+  place_hold() {
   }
 }
