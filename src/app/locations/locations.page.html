@@ -22,9 +22,12 @@
     <ion-card-title>
       {{location.fullname}}
     </ion-card-title>
-    <p>
-      <ion-text text-center>{{location.address}}, {{location.citystatezip}}</ion-text>
-    </p>
+    <div style="margin-top: 8px;">
+      <ion-text>{{location.address}}</ion-text>
+    </div>
+    <div>
+      <ion-text>{{location.citystatezip}}</ion-text>
+    </div>
     <p>
       <ion-text text-center>
         <a href="tel:{{location.phone}}">{{location.phone}}</a> &bull; <a href="mailto:{{location.email}}">{{location.email}}</a>

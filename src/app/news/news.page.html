@@ -16,7 +16,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <div *ngIf="!this.news">
     News posts aren't loaded yet.
@@ -44,7 +44,7 @@
   </ion-list>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="load_more_data($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more events ...">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more posts ...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
