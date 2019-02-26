@@ -33,6 +33,7 @@ export class Globals {
   public catalog_holds_url: string = this.catalog_api_base + '/holds.json';
   public catalog_holds_pickup_url: string = this.catalog_api_base + '/holds_pickup.json';
   public catalog_checkouts_url: string = this.catalog_api_base + '/checkouts.json';
+  public catalog_search_url: string = this.catalog_api_base + '/search.json';
 
   public catalog_covers_small: string = this.catalog_covers_base + '/small/r/';
   public catalog_covers_medium: string = this.catalog_covers_base + '/medium/r/';
