@@ -17,6 +17,15 @@
 </ion-header>
 <ion-content padding>
   <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query"></ion-searchbar>
+  <ion-item>
+    <ion-label>Search Type</ion-label>
+    <ion-select [(ngModel)]="this.type" value="{{this.type}}">
+      <ion-select-option value="keyword">Keyword</ion-select-option>
+      <ion-select-option value="author">Author</ion-select-option>
+      <ion-select-option value="title">Title</ion-select-option>
+      <ion-select-option value="subject">Subject</ion-select-option>
+    </ion-select>
+  </ion-item>
   <ion-button color="primary" expand="full" (click)="this.get_results()">Search</ion-button>
   <ion-card *ngFor="let result of this.results">
     <ion-card-header><ion-card-title>{{result['title']}}</ion-card-title></ion-card-header>
