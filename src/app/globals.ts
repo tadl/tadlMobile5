@@ -81,6 +81,10 @@ export class Globals {
     }
   }
 
+  original_image_from_thumbnail(url) {
+    return url.replace(/-150x150/, '');
+  }
+
   show_more(id, type) {
     var div_to_hide = id + '-' + type;
     var div_to_show = div_to_hide + '-full';
