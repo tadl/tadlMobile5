@@ -19,12 +19,49 @@
   <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query"></ion-searchbar>
   <ion-item>
     <ion-label>Search Type</ion-label>
-    <ion-select [(ngModel)]="this.type" value="{{this.type}}">
+    <ion-select [(ngModel)]="this.type" (ionChange)="this.detect_search_option()" value="{{this.type}}" interface="popover">
       <ion-select-option value="keyword">Keyword</ion-select-option>
       <ion-select-option value="author">Author</ion-select-option>
       <ion-select-option value="title">Title</ion-select-option>
       <ion-select-option value="subject">Subject</ion-select-option>
+      <ion-select-option value="series">Series</ion-select-option>
+      <ion-select-option value="single_genre">Genre</ion-select-option>
+      <ion-select-option value="call_numbers">Call Number</ion-select-option>
     </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Format</ion-label>
+    <ion-select [(ngModel)]="this.format" (ionChange)="this.detect_search_option()" value="{{this.format}}" interface="popover">
+      <ion-select-option  *ngFor="let f of this.globals.formats" value="{{f}}">
+        {{f}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ng-template [ngIf]="this.globals.multi_location == true">
+    <ion-item>
+      <ion-label>Location</ion-label>
+      <ion-select [(ngModel)]="this.location" (ionChange)="this.detect_search_option()" value="{{this.location}}" interface="popover">
+        <ion-select-option  *ngFor="let l of this.globals.search_locations" value="{{l['code']}}">
+          {{l['name']}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ng-template>
+  <ion-item>
+    <ion-label>Sort By</ion-label>
+    <ion-select [(ngModel)]="this.sort" (ionChange)="this.detect_search_option()" value="{{this.sort}}" interface="popover">
+      <ion-select-option  *ngFor="let s of this.globals.sort_options" value="{{s[1]}}">
+        {{s[0]}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Only Show Available Items</ion-label>
+    <ion-checkbox slot="end" [(ngModel)]="this.limit_available" (ionChange)="this.detect_search_option()" color="primary"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label>Only Show Physical Items</ion-label>
+    <ion-checkbox  [(ngModel)]="this.limit_physical" (ionChange)="this.detect_search_option()" color="primary"></ion-checkbox>
   </ion-item>
   <ion-button color="primary" expand="full" (click)="this.get_results()">Search</ion-button>
   <ion-card *ngFor="let result of this.results" (click)="item.details(result)">

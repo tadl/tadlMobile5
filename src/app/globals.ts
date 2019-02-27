@@ -58,6 +58,17 @@ export class Globals {
     { name: 'East Bay', code: '28' }
   ];
 
+  /* Used for searching */
+  public search_locations: Array<{name: string, code: string}> = [
+    { name: 'All Locations', code: '22' },
+    { name: 'Traverse City', code: '23' },
+    { name: 'Interlochen', code: '24' },
+    { name: 'Kingsley', code: '25' },
+    { name: 'Peninsula', code: '26' },
+    { name: 'Fife Lake', code: '27' },
+    { name: 'East Bay', code: '28' }
+  ];
+
   /* Used for displaying location name on item details */
   public short_to_friendly_name = new Map<string, string>([
     ['TADL-EBB', 'East Bay'],
@@ -77,6 +88,36 @@ export class Globals {
     { venue: 101, name: 'Kingsley' },
     { venue: 102, name: 'Peninsula' }
   ];
+
+  /* Formats */
+  public formats: string[] = [
+    'All Formats',
+    'Books',
+    'Books - Fiction',
+    'Books - Non-fiction',
+    'Large Print',
+    'Large Print - Fiction',
+    'Large Print - Non-fiction',
+    'Audiobooks',
+    'Audiobooks - Fiction',
+    'Audiobooks - Non-fiction',
+    'eBooks',
+    'eBooks - Fiction',
+    'eBooks - Non-fiction',
+    'Movies / TV',
+    'Music',
+    'Video Games',
+  ]
+
+  /* Sort Options */
+  public sort_options: Array<string[]> = [
+    ['Relevance', 'relevance'],
+    ['Newest to Oldest', 'pubdateDESC'],
+    ['Oldest to Newest', 'pubdateASC'],
+    ['Title A to Z', 'titleAZ'],
+    ['Title Z to A', 'titleZA'] 
+  ]
+
 
 
   /* FUNctions */
