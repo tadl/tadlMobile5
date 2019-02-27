@@ -12,6 +12,7 @@ import { User } from '../user';
 export class ItemDetailPage implements OnInit {
 
   item: any;
+  items: string;
 
   constructor(
     private modalController: ModalController,
@@ -20,6 +21,7 @@ export class ItemDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.items = this.item.availability.copies_all_available > 0 ? 'Available' : 'All Copies';
   }
 
   async closeModal() {

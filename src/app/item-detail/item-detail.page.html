@@ -11,45 +11,48 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12">
-        {{item.title_display}}
+        <h2><!-- TODO: ionicon for format --> {{item.title_display}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <img [src]="globals.catalog_covers_large + item.id" class="list-cover-image" float-left style="width:40%;margin-right:8px;">
+        <h4 *ngIf="item.author_brief">{{item.author_brief}}</h4>
+        <p *ngIf="item.abstract" padding-bottom class="item-description" [id]="item.id + '-abstract'">
+          <strong>Description: </strong>
+          {{ showAbstract(item) | truncate : 250 }}
+          <ion-button size="small" float-right color="light" *ngIf="item.abstract.length > 250" (click)='globals.show_more(id, "abstract")'>Show More</ion-button>
+        </p>
+        <div *ngIf="item.abstract" padding-bottom class="item-description" [id]="item.id + '-abstract-full'" style="display: none">
+          <strong>Description: </strong>
+          <div *ngFor="let part of item.abstract_array">
+            <p>{{part}}</p>
+          </div>
+          <ion-button size="small" float-right color="light" (click)='globals.show_less(item.id, "abstract")'>Show Less</ion-button>
+        </div>
+        <p *ngIf="item.contents" class="item-contents" [id]="item.id + '-content'">
+          <strong>Contents: </strong>
+          {{ showContents(item) | truncate : 250 }}
+          <ion-button size="small" float-right color="light" *ngIf="item.contents.length > 250" (click)='globals.show_more(item.id, "content")'>Show More</ion-button>
+        </p>
+        <div *ngIf="item.contents" class="item-contents" [id]="item.id + '-content-full'" style="display: none">
+          <strong>Contents: </strong>
+          <div *ngFor="let part of item.contents_array">
+            <p>{{part}}</p>
+          </div>
+          <ion-button size="small" float-right color="light" (click)='globals.show_less(item.id, "content")'>Show Less</ion-button>
+        </div>
+        <p *ngIf="item.publisher">Published by {{publisher}}<span *ngIf="item.publisher_location">, {{item.publisher_location}}</span><span *ngIf="item.sort_year">, {{item.sort_year}}</span></p>
+        <p *ngIf="item.physical_description" [innerHTML]="item.physical_description"></p>
+        <p *ngIf="item.electronic == true">Electronic resource from {{item.source}}</p>
+        <p *ngIf="item.availability.copies_all > 0"><span *ngIf="item.hold_count > 0">{{item.hold_count}} hold<span *ngIf="item.hold_count > 1">s</span> on </span>{{item.availability.copies_all}} cop<span *ngIf="item.availability.copies_all == 1">y</span><span *ngIf="item.availability.copies_all > 1">ies</span><span *ngIf="item.availability.copies_all_available > 0">, {{item.availability.copies_all_available}} available</span>.</p>
+        <a button ion-button *ngIf="electronic==true" [href]="item.eresource_link" float-right>View Resource</a>
+        <ion-button *ngIf="user.logged_in && item.electronic != true && item.holdable == true" (click)="user.place_hold(id)" float-right>Place Hold</ion-button>
+        <ion-button *ngIf="!user.logged_in && item.electronic != true && item.holdable == true" menuToggle menuToggle="right" (click)="close_modal()" float-right>Log In to Place Hold</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <div>
-    <h4><!-- ionicon for format --> {{title}}</h4>
-    <img [src]="globals.catalog_covers_medium + item.id" class="list-cover-image" float-left padding-right />
-    <h5 *ngIf="author">{{item.author}}</h5>
-    <h6 *ngIf="item.abstract">Description</h6>
-    <p *ngIf="item.abstract" padding-bottom class="item-description" [id]="item.id + '-abstract'">
-      {{ showAbstract(item) | truncate : 250 }}
-      <button ion-button small float-right color="light" *ngIf="item.abstract.length > 250" (click)='globals.show_more(id, "abstract")'>Show More</button>
-    </p>
-    <div *ngIf="item.abstract" padding-bottom class="item-description" [id]="item.id + '-abstract-full'" style="display: none">
-      <div *ngFor="let part of item.abstract_array">
-        <p>{{part}}</p>
-      </div>
-      <button ion-button small float-right color="light" (click)='globals.show_less(item.id, "abstract")'>Show Less</button>
-    </div>
-    <h6 *ngIf="item.contents">Contents</h6>
-    <p *ngIf="item.contents" class="item-contents" [id]="item.id + '-content'">
-      {{ showContents(item) | truncate : 250 }}
-      <button ion-button small float-right color="light" *ngIf="item.contents.length > 250" (click)='globals.show_more(item.id, "content")'>Show More</button>
-    </p>
-    <div *ngIf="item.contents" class="item-contents" [id]="item.id + '-content-full'" style="display: none">
-      <div *ngFor="let part of item.contents_array">
-        <p>{{part}}</p>
-      </div>
-      <button ion-button small float-right color="light" (click)='globals.show_less(item.id, "content")'>Show Less</button>
-    </div>
-    <p *ngIf="item.publisher">Published by {{publisher}}<span *ngIf="item.publisher_location">, {{item.publisher_location}}</span><span *ngIf="item.sort_year">, {{item.sort_year}}</span></p>
-    <p *ngIf="item.physical_description" [innerHTML]="item.physical_description"></p>
-    <p *ngIf="item.electronic == true">Electronic resource from {{item.source}}</p>
-    <p *ngIf="item.availability.copies_all > 0"><span *ngIf="item.holds > 0">{{item.hold_count}} hold<span *ngIf="item.holds > 1">s</span> on </span>{{item.availability.copies_all}} cop<span *ngIf="item.availability.copies_all == 1">y</span><span *ngIf="all_copies_total > 1">ies</span><span *ngIf="all_copies_available > 0">, {{all_copies_available}} available</span>.</p>
-    <a button ion-button *ngIf="electronic==true" [href]="item.eresource_link" float-right>View Resource</a>
-    <button ion-button *ngIf="user.logged_in && item.electronic != true && item.holdable == true" (click)="user.place_hold(id)" float-right>Place Hold</button>
-    <button ion-button *ngIf="!user.logged_in && item.electronic != true && item.holdable == true" menuToggle menuToggle="right" (click)="close_modal()" float-right>Log In to Place Hold</button><!-- TODO -->
-  </div>
   <div *ngIf="item.electronic != true" class="copy-details">
     <div>
       <ion-segment [(ngModel)]="items">
@@ -63,12 +66,12 @@
     </div>
     <div [ngSwitch]="items">
       <ion-list *ngSwitchCase="'Available'">
-        <ion-item *ngIf="loc_copies_available > 0">
+        <ion-item *ngIf="item.availability.copies_all_available > 0">
           <strong>Location</strong>
-          <ion-badge item-end>Call Number</ion-badge>
+          <ion-badge slot="end">Call Number</ion-badge>
         </ion-item>
-        <div *ngFor="let copies of availability">
-          <ion-item-divider *ngIf="globals.multi_location == true">{{globals.locationName.get(copies['library'])}}</ion-item-divider>
+        <div *ngFor="let copies of item.availability.by_location"><!-- TODO ... oof. this is all completely different and I am unsure we can duplicate the logic with the new api. -->
+          <ion-item-divider *ngIf="globals.multi_location == true">globals.locationName.get(copies['library'])</ion-item-divider>
           <ion-item *ngFor="let copy of copies['copies']" text-wrap>
             {{copy['count']}} in {{copy['shelf_location']}}
             <ion-badge item-end>{{copy['call_numbers'][copy['call_numbers'].length-1]}}</ion-badge>
@@ -76,23 +79,27 @@
         </div>
       </ion-list>
       <ion-list *ngSwitchCase="'All Copies'">
-        <ion-item *ngIf="loc_copies_total != 0">
-          <ion-row>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location == true">Location</ion-col>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location != true">Shelf</ion-col>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location == true">Shelf/Call Num</ion-col>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location != true">Call Num</ion-col>
-            <ion-col class="detail" text-wrap col-4>Status</ion-col>
-          </ion-row>
+        <ion-item *ngIf="item.availability.copies_all != 0">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location == true"><ion-text>Location</ion-text></ion-col>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location != true">Shelf</ion-col>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location == true">Shelf/Call Num</ion-col>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location != true">Call Num</ion-col>
+              <ion-col class="detail" text-wrap size="4">Status</ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
-        <ion-item *ngFor="let copy of holdings">
-          <ion-row>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location == true"><!-- globals.locationName.get(copy['circ_lib']) --></ion-col>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location != true">{{copy['location']}}</ion-col>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location == true">{{copy['location']}} / {{copy['call_number']}}</ion-col>
-            <ion-col class="detail" text-wrap col-4 *ngIf="globals.multi_location != true">{{copy['call_number']}}</ion-col>
-            <ion-col class="detail" text-wrap col-4>{{copy['status']}}<span *ngIf="copy['due_date']"><br/>Due {{copy['due_date']}}</span></ion-col>
-          </ion-row>
+        <ion-item *ngFor="let copy of item.holdings">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location == true"><!-- globals.locationName.get(copy['circ_lib']) --></ion-col>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location != true">{{copy['location']}}</ion-col>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location == true">{{copy['location']}} / {{copy['call_number']}}</ion-col>
+              <ion-col class="detail" text-wrap size="4" *ngIf="globals.multi_location != true">{{copy['call_number']}}</ion-col>
+              <ion-col class="detail" text-wrap size="4">{{copy['status']}}<span *ngIf="copy['due_date']"><br/>Due {{copy['due_date']}}</span></ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-item>
       </ion-list>
     </div>
