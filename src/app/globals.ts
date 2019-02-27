@@ -56,6 +56,17 @@ export class Globals {
     { name: 'East Bay', code: '28' }
   ];
 
+  /* Used for displaying location name on item details */
+  public short_to_friendly_name = new Map<string, string>([
+    ['TADL-EBB', 'East Bay'],
+    ['TADL-KBL', 'Kingsley'],
+    ['TADL-PCL', 'Peninsula'],
+    ['TADL-IPL', 'Interlochen'],
+    ['TADL-FLPL', 'Fife Lake'],
+    ['TADL-WOOD', 'Traverse City']
+  ]);
+
+
   format_date(str, fmt?) {
     if (fmt == "event") {
       return format(parseISO(str), 'EEE LLLL do, h:mm a');
@@ -70,12 +81,19 @@ export class Globals {
     }
   }
 
-    show_more(id) {
-      console.log('show more');
-    }
+  show_more(id, type) {
+    var div_to_hide = id + '-' + type;
+    var div_to_show = div_to_hide + '-full';
+    document.getElementById(div_to_show).setAttribute('style', 'display: block');
+    document.getElementById(div_to_hide).setAttribute('style', 'display: none');
+  }
 
-    show_less(id) {
-      console.log('show less');
-    }
+  show_less(id, type) {
+    var div_to_show = id + '-' + type
+    var div_to_hide = div_to_show + '-full'
+    document.getElementById(div_to_show).setAttribute("style", "display: block")
+    document.getElementById(div_to_hide).setAttribute("style", "display: none")
+  }
+
 
 }
