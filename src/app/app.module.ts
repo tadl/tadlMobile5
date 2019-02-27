@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { TruncateModule } from '@yellowspot/ng-truncate';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
@@ -40,6 +41,7 @@ import { CardPageModule } from './card/card.module';
     ItemDetailPageModule,
     CardPageModule,
     NgxBarcodeModule,
+    TruncateModule,
   ],
   providers: [
     Globals,

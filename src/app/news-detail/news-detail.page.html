@@ -17,7 +17,7 @@
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-img *ngIf="post.featured_image_urls.large" [src]="post.featured_image_urls.large" style="max-width:40%;float:left;margin:0 8px 5px 0;"></ion-img>
+        <img *ngIf="post.featured_image_urls.thumbnail" [src]="globals.original_image_from_thumbnail(post.featured_image_urls.thumbnail)" style="max-width:40%;float:left;margin:0 8px 5px 0;">
         <div [innerHTML]="post.content.rendered"></div>
       </ion-col>
     </ion-row>

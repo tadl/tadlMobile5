@@ -1,6 +1,6 @@
 import { Globals } from './globals';
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, LoadingController, ActionSheetController, Events, ModalController, ToastController } from '@ionic/angular';
+import { Events } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -110,7 +110,7 @@ export class User {
     });
   }
 
-  logout(){
+  logout() {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -138,5 +138,8 @@ export class User {
       (err) => {
         this.logout_error = this.globals.server_error_msg;
       });
+  }
+
+  place_hold() {
   }
 }

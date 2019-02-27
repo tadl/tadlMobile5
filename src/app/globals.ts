@@ -47,14 +47,39 @@ export class Globals {
   public logo_url: string = this.website_schema + this.website_host + '/logo.png'; /* redirected by nginx */
   public square_logo_url: string = this.website_schema + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
 
+  /* Arrays and Maps to handle multi-location things */
+  /* Used for changing pickup locations on holds */
   public pickup_locations: Array<{name: string, code: string}> = [
-    { name: 'Woodmere', code: '23' },
+    { name: 'Traverse City', code: '23' },
     { name: 'Interlochen', code: '24' },
     { name: 'Kingsley', code: '25' },
     { name: 'Peninsula', code: '26' },
     { name: 'Fife Lake', code: '27' },
     { name: 'East Bay', code: '28' }
   ];
+
+  /* Used for displaying location name on item details */
+  public short_to_friendly_name = new Map<string, string>([
+    ['TADL-EBB', 'East Bay'],
+    ['TADL-KBL', 'Kingsley'],
+    ['TADL-PCL', 'Peninsula'],
+    ['TADL-IPL', 'Interlochen'],
+    ['TADL-FLPL', 'Fife Lake'],
+    ['TADL-WOOD', 'Traverse City']
+  ]);
+
+  /* Used for filtering events by location */
+  public event_venues: Array<{venue: number, name: string}> = [
+    { venue: 97, name: 'Traverse City' },
+    { venue: 98, name: 'East Bay' },
+    { venue: 99, name: 'Fife Lake' },
+    { venue: 100, name: 'Interlochen' },
+    { venue: 101, name: 'Kingsley' },
+    { venue: 102, name: 'Peninsula' }
+  ];
+
+
+  /* FUNctions */
 
   format_date(str, fmt?) {
     if (fmt == "event") {
@@ -68,6 +93,25 @@ export class Globals {
     } else if (fmt == "news") {
       return format(parseISO(str), 'LLLL do, h:mm a');
     }
-
   }
+
+  original_image_from_thumbnail(url) {
+    return url.replace(/-150x150/, '');
+  }
+
+  show_more(id, type) {
+    var div_to_hide = id + '-' + type;
+    var div_to_show = div_to_hide + '-full';
+    document.getElementById(div_to_show).setAttribute('style', 'display: block');
+    document.getElementById(div_to_hide).setAttribute('style', 'display: none');
+  }
+
+  show_less(id, type) {
+    var div_to_show = id + '-' + type
+    var div_to_hide = div_to_show + '-full'
+    document.getElementById(div_to_show).setAttribute("style", "display: block")
+    document.getElementById(div_to_hide).setAttribute("style", "display: none")
+  }
+
+
 }
