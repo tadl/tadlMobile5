@@ -47,8 +47,10 @@ export class Globals {
   public logo_url: string = this.website_schema + this.website_host + '/logo.png'; /* redirected by nginx */
   public square_logo_url: string = this.website_schema + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
 
+  /* Arrays and Maps to handle multi-location things */
+  /* Used for changing pickup locations on holds */
   public pickup_locations: Array<{name: string, code: string}> = [
-    { name: 'Woodmere', code: '23' },
+    { name: 'Traverse City', code: '23' },
     { name: 'Interlochen', code: '24' },
     { name: 'Kingsley', code: '25' },
     { name: 'Peninsula', code: '26' },
@@ -66,6 +68,18 @@ export class Globals {
     ['TADL-WOOD', 'Traverse City']
   ]);
 
+  /* Used for filtering events by location */
+  public event_venues: Array<{venue: number, name: string}> = [
+    { venue: 97, name: 'Traverse City' },
+    { venue: 98, name: 'East Bay' },
+    { venue: 99, name: 'Fife Lake' },
+    { venue: 100, name: 'Interlochen' },
+    { venue: 101, name: 'Kingsley' },
+    { venue: 102, name: 'Peninsula' }
+  ];
+
+
+  /* FUNctions */
 
   format_date(str, fmt?) {
     if (fmt == "event") {

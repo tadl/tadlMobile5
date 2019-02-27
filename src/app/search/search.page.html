@@ -15,10 +15,10 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
   <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query"></ion-searchbar>
   <ion-button color="primary" expand="full" (click)="this.get_results()">Search</ion-button>
-  <ion-card *ngFor="let result of this.results">
-    <ion-card-header><ion-card-title>{{result['title']}}</ion-card-title></ion-card-header>
+  <ion-card *ngFor="let result of this.results" (click)="item.details(result)">
+    <ion-card-header><ion-card-title>{{ result.title }}</ion-card-title></ion-card-header>
   </ion-card>
 </ion-content>

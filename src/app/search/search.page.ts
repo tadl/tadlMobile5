@@ -1,11 +1,13 @@
-import { Globals } from '../globals';
-import { User } from '../user';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Events } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
+
+import { Globals } from '../globals';
+import { User } from '../user';
+import { Item } from '../item';
 
 @Component({
   selector: 'app-search',
@@ -20,34 +22,34 @@ export class SearchPage implements OnInit {
     public loading: LoadingService,
     public toast: ToastService,
     public events: Events,
+    public item: Item,
     private http: HttpClient,
-  ) { 
-  }
+  ) { }
 
-  query: string
-  type: string = 'keyword'
-  sort: string
-  fmt: string
-  location: string
-  page: string
-  view: string
-  more_results: boolean
-  size: number
-  results: Array<{any}> = []
+  query: string;
+  type: string = "keyword";
+  sort: string;
+  fmt: string;
+  location: string;
+  page: string;
+  view: string;
+  more_results: boolean;
+  size: number;
+  results: Array<{any}> = [];
 
-  get_results(){
+  get_results() {
     let params = new HttpParams()
       .set("v", "5")
       .set("type", this.type)
       .set("query", this.query);
-    var url = this.globals.catalog_search_url
+    var url = this.globals.catalog_search_url;
     this.http.get(url, {params: params})
     .subscribe(data => {
         if (data['results']) {
           this.results = data['results'];
-          this.more_results = data['more_results']
-          if(data['type']){
-            this.type = data['type']
+          this.more_results = data['more_results'];
+          if (data['type']) {
+            this.type = data['type'];
           }
         } else {
           //need to handle when token has expired
@@ -57,7 +59,6 @@ export class SearchPage implements OnInit {
         this.toast.present(this.globals.server_error_msg);
       });
   }
-
 
   ngOnInit() {
   }
