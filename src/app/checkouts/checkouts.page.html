@@ -46,7 +46,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-button expand="full" (click)='item.details(checkout.record_id)'>Details</ion-button>
+          <ion-button expand="full" (click)='item.details(checkout)'>Details</ion-button>
         </ion-col>
         <ion-col size="6">
           <ion-button expand="full" [disabled]="checkout.renew_attempts == 0" color="secondary" (click)='user.renew(checkout.checkout_id, checkout.id)'>Renew</ion-button>

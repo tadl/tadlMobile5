@@ -1,11 +1,13 @@
-import { Globals } from '../globals';
-import { User } from '../user';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Events } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
+
+import { Globals } from '../globals';
+import { User } from '../user';
+import { Item } from '../item';
 
 @Component({
   selector: 'app-checkouts',
@@ -20,6 +22,7 @@ export class CheckoutsPage implements OnInit {
     public loading: LoadingService,
     public toast: ToastService,
     public events: Events,
+    public item: Item,
     private http: HttpClient,
   ) { 
   }
