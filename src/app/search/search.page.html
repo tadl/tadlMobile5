@@ -93,4 +93,8 @@
       </ion-text>
     </ion-label>
   </ion-item>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="get_more_results($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more results ...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
