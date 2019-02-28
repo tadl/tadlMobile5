@@ -26,7 +26,7 @@ export class SearchPage implements OnInit {
     private http: HttpClient,
   ) { }
 
-  query: string = '';
+  query: string;
   type: string = "keyword";
   sort: string = this.globals.sort_options[0][1];
   format: string = "All Formats";
@@ -40,6 +40,7 @@ export class SearchPage implements OnInit {
   results: Array<{any}> = [];
 
   get_results() {
+    if (!this.query) { return; }
     let params = new HttpParams()
       .set("v", "5")
       .set("type", this.type)
@@ -51,7 +52,7 @@ export class SearchPage implements OnInit {
       .set("fmt", this.format);
     var url = this.globals.catalog_search_url;
     this.http.get(url, {params: params})
-    .subscribe(data => {
+      .subscribe(data => {
         if (data['results']) {
           this.results = data['results'];
           this.more_results = data['more_results'];
@@ -59,7 +60,7 @@ export class SearchPage implements OnInit {
             this.type = data['type'];
           }
         } else {
-          //need to handle when token has expired
+          // TODO: need to handle when token has expired
         }
       },
       (err) => {
@@ -67,9 +68,9 @@ export class SearchPage implements OnInit {
       });
   }
 
-  detect_search_option(){
-    if(this.query != ''){
-      this.get_results()
+  detect_search_option() {
+    if (this.query) {
+      this.get_results();
     }
   }
 
