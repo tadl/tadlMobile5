@@ -63,7 +63,7 @@ export class SearchPage implements OnInit {
             this.results.push.apply(this.results, data['results']);
             this.infinite.target.complete();
             this.loading_more = false;
-            if (this.more_results == false) { this.infinite.target.disabled = true; }
+            if (data['more_results'] == false) { this.infinite.target.disabled = true; }
           } else {
             this.results = data['results'];
           }
