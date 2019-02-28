@@ -18,13 +18,15 @@
 
 <ion-content>
   <form>
-    <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}"></ion-searchbar>
-    <ion-button color="primary" expand="full" (click)="this.get_results()">Search</ion-button>
+    <ion-item lines="none">
+      <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Books, Movies, Music..."></ion-searchbar>
+      <ion-button color="primary" size="default" slot="end" expand="full" (click)="this.get_results()">Search</ion-button>
+    </ion-item>
     <ion-item-divider>
       <ion-toggle slot="start" [(ngModel)]="this.advanced" [ngModelOptions]="{standalone: true}" name="advanced"></ion-toggle>
       <ion-label><p style="margin-left: 10px;">ADVANCED OPTIONS</p></ion-label>
     </ion-item-divider>
-    <div *ngIf="advanced">
+    <ion-list *ngIf="advanced" lines="full">
       <ion-item>
         <ion-label>Search Type</ion-label>
         <ion-select [(ngModel)]="this.type" [ngModelOptions]="{standalone: true}" (ionChange)="this.detect_search_option()" [value]="this.type" interface="popover">
@@ -71,7 +73,7 @@
         <ion-label>Only Show Physical Items</ion-label>
         <ion-checkbox  [(ngModel)]="this.limit_physical" [ngModelOptions]="{standalone: true}" (ionChange)="this.detect_search_option()" color="primary"></ion-checkbox>
       </ion-item>
-    </div>
+    </ion-list>
   </form>
   <ion-item *ngFor="let result of this.results" (click)="item.details(result)">
     <ion-thumbnail slot="start">
