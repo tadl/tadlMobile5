@@ -27,7 +27,9 @@ export class HomePage {
 
   search() {
     console.log(this.query)
-    this.router.navigate(['/search', { query: this.query }]);
+    if (this.query) {
+      this.router.navigate(['/search', { query: this.query }]);
+    }
   }
 
 }
