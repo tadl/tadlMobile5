@@ -31,7 +31,7 @@ export class SearchPage implements OnInit {
   sort: string = this.globals.sort_options[0][1];
   format: string = "All Formats";
   location: string = this.globals.all_locations_value;
-  page: string;
+  page: any;
   view: string;
   limit_available: boolean = false
   limit_physical: boolean = false
