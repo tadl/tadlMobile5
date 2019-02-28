@@ -4,7 +4,6 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 
 import { Globals } from '../globals';
 
-import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 
 import { NewsDetailPage } from '../news-detail/news-detail.page';
@@ -26,7 +25,6 @@ export class NewsPage implements OnInit {
 
   constructor(
     public globals: Globals,
-    public loading: LoadingService,
     public toast: ToastService,
     public modalController: ModalController,
     private http: HttpClient,
@@ -55,7 +53,6 @@ export class NewsPage implements OnInit {
             this.loading_more = false;
           } else {
             this.news = data;
-            this.loading.dismiss();
           }
 
         } else {
@@ -63,7 +60,6 @@ export class NewsPage implements OnInit {
             this.infinite.target.complete();
             this.loading_more = false;
           } else {
-            this.loading.dismiss();
           }
           this.toast.present(this.globals.server_error_msg);
         }
@@ -74,7 +70,6 @@ export class NewsPage implements OnInit {
           this.infinite.target.disabled = true;
           this.loading_more = false;
         } else {
-          this.loading.dismiss();
           this.toast.present(this.globals.server_error_msg);
         }
       });
@@ -96,9 +91,7 @@ export class NewsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading.present('Loading News...').then(() => {
-      this.get_news(this.page);
-    });
+    this.get_news(this.page);
   }
 
 }

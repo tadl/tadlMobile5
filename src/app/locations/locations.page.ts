@@ -3,7 +3,6 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 
 import { Globals } from '../globals';
 
-import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 
 @Component({
@@ -18,7 +17,6 @@ export class LocationsPage implements OnInit {
 
   constructor(
     public globals: Globals,
-    public loading: LoadingService,
     public toast: ToastService,
     private http: HttpClient,
   ) { }
@@ -29,22 +27,17 @@ export class LocationsPage implements OnInit {
       .subscribe(data => {
         if (data['locations']) {
           this.locations = data['locations'];
-          this.loading.dismiss();
         } else {
           this.toast.present(this.globals.server_error_msg);
-          this.loading.dismiss();
         }
       }, (err) => {
         this.toast.present(this.globals.server_error_msg);
-        this.loading.dismiss();
       });
 
   }
 
   ngOnInit() {
-    this.loading.present('Loading...').then(() => {
-      this.get_locations();
-    });
+    this.get_locations();
   }
 
 }

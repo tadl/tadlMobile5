@@ -4,7 +4,6 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 
 import { Globals } from '../globals';
 
-import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 
 import { EventDetailPage } from '../event-detail/event-detail.page';
@@ -27,7 +26,6 @@ export class EventsPage implements OnInit {
 
   constructor(
     public globals: Globals,
-    public loading: LoadingService,
     public toast: ToastService,
     public modalController: ModalController,
     private http: HttpClient,
@@ -58,7 +56,6 @@ export class EventsPage implements OnInit {
             if (!data['next_rest_url']) { this.infinite.target.disabled = true; }
           } else {
             this.events = data['events'];
-            this.loading.dismiss();
           }
 
         } else {
@@ -66,7 +63,6 @@ export class EventsPage implements OnInit {
             this.infinite.target.complete();
             this.loading_more = false;
           } else {
-            this.loading.dismiss();
           }
           this.toast.present(this.globals.server_error_msg);
         }
@@ -76,7 +72,6 @@ export class EventsPage implements OnInit {
           this.infinite.target.complete();
           this.loading_more = false;
         } else {
-          this.loading.dismiss();
         }
         this.toast.present(this.globals.server_error_msg);
       });
@@ -98,9 +93,7 @@ export class EventsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading.present('Loading Events...').then(() => {
-      this.get_events(this.page, this.location);
-    });
+    this.get_events(this.page, this.location);
   }
 
 }
