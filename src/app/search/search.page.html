@@ -19,7 +19,7 @@
 <ion-content>
   <form action=".">
     <ion-item lines="none">
-      <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Books, Movies, Music..."></ion-searchbar>
+      <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Books, Movies, Music..." debounce="100"></ion-searchbar>
       <ion-button color="primary" size="default" slot="end" expand="full" (click)="this.get_results()">Search</ion-button>
     </ion-item>
     <ion-item-divider>
