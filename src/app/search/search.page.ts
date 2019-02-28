@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
@@ -24,6 +25,7 @@ export class SearchPage implements OnInit {
     public toast: ToastService,
     public item: Item,
     private http: HttpClient,
+    private route: ActivatedRoute,
   ) { }
 
   query: string;
@@ -32,10 +34,8 @@ export class SearchPage implements OnInit {
   format: string = "All Formats";
   location: string = this.globals.all_locations_value;
   page: any;
-  view: string;
   limit_available: boolean = false
   limit_physical: boolean = false
-  size: number;
   results: Array<{any}> = [];
   more_results: boolean;
   infinite: any;
@@ -100,6 +100,10 @@ export class SearchPage implements OnInit {
   }
 
   ngOnInit() {
+    if (this.route.snapshot) {
+      this.query = this.route.snapshot.paramMap.get('query');
+      this.get_results();
+    }
   }
 
 }

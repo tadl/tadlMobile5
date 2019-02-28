@@ -34,6 +34,50 @@
         </p>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <form action=".">
+          <ion-item lines="none">
+            <ion-searchbar (search)="this.search()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Books, Movies, Music..."></ion-searchbar>
+            <ion-button color="primary" size="default" slot="end" expand="full" (click)="this.search()">Go!</ion-button>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-list>
+          <ion-button routerDirection="root" routerLink="/search" expand="full">
+            <ion-icon slot="start" name="search"></ion-icon>
+            <ion-label>Search</ion-label>
+          </ion-button>
+          <ion-button routerDirection="root" routerLink="/locations" expand="full">
+            <ion-icon slot="start" name="compass"></ion-icon>
+            <ion-label>Hours &amp; Locations</ion-label>
+          </ion-button>
+          <ion-button (click)="open_account_menu()" detail="true" expand="full">
+            <ion-icon slot="start" name="contact"></ion-icon>
+            <ion-label>Account</ion-label>
+          </ion-button>
+        </ion-list>
+      </ion-col>
+      <ion-col size="6">
+        <ion-list>
+          <ion-button routerDirection="root" routerLink="/events" expand="full">
+            <ion-icon slot="start" name="calendar"></ion-icon>
+            <ion-label>Events</ion-label>
+          </ion-button>
+          <ion-button routerDirection="root" routerLink="/news" expand="full">
+            <ion-icon slot="start" name="megaphone"></ion-icon>
+            <ion-label>News</ion-label>
+          </ion-button>
+          <ion-button routerDirection="root" routerLink="/featured" expand="full">
+            <ion-icon slot="start" name="star"></ion-icon>
+            <ion-label>Featured Items</ion-label>
+          </ion-button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-
 </ion-content>
+

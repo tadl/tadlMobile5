@@ -45,7 +45,6 @@ export class EventsPage implements OnInit {
       .set("per_page", "20")
       .set("start_date", "now");
     if (loc) { params.append("venue", loc); }
-
     this.http.get(this.url, {params: params})
       .subscribe(data => {
         if (data['events']) {
@@ -57,7 +56,6 @@ export class EventsPage implements OnInit {
           } else {
             this.events = data['events'];
           }
-
         } else {
           if (this.loading_more) {
             this.infinite.target.complete();
@@ -66,7 +64,6 @@ export class EventsPage implements OnInit {
           }
           this.toast.present(this.globals.server_error_msg);
         }
-
       }, (err) => {
         if (this.loading_more) {
           this.infinite.target.complete();
