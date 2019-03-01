@@ -1,6 +1,6 @@
 import { Globals } from './globals';
 import { Component, ViewChild } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { Events, ActionSheetController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -18,6 +18,7 @@ export class User {
     public events: Events,
     public loading: LoadingService,
     public toast: ToastService,
+    public actionSheetController: ActionSheetController,
     private http: HttpClient,
     private storage: Storage,
   ) {
@@ -45,8 +46,23 @@ export class User {
   checkouts: Array<{any}> = [];
   greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
 
+  update_user_object(data) {
+    this.logged_in = true;
+    this.token = data['token'];
+    this.full_name = data['full_name'];
+    this.checkout_count = data['checkouts'];
+    this.holds_count = data['holds'];
+    this.holds_ready = data['holds_ready'];
+    this.fines = data['fines'];
+    if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
+    if (parseFloat(this.fines) == parseFloat('0.00')) { this.fines_exist = true; }
+    this.card = data['card'];
+    this.overdue = data['overdue'];
+    this.default_pickup = data['pickup_library'];
+  }
+
   login(auto = false) {
-    if (auto == true ) {
+    if (auto == true) {
       var params = new HttpParams()
         .set("username", this.username)
         .set("md5password", this.hashed_password)
@@ -62,18 +78,7 @@ export class User {
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['token']) {
-          this.logged_in = true;
-          this.token = data['token'];
-          this.full_name = data['full_name'];
-          this.checkout_count = data['checkouts'];
-          this.holds_count = data['holds'];
-          this.holds_ready = data['holds_ready'];
-          this.fines = data['fines'];
-          if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
-          if (parseFloat(this.fines) == parseFloat('0.00')) { this.fines_exist = true; }
-          this.card = data['card'];
-          this.overdue = data['overdue'];
-          this.default_pickup = data['pickup_library'];
+          this.update_user_object(data);
           this.login_error = "";
           this.logout_error = "";
           this.storage.set('username', this.username);
@@ -206,7 +211,7 @@ export class User {
         if (data['holds'] && data['user']) {
           this.holds = data['holds'];
         } else {
-          //need to handle when token has expired
+          // TODO need to handle when token has expired
         }
       },
       (err) => {
@@ -214,11 +219,75 @@ export class User {
       });
   }
 
-/*   public catalog_holds_manage_url: string = this.catalog_api_base + '/manage_hold.json';
-  public catalog_change_hold_pickup_url: string = this.catalog_api_base + '/change_hold_pickup.json';
-  */
+  manage_hold(hold, task) {
+    let url = this.globals.catalog_holds_manage_url;
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("hold_id", hold.hold_id)
+      .set("task", task)
+      .set("v", "5");
+    if (task == "activate") { var action = "activated"; }
+    else if (task == "suspend") { var action = "suspended"; }
+    else if (task == "cancel") { var action = "canceled"; }
+    this.loading.present('One moment...');
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        this.loading.dismiss();
+        if (data['holds'] && data['user']) {
+          this.holds = data['holds'];
+          this.update_user_object(data['user']);
+          this.toast.present("Successfully " + action + " hold on " + hold.title_display + ".", 5000);
+        } else {
+          // TODO handle expired token
+        }
+      },
+      (err) => {
+        this.toast.present(this.globals.server_error_msg);
+      });
+  }
 
+  async cancel_hold(hold) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Cancel hold on ' + hold.title_display,
+      buttons: [{
+        text: 'Cancel Hold',
+        role: 'destructive',
+        handler: () => {
+          this.manage_hold(hold, 'cancel');
+        }
+      }, {
+        text: 'Nevermind',
+        role: 'cancel',
+        handler: () => {
+          console.log('nevermind');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 
-
+  change_hold_pickup(hold, newloc) {
+    let url = this.globals.catalog_change_hold_pickup_url;
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("hold_id", hold.hold_id)
+      .set("hold_status", hold.hold_status)
+      .set("pickup_location", newloc.detail.value)
+      .set("v", "5");
+    this.loading.present("Changing pickup location...");
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        this.loading.dismiss();
+        if (data['hold_id'] == hold.hold_id) {
+          this.holds.find(item => item['hold_id'] == data['hold_id'])['pickup_location'] = data['pickup_location'];
+          this.toast.present('Changed pickup location for ' + hold.title_display + ' to ' + data['pickup_location'], 5000);
+        } else {
+          // TODO handle expired token
+        }
+      },
+      (err) => {
+        this.toast.present(this.globals.server_error_msg);
+      });
+  }
 
 }

@@ -18,25 +18,25 @@
 
 <ion-content class="ng-cloak">
   <ion-card *ngFor="let hold of this.user.holds">
-    <ion-card-header><ion-card-title>{{hold.title_display}}</ion-card-title></ion-card-header>
+    <ion-card-header><ion-card-title>{{ hold.title_display }}</ion-card-title></ion-card-header>
     <ion-card-content>
       <ion-grid>
         <ion-row>
           <ion-col size="3">
-            <img src="{{this.globals.catalog_covers_medium + hold.id}}"/>
+            <img [src]="this.globals.catalog_covers_medium + hold.id">
           </ion-col>
           <ion-col size="9">
-            <p><strong>{{hold.author}}</strong></p>
-            <p *ngIf="hold.hold_status != ''">Position {{hold.queue_state[0]}} in queue with {{hold.queue_state[1]}} eligible cop<span *ngIf="hold.queue_state[1] > 1 || hold.queue_state[1] == 0">ies</span><span *ngIf="hold.queue_state[1] == 1">y</span></p>
-            <p *ngIf="globals.multi_location==true">Pickup location: {{hold.pickup_location}}</p>
+            <p><strong>{{ hold.author }}</strong></p>
+            <p *ngIf="hold.hold_status != ''">Position {{ hold.queue_state[0] }} in queue with {{ hold.queue_state[1] }} eligible cop<span *ngIf="hold.queue_state[1] > 1 || hold.queue_state[1] == 0">ies</span><span *ngIf="hold.queue_state[1] == 1">y</span></p>
+            <p *ngIf="globals.multi_location==true">Pickup location: {{ hold.pickup_location }}</p>
             <p *ngIf="hold.hold_status != ''">Hold status:
-              <span *ngIf="hold.hold_status == 'Suspended'"><strong ion-text color="danger">{{hold.hold_status}}</strong></span>
-              <span *ngIf="hold.hold_status == 'Active'"><strong ion-text color="green">{{hold.hold_status}}<span *ngIf="hold.queue_status != ''"> - <strong ion-text color="primary">{{hold.queue_status}}</strong></span></strong></span>
+              <span *ngIf="hold.hold_status == 'Suspended'"><strong ion-text color="danger">{{ hold.hold_status }}</strong></span>
+              <span *ngIf="hold.hold_status == 'Active'"><strong ion-text color="green">{{ hold.hold_status }}<span *ngIf="hold.queue_status != ''"> - <strong ion-text color="primary">{{ hold.queue_status }}</strong></span></strong></span>
             </p>
             <p *ngIf="globals.multi_location==true && !hold.queue_status.startsWith('Ready')">
-              <ion-select class="full-width-select" interface="popover" placeholder="Change Pickup" (ionChange)="user.change_hold_pickup(hold.hold_id, hold.hold_status, $event)">
-                <ion-select-option *ngFor="let loc of globals.pickup_locations" value="{{loc.code}}">
-                  {{loc.name}}
+              <ion-select class="full-width-select" interface="popover" placeholder="Change Pickup" (ionChange)="user.change_hold_pickup(hold, $event)">
+                <ion-select-option *ngFor="let loc of globals.pickup_locations" [value]="loc.code">
+                  {{ loc.name }}
                 </ion-select-option>
               </ion-select>
             </p>
@@ -44,14 +44,14 @@
         </ion-row>
         <ion-row>
           <ion-col size="4">
-            <ion-button expand="full" *ngIf="hold.hold_status == 'Suspended'" (click)="user.activate_hold(hold.hold_id)">Activate</ion-button>
-            <ion-button expand="full" *ngIf="hold.hold_status != 'Suspended' && !hold.queue_status.startsWith('Ready')" (click)="user.suspend_hold(hold.hold_id)">Suspend</ion-button>
+            <ion-button expand="full" *ngIf="hold.hold_status == 'Suspended'" (click)="user.manage_hold(hold, 'activate')">Activate</ion-button>
+            <ion-button expand="full" *ngIf="hold.hold_status != 'Suspended' && !hold.queue_status.startsWith('Ready')" (click)="user.manage_hold(hold, 'suspend')">Suspend</ion-button>
           </ion-col>
           <ion-col size="4">
             <ion-button expand="full" (click)='item.details(hold)'>Details</ion-button>
           </ion-col>
           <ion-col size="4">
-            <ion-button expand="full" (click)="this.cancel_hold(hold.hold_id, hold.title)">Cancel</ion-button>
+            <ion-button expand="full" (click)="user.cancel_hold(hold)">Cancel</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
