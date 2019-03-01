@@ -19,8 +19,8 @@
 <ion-content>
   <ion-grid>
     <ion-row *ngIf="!user.logged_in">
-      <ion-col size="12">
-        <ion-img [src]="globals.logo_url"></ion-img>
+      <ion-col size="12" text-center>
+        <ion-img [src]="globals.logo_url" style="max-width: 420px;margin:18px auto;"></ion-img>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="user.logged_in">
