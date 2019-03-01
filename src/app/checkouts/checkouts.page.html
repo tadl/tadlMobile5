@@ -16,29 +16,37 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ng-cloak">
-  <ion-button *ngIf="user.checkouts.length > 0" expand="full" (click)="user.renew_all()">Renew All</ion-button>
-  <ion-card *ngFor="let checkout of user.checkouts">
-    <h2 margin-horizontal [innerHTML]="checkout.title"></h2>
-    <ion-card-content>
-      <img [src]="this.globals.catalog_covers_medium + checkout.id" float-left padding-end padding-bottom style="width: 35%;">
-      <p><strong>{{ checkout.author }}</strong></p>
-      <p>
-        <span>Due </span>
-        <span [innerHTML]="checkout.due_date"></span>
-      </p>
-      <p><span *ngIf="checkout.renew_attempts == 0">No </span><span *ngIf="checkout.renew_attempts > 0">{{ checkout.renew_attempts }} </span>Renewal<span *ngIf="(checkout.renew_attempts > 1) || (checkout.renew_attempts == 0)">s</span> remaining</p>
-      <p>Barcode: {{ checkout.barcode }}</p>
-      <ion-grid style="clear: both;">
-        <ion-row>
-          <ion-col size="6">
-            <ion-button expand="full" (click)='item.details(checkout)'>Details</ion-button>
-          </ion-col>
-          <ion-col size="6">
-            <ion-button expand="full" [disabled]="checkout.renew_attempts == 0" color="secondary" (click)='user.renew(checkout.checkout_id)'>Renew</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+<ion-content>
+  <div *ngIf="user.checkouts.length > 0">
+    <ion-button *ngIf="user.checkouts.length > 0" expand="full" (click)="user.renew_all()">Renew All</ion-button>
+    <ion-card *ngFor="let checkout of user.checkouts" no-margin>
+      <h2 margin-horizontal [innerHTML]="checkout.title"></h2>
+      <ion-card-content>
+        <img [src]="this.globals.catalog_covers_medium + checkout.id" float-left padding-end padding-bottom style="width: 35%;">
+        <p><strong>{{ checkout.author }}</strong></p>
+        <p>
+          <span>Due </span>
+          <span [innerHTML]="checkout.due_date"></span>
+        </p>
+        <p><span *ngIf="checkout.renew_attempts == 0">No </span><span *ngIf="checkout.renew_attempts > 0">{{ checkout.renew_attempts }} </span>Renewal<span *ngIf="(checkout.renew_attempts > 1) || (checkout.renew_attempts == 0)">s</span> remaining</p>
+        <p>Barcode: {{ checkout.barcode }}</p>
+        <ion-grid style="clear: both;">
+          <ion-row>
+            <ion-col size="6">
+              <ion-button expand="full" (click)='item.details(checkout)'>Details</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button expand="full" [disabled]="checkout.renew_attempts == 0" color="secondary" (click)='user.renew(checkout.checkout_id)'>Renew</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="user.checkouts.length == 0 && user.checkout_count > 0">
+    <p margin>Checkouts are loading. Hang tight!</p><!-- TODO: wording/design -->
+  </div>
+  <div *ngIf="user.checkout_count == 0">
+    <p margin>You have no items checked out.</p>
+  </div>
 </ion-content>
