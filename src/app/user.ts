@@ -144,7 +144,7 @@ export class User {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
-    var url = this.globals.catalog_checkouts_url;
+    let url = this.globals.catalog_checkouts_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['checkouts'] && data['user']) {
@@ -155,6 +155,42 @@ export class User {
       (err) => {
         this.toast.present(this.globals.server_error_msg);
       });
+  }
+
+/*       format.json {render :json =>{:user => @user, :message => @message, :errors => @errors,
+                          :checkouts => @checkouts}}
+                          */
+  renew(cid) {
+    let url = this.globals.catalog_renew_url;
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("checkout_ids", cid)
+      .set("v", "5");
+    this.loading.present('Renewing...');
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        this.loading.dismiss();
+        if (data['errors'].length == 0 && data['checkouts'] && data['user']) {
+          this.checkouts = data['checkouts'];
+          this.toast.present(data['message']);
+        } else if (data['checkouts'] && data['user']) {
+          this.checkouts = data['checkouts'];
+          let message = data['message'] + ': ';
+          data['errors'].forEach(function(val) {
+            message += val['title'] + ': ' + val['message'];
+          });
+          this.toast.present(message);
+
+        } else {
+          // TODO token is expired
+        }
+      });
+  }
+  renew_all() {
+    let url = this.globals.catalog_renew_url;
+    let ids = [];
+    this.checkouts.forEach(function(item) { ids.push(item.checkout_id); });
+    this.renew(ids.join());
   }
 
   place_hold() {
