@@ -11,11 +11,9 @@ export class ToastService {
   ) { }
 
   async present(message = "Acknowledged.", duration?) {
-    let toast_duration = '';
+    let toast_duration = 0;
     if (duration) {
       toast_duration = duration;
-    } else {
-      toast_duration = 0;
     }
     const toast = await this.toastController.create({
       message: message,

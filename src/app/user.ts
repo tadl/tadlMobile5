@@ -155,9 +155,6 @@ export class User {
       });
   }
 
-/*       format.json {render :json =>{:user => @user, :message => @message, :errors => @errors,
-                          :checkouts => @checkouts}}
-                          */
   renew(cid) {
     let url = this.globals.catalog_renew_url;
     let params = new HttpParams()
@@ -184,10 +181,11 @@ export class User {
         }
       });
   }
+
   renew_all() {
     let url = this.globals.catalog_renew_url;
     let ids = [];
-    this.checkouts.forEach(function(item) { ids.push(item.checkout_id); });
+    this.checkouts.forEach(function(item) { ids.push(item['checkout_id']); });
     this.renew(ids.join());
   }
 
@@ -215,6 +213,10 @@ export class User {
         this.toast.present(this.globals.server_error_msg);
       });
   }
+
+/*   public catalog_holds_manage_url: string = this.catalog_api_base + '/manage_hold.json';
+  public catalog_change_hold_pickup_url: string = this.catalog_api_base + '/change_hold_pickup.json';
+  */
 
 
 
