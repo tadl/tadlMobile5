@@ -140,6 +140,23 @@ export class User {
       });
   }
 
+  get_checkouts() {
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("v", "5");
+    var url = this.globals.catalog_checkouts_url;
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        if (data['checkouts'] && data['user']) {
+          this.checkouts = data['checkouts'];
+        } else {
+        }
+      },
+      (err) => {
+        this.toast.present(this.globals.server_error_msg);
+      });
+  }
+
   place_hold() {
   }
 }
