@@ -43,8 +43,6 @@ export class User {
   melcat_id: string;
   holds: Array<{any}> = [];
   checkouts: Array<{any}> = [];
-  checkout_messages: string;
-  checkout_errors: Array<{any}> = [];
   greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
 
   login(auto = false) {
@@ -193,6 +191,32 @@ export class User {
     this.renew(ids.join());
   }
 
-  place_hold() {
+  place_hold(id) {
   }
+
+  get_holds(ready = false) {
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("v", "5");
+    if (ready == true) {
+      var url = this.globals.catalog_holds_pickup_url;
+    } else {
+      var url = this.globals.catalog_holds_url;
+    }
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        if (data['holds'] && data['user']) {
+          this.holds = data['holds'];
+        } else {
+          //need to handle when token has expired
+        }
+      },
+      (err) => {
+        this.toast.present(this.globals.server_error_msg);
+      });
+  }
+
+
+
+
 }

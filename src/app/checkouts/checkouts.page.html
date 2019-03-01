@@ -18,14 +18,6 @@
 
 <ion-content class="ng-cloak">
   <ion-button *ngIf="user.checkouts.length > 0" expand="full" (click)="user.renew_all()">Renew All</ion-button>
-  <ion-card *ngIf="user.checkout_errors.length > 0">
-    <ion-card-content class="warning">
-      <ion-row *ngFor='let error of user.checkout_errors'>
-        <ion-col>Unable to renew {{error.title}}. {{error.message}}</ion-col>
-      </ion-row>
-    </ion-card-content>
-    <ion-button expand="full" fill="clear" (click)="user.clear_checkout_errors()">Clear Messages</ion-button>
-  </ion-card>
 
   <ion-card *ngFor="let checkout of user.checkouts">
     <ion-card-header><ion-card-title>{{checkout.title}}</ion-card-title></ion-card-header>
