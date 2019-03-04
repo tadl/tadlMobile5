@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, MenuController } from '@ionic/angular';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -16,6 +16,7 @@ export class ItemDetailPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
+    private menu: MenuController,
     public globals: Globals,
     public user: User,
   ) { }

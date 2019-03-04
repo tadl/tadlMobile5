@@ -29,6 +29,7 @@ export class SearchPage implements OnInit {
   ) { }
 
   query: string;
+  prev_query: string = "";
   type: string = "keyword";
   sort: string = this.globals.sort_options[0][1];
   format: string = "All Formats";
@@ -43,7 +44,12 @@ export class SearchPage implements OnInit {
 
   get_results(page?) {
     if (!this.query) { return; }
-    if (!page) { this.page = 0; }
+    if (!page || this.query != this.prev_query) {
+      this.page = 0;
+      if (this.infinite && this.infinite.target.disabled == true) {
+        this.infinite.target.disabled = false;
+      }
+    }
     let params = new HttpParams()
       .set("v", "5")
       .set("type", this.type)
@@ -55,6 +61,7 @@ export class SearchPage implements OnInit {
       .set("limit_available", this.limit_available.toString())
       .set("fmt", this.format);
     var url = this.globals.catalog_search_url;
+    this.prev_query = this.query;
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['results']) {
