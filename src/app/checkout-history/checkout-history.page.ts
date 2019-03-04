@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { IonInfiniteScroll, Events } from '@ionic/angular';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -11,6 +11,7 @@ import { Item } from '../item';
   styleUrls: ['./checkout-history.page.scss'],
 })
 export class CheckoutHistoryPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor(
     public globals: Globals,

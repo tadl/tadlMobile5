@@ -61,9 +61,9 @@ export class SearchPage implements OnInit {
       .set("limit_available", this.limit_available.toString())
       .set("fmt", this.format);
     var url = this.globals.catalog_search_url;
-    this.prev_query = this.query;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.prev_query = this.query;
         if (data['results']) {
           if (data['type']) { this.type = data['type']; }
           if (this.loading_more == true) {
@@ -80,7 +80,7 @@ export class SearchPage implements OnInit {
             this.loading_more = false;
           } else {
           }
-          // TODO: need to handle when token has expired (but actually token isn't required for this)
+          this.toast.present(this.globals.server_error_msg);
         }
       },
       (err) => {

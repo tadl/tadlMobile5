@@ -44,6 +44,9 @@ export class User {
   holds: Array<{any}> = [];
   checkouts: Array<{any}> = [];
   checkout_history: Array<{any}> = [];
+  checkout_history_page: string = "0";
+  checkout_history_loading_more: boolean = false;
+  checkout_history_infinite: any;
   greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
 
   update_user_object(data) {
@@ -165,20 +168,46 @@ export class User {
       });
   }
 
+  get_more_checkout_history(infiniteScroll) {
+    this.checkout_history_page++;
+    this.checkout_history_loading_more = true;
+    this.checkout_history_infinite = infiniteScroll;
+    this.get_checkout_history(this.checkout_history_page);
+  }
+
   get_checkout_history(page?) {
-    if (!page) { var checkouts_page = "0"; }
+    if (!page) { this.checkout_history_page = "0"; }
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5")
-      .set("page", checkouts_page);
+      .set("page", this.checkout_history_page);
     let url = this.globals.catalog_checkout_history_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['user'] && data['checkouts']) {
-          this.checkout_history = data['checkouts'];
+          if (this.checkout_history_loading_more == true) {
+            this.checkout_history.push.apply(this.checkout_history, data['checkouts']);
+            this.checkout_history_infinite.target.complete();
+            this.checkout_history_loading_more = false;
+            if (data['more_results'] == "false") { this.checkout_history_infinite.target.disabled = true; }
+          } else {
+            this.checkout_history = data['checkouts'];
+          }
+        } else {
+          if (this.checkout_history_loading_more == true) {
+            this.checkout_history_infinite.target.complete();
+            this.checkout_history_loading_more = false;
+          } else {
+          }
+          this.toast.present(this.globals.server_error_msg);
         }
       },
       (err) => {
+        if (this.checkout_history_loading_more == true) {
+          this.checkout_history_infinite.target.complete();
+          this.checkout_history_loading_more = false;
+        } else {
+        }
         this.toast.present(this.globals.server_error_msg);
       });
   }
