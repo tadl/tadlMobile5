@@ -113,7 +113,27 @@ export class User {
     });
   }
 
-  logout() {
+  async logout() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Please confirm",
+      buttons: [{
+        text: 'Log Out',
+        role: 'destructive',
+        handler: () => {
+          this.actually_logout();
+        }
+      }, {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('nevermind');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  actually_logout() {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -132,6 +152,8 @@ export class User {
           this.fines = '';
           this.card = '';
           this.overdue = '';
+          this.melcat_id = '';
+          this.fines_exist = false;
           this.default_pickup = '';
           this.holds = [];
           this.checkouts = [];
