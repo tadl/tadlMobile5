@@ -1,6 +1,6 @@
 import { Globals } from './globals';
 import { Component, ViewChild } from '@angular/core';
-import { Events, ActionSheetController } from '@ionic/angular';
+import { Events, ActionSheetController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -18,6 +18,7 @@ export class User {
     public loading: LoadingService,
     public toast: ToastService,
     public actionSheetController: ActionSheetController,
+    public alertController: AlertController,
     private http: HttpClient,
     private storage: Storage,
   ) {
@@ -263,7 +264,55 @@ export class User {
     this.renew(ids.join());
   }
 
-  place_hold(id) {
+  place_hold(id, force?) {
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("id", id)
+      .set("v", "5");
+    if (force) { params.append("force", "true"); }
+
+    let url = this.globals.catalog_place_hold_url;
+    this.loading.present('Placing hold...');
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        this.loading.dismiss();
+        console.log(data);
+        if (data['user'] && data['hold']) {
+          if (data['hold']['need_to_force'] == true) {
+            this.force_needed(data['hold']['id'], data['hold']['error']);
+          } else if (data['hold']['error']) {
+            this.toast.present(data['hold']['error'] + ' : ' + data['hold']['confirmation']);
+          } else {
+            this.toast.present(data['hold']['confirmation']);
+            this.update_user_object(data['user']);
+          }
+        } else {
+          // TODO handle expired token
+        }
+      },
+      (err) => {
+        this.loading.dismiss();
+        this.toast.present(this.globals.server_error_msg);
+      });
+  }
+
+  async force_needed(id, error) {
+    const alert = await this.alertController.create({
+      header: 'Force hold?',
+      message: error,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }, {
+          text: 'Force Hold',
+          handler: () => {
+            this.place_hold(id, true);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   get_holds(ready = false) {

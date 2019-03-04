@@ -30,6 +30,7 @@ export class Globals {
 
   public catalog_login_url: string = this.catalog_api_base + '/login.json';
   public catalog_logout_url: string = this.catalog_api_base + '/logout.json';
+  public catalog_place_hold_url: string = this.catalog_api_base + '/place_hold.json';
   public catalog_holds_url: string = this.catalog_api_base + '/holds.json';
   public catalog_holds_pickup_url: string = this.catalog_api_base + '/holds_pickup.json';
   public catalog_checkouts_url: string = this.catalog_api_base + '/checkouts.json';
