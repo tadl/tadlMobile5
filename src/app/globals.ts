@@ -112,6 +112,21 @@ export class Globals {
     'Video Games',
   ]
 
+  /* Format type icons */
+  item_type = new Map<string, string>([
+    ['text', 'book'],
+    ['notated music', 'musical-notes'],
+    ['cartographic', 'map'],
+    ['moving image', 'film'],
+    ['sound recording-nonmusical', 'disc'],
+    ['sound recording-musical', 'disc'],
+    ['still image', 'image'],
+    ['software, multimedia', 'document'],
+    ['kit', 'briefcase'],
+    ['mixed-material', 'briefcase'],
+    ['three dimensional object', 'archive']
+  ]);
+
   /* Sort Options */
   public sort_options: Array<string[]> = [
     ['Relevance', 'relevance'],
@@ -120,8 +135,6 @@ export class Globals {
     ['Title A to Z', 'titleAZ'],
     ['Title Z to A', 'titleZA'] 
   ]
-
-
 
   /* FUNctions */
 

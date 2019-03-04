@@ -11,7 +11,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12">
-        <h2 class="detatil-title"><!-- TODO: ionicon for format --> {{ item.title_display }}</h2>
+        <h2 class="detatil-title"><ion-icon [name]="this.globals.item_type.get(item.type_of_resource)" size="large"></ion-icon> {{ item.title_display }}</h2>
       </ion-col>
     </ion-row>
     <ion-row>
