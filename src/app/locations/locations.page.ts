@@ -57,7 +57,6 @@ export class LocationsPage implements OnInit {
 
   ngOnInit() {
     this.get_locations();
-    console.log(this.globals.day_today().toLowerCase());
   }
 
 }
