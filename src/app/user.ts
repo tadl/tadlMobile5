@@ -265,12 +265,11 @@ export class User {
   }
 
   place_hold(id, force?) {
-    let params = new HttpParams()
+    var params = new HttpParams()
       .set("token", this.token)
       .set("id", id)
       .set("v", "5");
-    if (force) { params.append("force", "true"); }
-
+    if (force) { params = params.append("force", "true"); }
     let url = this.globals.catalog_place_hold_url;
     this.loading.present('Placing hold...');
     this.http.get(url, {params: params})
@@ -307,7 +306,7 @@ export class User {
         }, {
           text: 'Force Hold',
           handler: () => {
-            this.place_hold(id, true);
+            this.place_hold(id, "true");
           }
         }
       ]
