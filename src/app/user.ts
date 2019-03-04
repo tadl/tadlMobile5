@@ -44,7 +44,7 @@ export class User {
   holds: Array<{any}> = [];
   checkouts: Array<{any}> = [];
   checkout_history: Array<{any}> = [];
-  checkout_history_page: string = "0";
+  checkout_history_page: any = 0;
   checkout_history_loading_more: boolean = false;
   checkout_history_infinite: any;
   greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
