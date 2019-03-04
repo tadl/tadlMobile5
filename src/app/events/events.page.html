@@ -18,8 +18,19 @@
 
 <ion-content>
 
-  <div *ngIf="!this.events">
-    Events aren't loaded yet.
+  <div *ngIf="!this.events" text-center>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-icon name="calendar" class="heading"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text>Loading Events...</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
   <ion-list *ngIf="this.events">

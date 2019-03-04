@@ -18,8 +18,19 @@
 
 <ion-content>
 
-  <div *ngIf="!this.news">
-    News posts aren't loaded yet.
+  <div *ngIf="!this.news" text-center>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-icon name="megaphone" class="heading"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text>Loading News...</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
   <ion-list *ngIf="this.news">
