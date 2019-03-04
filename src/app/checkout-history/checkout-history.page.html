@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="!user.checkout_history">
+  <div *ngIf="user.checkout_history.length == 0" padding>
     Checkout History is not yet loaded, or unavailable.
   </div>
   <ion-list *ngIf="user.checkout_history">
