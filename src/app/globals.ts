@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { format, formatDistance, formatRelative, subDays, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 @Injectable()
 
@@ -137,6 +137,10 @@ export class Globals {
     } else if (fmt == "news") {
       return format(parseISO(str), 'LLLL do, h:mm a');
     }
+  }
+
+  day_today() {
+    return format(new Date(), 'EEEE');
   }
 
   original_image_from_thumbnail(url) {

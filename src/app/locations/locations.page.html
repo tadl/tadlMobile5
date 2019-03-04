@@ -17,51 +17,29 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let location of this.locations">
-    <img [src]="location.image">
-    <ion-card-title>
-      {{location.fullname}}
-    </ion-card-title>
-    <div style="margin-top: 8px;">
-      <ion-text>{{location.address}}</ion-text>
-    </div>
-    <div>
-      <ion-text>{{location.citystatezip}}</ion-text>
-    </div>
-    <p>
-      <ion-text text-center>
-        <a href="tel:{{location.phone}}">{{location.phone}}</a> &bull; <a href="mailto:{{location.email}}">{{location.email}}</a>
-      </ion-text>
-    </p>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="5">Sunday</ion-col>
-        <ion-col size="7">{{location.sunday}}</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="5">Monday</ion-col>
-        <ion-col size="7">{{location.monday}}</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="5">Tuesday</ion-col>
-        <ion-col size="7">{{location.tuesday}}</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="5">Wednesday</ion-col>
-        <ion-col size="7">{{location.wednesday}}</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="5">Thursday</ion-col>
-        <ion-col size="7">{{location.thursday}}</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="5">Friday</ion-col>
-        <ion-col size="7">{{location.friday}}</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="5">Saturday</ion-col>
-        <ion-col size="7">{{location.saturday}}</ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+
+  <div *ngIf="!this.locations">
+  Locations aren't loaded yet.
+  </div>
+
+  <ion-list *ngIf="this.locations">
+    <ion-item *ngFor="let location of this.locations" (click)="view_details(location)" detail="true" lines="full">
+      <ion-thumbnail slot="start" *ngIf="location.image">
+        <ion-img [src]="location.image"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <ion-text>
+          <h2 [innerHTML]="location.fullname"></h2>
+        </ion-text>
+        <ion-text>
+          <p *ngIf="location[this.globals.day_today().toLowerCase()]=='Closed'">Closed today</p>
+          <p *ngIf="location[this.globals.day_today().toLowerCase()]!='Closed'">Open {{ location[this.globals.day_today().toLowerCase()] }} today</p>
+        </ion-text>
+        <ion-text color="medium">
+          <p>{{ location.address }}, {{ location.citystatezip }}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
