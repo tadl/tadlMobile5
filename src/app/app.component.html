@@ -58,6 +58,9 @@
               <ion-label>Holds</ion-label>
               <ion-badge slot="end">{{user.holds_count}}</ion-badge>
             </ion-item>
+            <ion-item routerDirection="root" routerLink="/checkout-history" detail="true">
+              <ion-label>Checkout History</ion-label>
+            </ion-item>
           </ion-menu-toggle>
         </ion-list>
         <ion-button expand="full" color="success" (click)="view_card();"><ion-ripple-effect></ion-ripple-effect>View Card</ion-button>

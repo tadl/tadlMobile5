@@ -92,6 +92,7 @@
           <span *ngIf="!result.electronic">{{ result.availability.copies_all_available }} available</span> &bull;
           <span *ngIf="!result.electronic">{{ result.holdings[0].call_number }}</span>
           <span *ngIf="result.electronic">Electronic resource from {{ result.source }}</span>
+        </p>
       </ion-text>
     </ion-label>
   </ion-item>

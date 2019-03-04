@@ -12,7 +12,6 @@ import { ToastService } from './services/toast/toast.service';
 })
 
 export class User {
-  pages = {};
   constructor(
     public globals: Globals,
     public events: Events,
@@ -44,6 +43,7 @@ export class User {
   melcat_id: string;
   holds: Array<{any}> = [];
   checkouts: Array<{any}> = [];
+  checkout_history: Array<{any}> = [];
   greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
 
   update_user_object(data) {
@@ -162,6 +162,24 @@ export class User {
       },
       (err) => {
         this.logout_error = this.globals.server_error_msg;
+      });
+  }
+
+  get_checkout_history(page?) {
+    if (!page) { var checkouts_page = "0"; }
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("v", "5")
+      .set("page", checkouts_page);
+    let url = this.globals.catalog_checkout_history_url;
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        if (data['user'] && data['checkouts']) {
+          this.checkout_history = data['checkouts'];
+        }
+      },
+      (err) => {
+        this.toast.present(this.globals.server_error_msg);
       });
   }
 

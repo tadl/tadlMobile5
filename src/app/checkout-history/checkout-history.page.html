@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="left"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Checkout History
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-toggle menu="right">
+        <ion-button>
+          <ion-icon slot="icon-only" name="contact"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!user.checkout_history">
+    Checkout History is not yet loaded, or unavailable.
+  </div>
+  <ion-list *ngIf="user.checkout_history">
+    <ion-item *ngFor="let checkout of user.checkout_history" (click)="item.details(checkout)">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="globals.catalog_covers_medium + checkout.id"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <ion-text>
+          <h2 [innerHTML]="checkout.title_display"></h2>
+        </ion-text>
+        <ion-text>
+          <p [innerHTML]="checkout.author_brief"></p>
+        </ion-text>
+        <ion-text>
+          <p>
+            <span *ngIf="checkout.checkout_date">Checked out {{ checkout.checkout_date }}</span>
+            <span *ngIf="checkout.return_date != '*'">, Returned {{ checkout.return_date }}</span>
+            <span *ngIf="checkout.due_date && checkout.return_date == '*'">, Due {{ checkout.due_date }}</span>
+          </p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

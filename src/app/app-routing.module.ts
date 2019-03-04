@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'item-detail', loadChildren: './item-detail/item-detail.module#ItemDetailPageModule' },
   { path: 'card', loadChildren: './card/card.module#CardPageModule' },
   { path: 'fines', loadChildren: './fines/fines.module#FinesPageModule' },
-  { path: 'location-detail', loadChildren: './location-detail/location-detail.module#LocationDetailPageModule' }
+  { path: 'location-detail', loadChildren: './location-detail/location-detail.module#LocationDetailPageModule' },
+  { path: 'checkout-history', loadChildren: './checkout-history/checkout-history.module#CheckoutHistoryPageModule' }
 ];
 
 @NgModule({
