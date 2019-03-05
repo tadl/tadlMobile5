@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Events, ModalController, MenuController } from '@ionic/angular';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -15,24 +14,12 @@ export class ItemDetailPage implements OnInit {
   items: string;
 
   constructor(
-    private modalController: ModalController,
-    private menu: MenuController,
-    public events: Events,
     public globals: Globals,
     public user: User,
   ) { }
 
   ngOnInit() {
     this.items = this.item.availability.copies_all_available > 0 ? 'Available' : 'All Copies';
-  }
-
-  async login_and_place_hold(id) {
-    const onClosedData: string = "Wrapped up!";
-    await this.modalController.dismiss(onClosedData);
-    this.globals.open_account_menu();
-    this.events.subscribe('logged_in', () => {
-      this.user.place_hold(id)
-    });
   }
 
   showContents(item) {

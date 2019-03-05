@@ -22,14 +22,13 @@ export class LoadingService {
       duration: 5000,
     }).then(a => {
       a.present().then(() => {
-        console.log('presented');
       });
     });
   }
 
   async dismiss() {
     this.isLoading--;
-    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+    return await this.loadingController.dismiss().then(() => { });
   }
 
 }

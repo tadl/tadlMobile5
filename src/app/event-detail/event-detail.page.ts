@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 
 import { Globals } from '../globals';
 
@@ -13,16 +12,10 @@ export class EventDetailPage implements OnInit {
   event: any;
 
   constructor(
-    private modalController: ModalController,
     public globals: Globals,
   ) { }
 
   ngOnInit() {
-  }
-
-  async closeModal() {
-    const onClosedData: string = "Wrapped up!";
-    await this.modalController.dismiss(onClosedData);
   }
 
 }

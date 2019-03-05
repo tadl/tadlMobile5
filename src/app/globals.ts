@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { ModalController, MenuController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 
 @Injectable()
 
 export class Globals {
-  constructor(private menu: MenuController) { }
+  constructor(
+    private menuController: MenuController,
+    private modalController: ModalController,
+  ) { }
 
   /* customizable variables */
   /* basic information */
@@ -182,7 +185,13 @@ export class Globals {
 
   /* opens account menu */
   open_account_menu() {
-    this.menu.open('right');
+    this.menuController.open('right');
   }
+
+  async close_modal() {
+    const onClosedData: string = "Wrapped up!";
+    await this.modalController.dismiss(onClosedData);
+  }
+
 
 }

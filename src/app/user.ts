@@ -1,6 +1,6 @@
 import { Globals } from './globals';
 import { Component, ViewChild } from '@angular/core';
-import { Events, ActionSheetController, AlertController } from '@ionic/angular';
+import { Events, ModalController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -19,6 +19,7 @@ export class User {
     public toast: ToastService,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public modalController: ModalController,
     private http: HttpClient,
     private storage: Storage,
   ) {
@@ -264,6 +265,15 @@ export class User {
     let ids = [];
     this.checkouts.forEach(function(item) { ids.push(item['checkout_id']); });
     this.renew(ids.join());
+  }
+
+  async login_and_place_hold(id) {
+    const onClosedData: string = "Wrapped up!";
+    await this.modalController.dismiss(onClosedData);
+    this.globals.open_account_menu();
+    this.events.subscribe('logged_in', () => {
+      this.place_hold(id)
+    });
   }
 
   place_hold(id, force?) {

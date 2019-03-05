@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 
 import { Globals } from '../globals';
 
@@ -11,16 +10,10 @@ import { Globals } from '../globals';
 export class CardPage implements OnInit {
 
   constructor(
-    private modalController: ModalController,
     public globals: Globals,
   ) { }
 
   ngOnInit() {
-  }
-
-  async closeModal() {
-    const onClosedData: string = "Wrapped up!";
-    await this.modalController.dismiss(onClosedData);
   }
 
 }
