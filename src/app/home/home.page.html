@@ -34,12 +34,12 @@
         </p>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col size="12">
+    <ion-row class="searchbox">
+      <ion-col size="12" class="searchbox">
         <form action=".">
-          <ion-item lines="none">
-            <ion-searchbar (search)="this.search()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Books, Movies, Music..." debounce="100"></ion-searchbar>
-            <ion-button color="primary" size="default" slot="end" expand="full" (click)="this.search()">Go!</ion-button>
+          <ion-item lines="none" class="searchbox">
+            <ion-searchbar (search)="this.search()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Search" debounce="100" class="searchbox-left"></ion-searchbar>
+            <ion-button color="primary" size="default" slot="end" expand="full" (click)="this.search()" class="searchbox-right">Go!</ion-button>
           </ion-item>
         </form>
       </ion-col>
