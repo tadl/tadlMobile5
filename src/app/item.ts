@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
 
 import { Globals } from './globals';
@@ -13,11 +14,14 @@ import { ItemDetailPage } from './item-detail/item-detail.page';
 
 export class Item {
 
+  featured: any;
+
   constructor(
     public modalController: ModalController,
     public globals: Globals,
     public loading: LoadingService,
     public toast: ToastService,
+    private http: HttpClient,
   ) { }
 
   async details(item) {
@@ -33,6 +37,22 @@ export class Item {
       }
     });
     return await modal.present();
+  }
+
+  get_featured() {
+    let params = new HttpParams()
+      .set("compact", "true");
+    let url = this.globals.catalog_featured_url;
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        if (data['featured_items']) {
+          this.featured = data['featured_items'];
+        }
+      },
+      (err) => {
+        this.loading.dismiss();
+        this.toast.present(this.globals.server_error_msg);
+      });
   }
 
 }

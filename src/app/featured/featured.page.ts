@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Globals } from '../globals';
+import { Item } from '../item';
+import { User } from '../user';
+
 @Component({
   selector: 'app-featured',
   templateUrl: './featured.page.html',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeaturedPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public globals: Globals,
+    public item: Item,
+    public user: User,
+  ) { }
 
   ngOnInit() {
+    if (!this.item.featured) {
+      this.item.get_featured();
+    }
   }
 
 }
