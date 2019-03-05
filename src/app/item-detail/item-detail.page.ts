@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, MenuController } from '@ionic/angular';
+import { Events, ModalController, MenuController } from '@ionic/angular';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -17,6 +17,7 @@ export class ItemDetailPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private menu: MenuController,
+    public events: Events,
     public globals: Globals,
     public user: User,
   ) { }
@@ -25,9 +26,13 @@ export class ItemDetailPage implements OnInit {
     this.items = this.item.availability.copies_all_available > 0 ? 'Available' : 'All Copies';
   }
 
-  async closeModal() {
+  async login_and_place_hold(id) {
     const onClosedData: string = "Wrapped up!";
     await this.modalController.dismiss(onClosedData);
+    this.globals.open_account_menu();
+    this.events.subscribe('logged_in', () => {
+      this.user.place_hold(id)
+    });
   }
 
   showContents(item) {
@@ -39,6 +44,7 @@ export class ItemDetailPage implements OnInit {
     }
     return output;
   }
+
   showAbstract(item) {
     var output = '';
     if (item.abstract_array[1] == null) {
@@ -48,6 +54,5 @@ export class ItemDetailPage implements OnInit {
     }
     return output;
   }
-
 
 }

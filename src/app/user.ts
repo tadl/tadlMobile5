@@ -283,7 +283,7 @@ export class User {
           } else if (data['hold']['error']) {
             this.toast.present(data['hold']['error'] + ' : ' + data['hold']['confirmation']);
           } else {
-            this.toast.present(data['hold']['confirmation']);
+            this.toast.present(data['hold']['confirmation'], 5000);
             this.update_user_object(data['user']);
           }
         } else {
