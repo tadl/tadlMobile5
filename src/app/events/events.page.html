@@ -44,6 +44,14 @@
 
   <ion-list *ngIf="this.events">
 
+    <ion-item *ngIf="globals.multi_location == true">
+      <ion-label class="location-label">Location</ion-label>
+      <ion-select [(ngModel)]="location" interface="popover" (ionChange)="get_events(1, location)" class="location-select">
+        <ion-select-option value="">All Locations</ion-select-option>
+        <ion-select-option *ngFor="let venue of globals.event_venues" [value]="venue.venue">{{ venue.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <ion-item *ngFor="let event of this.events" (click)="view_details(event)" detail="true">
       <ion-thumbnail slot="start" *ngIf="event.image && event.image.extension != 'pdf'">
         <ion-img [src]="event.image.sizes.thumbnail.url"></ion-img>

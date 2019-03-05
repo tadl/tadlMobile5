@@ -5,6 +5,7 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 import { Globals } from '../globals';
 
 import { ToastService } from '../services/toast/toast.service';
+import { LoadingService } from '../services/loading/loading.service';
 
 import { EventDetailPage } from '../event-detail/event-detail.page';
 
@@ -20,6 +21,7 @@ export class EventsPage implements OnInit {
   url: string = this.globals.events_api_url;
   events: any;
   location: any = '';
+  location_previous: any = '';
   page: any = 1;
   loading_more: boolean = false;
   infinite: any;
@@ -27,13 +29,25 @@ export class EventsPage implements OnInit {
   constructor(
     public globals: Globals,
     public toast: ToastService,
+    public loading: LoadingService,
     public modalController: ModalController,
     private http: HttpClient,
   ) { }
 
+  refresh_events(event) {
+    this.get_events(1, null, event);
+    if (this.infinite) {
+      this.infinite.target.disabled = false;
+    }
+  }
 
   load_more_data(infiniteScroll) {
-    this.page++;
+    if (this.location == this.location_previous) {
+      this.page++;
+    } else {
+      this.page = 2;
+      this.location_previous = this.location;
+    }
     this.loading_more = true;
     this.infinite = infiniteScroll;
     this.get_events(this.page, this.location);
@@ -44,7 +58,10 @@ export class EventsPage implements OnInit {
       .set("page", page)
       .set("per_page", "20")
       .set("start_date", "now");
-    if (loc) { params.append("venue", loc); }
+    if (loc) { params = params.append("venue", loc); }
+    if (this.loading_more == false && this.infinite) {
+      this.infinite.target.disabled = false;
+    }
     this.http.get(this.url, {params: params})
       .subscribe(data => {
         if (refresher) { refresher.target.complete(); }
@@ -66,17 +83,14 @@ export class EventsPage implements OnInit {
           this.toast.present(this.globals.server_error_msg);
         }
       }, (err) => {
-        if (this.loading_more) {
+        if (this.infinite) {
           this.infinite.target.complete();
+          this.infinite.target.disabled = true;
           this.loading_more = false;
         } else {
         }
         this.toast.present(this.globals.server_error_msg);
       });
-  }
-
-  refresh_events(event) {
-    this.get_events(1, null, event);
   }
 
   async view_details(event) {
