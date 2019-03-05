@@ -39,7 +39,7 @@ export class EventsPage implements OnInit {
     this.get_events(this.page, this.location);
   }
 
-  get_events(page, loc?) {
+  get_events(page, loc?, refresher?) {
     let params = new HttpParams()
       .set("page", page)
       .set("per_page", "20")
@@ -47,6 +47,7 @@ export class EventsPage implements OnInit {
     if (loc) { params.append("venue", loc); }
     this.http.get(this.url, {params: params})
       .subscribe(data => {
+        if (refresher) { refresher.target.complete(); }
         if (data['events']) {
           if (this.loading_more) {
             this.events.push.apply(this.events, data['events']);
@@ -72,6 +73,10 @@ export class EventsPage implements OnInit {
         }
         this.toast.present(this.globals.server_error_msg);
       });
+  }
+
+  refresh_events(event) {
+    this.get_events(1, null, event);
   }
 
   async view_details(event) {

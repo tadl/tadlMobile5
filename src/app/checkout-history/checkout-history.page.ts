@@ -20,6 +20,10 @@ export class CheckoutHistoryPage implements OnInit {
     public item: Item,
   ) { }
 
+  refresh_checkout_history(event) {
+    this.user.get_checkout_history(0, event);
+  }
+
   ngOnInit() {
     if (this.user.token) {
       this.user.get_checkout_history();

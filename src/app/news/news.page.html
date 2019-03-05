@@ -18,6 +18,15 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="refresh_news($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="!this.news" text-center>
     <ion-grid>
       <ion-row>

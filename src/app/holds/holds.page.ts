@@ -20,6 +20,10 @@ export class HoldsPage implements OnInit {
   ) {
   }
 
+  refresh_holds(event) {
+    this.user.get_holds(false, event);
+  }
+
   ngOnInit() {
     if (this.user.token) {
       this.user.get_holds();

@@ -176,7 +176,7 @@ export class User {
     this.get_checkout_history(this.checkout_history_page);
   }
 
-  get_checkout_history(page?) {
+  get_checkout_history(page?, refresher?) {
     if (!page) { this.checkout_history_page = "0"; }
     let params = new HttpParams()
       .set("token", this.token)
@@ -185,6 +185,7 @@ export class User {
     let url = this.globals.catalog_checkout_history_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        if (refresher) { refresher.target.complete(); }
         if (data['user'] && data['checkouts']) {
           if (this.checkout_history_loading_more == true) {
             this.checkout_history.push.apply(this.checkout_history, data['checkouts']);
@@ -213,13 +214,14 @@ export class User {
       });
   }
 
-  get_checkouts() {
+  get_checkouts(refresher?) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_checkouts_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        if (refresher) { refresher.target.complete(); }
         if (data['checkouts'] && data['user']) {
           this.checkouts = data['checkouts'];
         } else {
@@ -314,7 +316,7 @@ export class User {
     await alert.present();
   }
 
-  get_holds(ready = false) {
+  get_holds(ready = false, refresher?) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -325,6 +327,7 @@ export class User {
     }
     this.http.get(url, {params: params})
       .subscribe(data => {
+        if (refresher) { refresher.target.complete(); }
         if (data['holds'] && data['user']) {
           this.holds = data['holds'];
         } else {

@@ -37,7 +37,7 @@ export class NewsPage implements OnInit {
     this.get_news(this.page);
   }
 
-  get_news(page) {
+  get_news(page, refresher?) {
     let params = new HttpParams()
       .set("page", page)
       .set("per_page", "20")
@@ -46,6 +46,7 @@ export class NewsPage implements OnInit {
 
     this.http.get(this.url, {params: params})
       .subscribe(data => {
+        if (refresher) { refresher.target.complete(); }
         if (data) {
           if (this.loading_more) {
             this.news.push.apply(this.news, data);
@@ -73,6 +74,10 @@ export class NewsPage implements OnInit {
           this.toast.present(this.globals.server_error_msg);
         }
       });
+  }
+
+  refresh_news(event) {
+    this.get_news(1, event);
   }
 
   async view_details(post) {

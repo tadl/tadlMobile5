@@ -20,6 +20,10 @@ export class CheckoutsPage implements OnInit {
   ) { 
   }
 
+  refresh_checkouts(event) {
+    this.user.get_checkouts(event);
+  }
+
   ngOnInit() {
     if (this.user.token) {
       this.user.get_checkouts();

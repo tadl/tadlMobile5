@@ -17,6 +17,16 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh_checkouts($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="user.checkouts.length > 0">
     <ion-button *ngIf="user.checkouts.length > 0" expand="full" (click)="user.renew_all()">Renew All</ion-button>
     <ion-card *ngFor="let checkout of user.checkouts" no-margin>

@@ -17,6 +17,16 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh_holds($event)">
+    <ion-refresher-content
+    pullingIcon="arrow-dropdown"
+    pullingText="Pull to refresh"
+    refreshingSpinner="circles"
+    refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="user.holds.length > 0">
     <ion-card *ngFor="let hold of this.user.holds" no-margin>
       <h2 margin-horizontal [innerHTML]="hold.title_display"></h2>
