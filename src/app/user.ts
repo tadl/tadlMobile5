@@ -249,6 +249,7 @@ export class User {
         if (refresher) { refresher.target.complete(); }
         if (data['checkouts'] && data['user']) {
           this.checkouts = data['checkouts'];
+          this.update_user_object(data['user']);
         } else {
           // TODO handle token expired
         }
@@ -364,6 +365,7 @@ export class User {
       .subscribe(data => {
         if (refresher) { refresher.target.complete(); }
         if (data['holds'] && data['user']) {
+          this.update_user_object(data['user']);
           if (ready == true) {
             this.holds_ready = data['holds'];
           } else {
