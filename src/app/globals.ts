@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 
 @Injectable()
 
 export class Globals {
-  constructor() { }
+  constructor(private menu: MenuController) { }
 
   /* customizable variables */
   /* basic information */
@@ -140,6 +141,7 @@ export class Globals {
 
   /* FUNctions */
 
+  /* date formatter */
   format_date(str, fmt?) {
     if (fmt == "event") {
       return format(parseISO(str), 'EEE LLLL do, h:mm a');
@@ -154,21 +156,23 @@ export class Globals {
     }
   }
 
+  /* returns today's date, for displaying hours today */
   day_today() {
     return format(new Date(), 'EEEE');
   }
 
+  /* used to display images on news detail pages */
   original_image_from_thumbnail(url) {
     return url.replace(/-150x150/, '');
   }
 
+  /* toggles for added content on item detail */
   show_more(id, type) {
     var div_to_hide = id + '-' + type;
     var div_to_show = div_to_hide + '-full';
     document.getElementById(div_to_show).setAttribute('style', 'display: block');
     document.getElementById(div_to_hide).setAttribute('style', 'display: none');
   }
-
   show_less(id, type) {
     var div_to_show = id + '-' + type
     var div_to_hide = div_to_show + '-full'
@@ -176,5 +180,9 @@ export class Globals {
     document.getElementById(div_to_hide).setAttribute("style", "display: none")
   }
 
+  /* opens account menu */
+  open_account_menu() {
+    this.menu.open('right');
+  }
 
 }

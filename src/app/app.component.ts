@@ -28,10 +28,6 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  open_account_menu() {
-    this.menu.open('right');
-  }
-
   async view_card() {
     const modal = await this.modalController.create({
       component: CardPage,

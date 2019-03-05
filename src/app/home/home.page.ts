@@ -21,12 +21,7 @@ export class HomePage {
 
   query: string;
 
-  open_account_menu() {
-    this.menu.open('right');
-  }
-
   search() {
-    console.log(this.query)
     if (this.query) {
       this.router.navigate(['/search', { query: this.query }]);
     }

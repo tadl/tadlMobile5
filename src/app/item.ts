@@ -21,7 +21,6 @@ export class Item {
   ) { }
 
   async details(item) {
-    console.log('show details for id: ', item.id);
     const modal = await this.modalController.create({
       component: ItemDetailPage,
       componentProps: {

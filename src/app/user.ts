@@ -277,7 +277,6 @@ export class User {
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.loading.dismiss();
-        console.log(data);
         if (data['user'] && data['hold']) {
           if (data['hold']['need_to_force'] == true) {
             this.force_needed(data['hold']['id'], data['hold']['error']);
