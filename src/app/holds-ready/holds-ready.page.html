@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="left"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Holds Ready for Pickup
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-toggle menu="right">
+        <ion-button>
+          <ion-icon slot="icon-only" name="contact"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh_holds_ready($event)">
+    <ion-refresher-content
+    pullingIcon="arrow-dropdown"
+    pullingText="Pull to refresh"
+    refreshingSpinner="circles"
+    refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="user.holds_ready.length > 0">
+    <ion-card *ngFor="let hold of this.user.holds_ready" no-margin>
+      <h2 margin-horizontal [innerHTML]="hold.title_display"></h2>
+      <ion-card-content>
+        <img [src]="this.globals.catalog_covers_medium + hold.id" float-left padding-end padding-bottom style="width: 35%">
+        <p><strong>{{ hold.author }}</strong></p>
+        <p *ngIf="hold.hold_status != ''">Position {{ hold.queue_state[0] }} in queue with {{ hold.queue_state[1] }} eligible cop<span *ngIf="hold.queue_state[1] > 1 || hold.queue_state[1] == 0">ies</span><span *ngIf="hold.queue_state[1] == 1">y</span></p>
+        <p *ngIf="globals.multi_location==true">Pickup location: {{ hold.pickup_location }}</p>
+        <p *ngIf="hold.hold_status != ''">Hold status:
+          <span *ngIf="hold.hold_status == 'Suspended'"><ion-text color="danger">{{ hold.hold_status }}</ion-text></span>
+          <span *ngIf="hold.hold_status == 'Active'"><ion-text color="success">{{ hold.hold_status }}<span *ngIf="hold.queue_status != ''"> - <ion-text color="primary">{{ hold.queue_status }}</ion-text></span></ion-text></span>
+        </p>
+        <p *ngIf="globals.multi_location==true && !hold.queue_status.startsWith('Ready')">
+          <ion-select class="full-width-select" interface="popover" placeholder="Change Pickup Location" (ionChange)="user.change_hold_pickup(hold, $event)">
+            <ion-select-option *ngFor="let loc of globals.pickup_locations" [value]="loc.code">
+              {{ loc.name }}
+            </ion-select-option>
+          </ion-select>
+        </p>
+        <ion-grid style="clear: both;">
+          <ion-row>
+            <ion-col size="4">
+              <ion-button expand="full" *ngIf="hold.hold_status == 'Suspended'" (click)="user.manage_hold(hold, 'activate')">Activate</ion-button>
+              <ion-button expand="full" *ngIf="hold.hold_status != 'Suspended' && !hold.queue_status.startsWith('Ready')" (click)="user.manage_hold(hold, 'suspend')">Suspend</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button expand="full" (click)='item.details(hold)'>Details</ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button expand="full" (click)="user.cancel_hold(hold)">Cancel</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="user.holds_ready.length == 0 && user.holds_ready_count > 0">
+    <p margin>Holds are loading. Hang tight!</p><!-- TODO: wording/design -->
+  </div>
+  <div *ngIf="user.holds_ready_count == 0">
+    <p margin>You have no holds ready for pickup.</p>
+  </div>
+</ion-content>

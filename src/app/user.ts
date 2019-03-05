@@ -33,7 +33,7 @@ export class User {
   ils_username: string;
   checkout_count: string;
   holds_count: string;
-  holds_ready: string;
+  holds_ready_count: string;
   overdue: string;
   fines: string;
   fines_exist: boolean = false;
@@ -44,6 +44,7 @@ export class User {
   logout_error: string;
   melcat_id: string;
   holds: Array<{any}> = [];
+  holds_ready: Array<{any}> = [];
   checkouts: Array<{any}> = [];
   checkout_history: Array<{any}> = [];
   checkout_history_page: any = 0;
@@ -57,7 +58,7 @@ export class User {
     this.full_name = data['full_name'];
     this.checkout_count = data['checkouts'];
     this.holds_count = data['holds'];
-    this.holds_ready = data['holds_ready'];
+    this.holds_ready_count = data['holds_ready'];
     this.fines = data['fines'];
     if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
     if (parseFloat(this.fines) == parseFloat('0.00')) { this.fines_exist = true; }
@@ -154,7 +155,7 @@ export class User {
           this.full_name = '';
           this.checkout_count = '';
           this.holds_count = '';
-          this.holds_ready = '';
+          this.holds_ready_count = '';
           this.fines = '';
           this.card = '';
           this.overdue = '';
@@ -341,7 +342,11 @@ export class User {
       .subscribe(data => {
         if (refresher) { refresher.target.complete(); }
         if (data['holds'] && data['user']) {
-          this.holds = data['holds'];
+          if (ready == true) {
+            this.holds_ready = data['holds'];
+          } else {
+            this.holds = data['holds'];
+          }
         } else {
           // TODO need to handle when token has expired
         }

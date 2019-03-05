@@ -58,6 +58,10 @@
               <ion-label>Holds</ion-label>
               <ion-badge slot="end">{{user.holds_count}}</ion-badge>
             </ion-item>
+            <ion-item routerDirection="root" routerLink="/holds-ready" detail="false" *ngIf="user.holds_ready_count > 0">
+              <ion-label>Holds Ready for Pickup</ion-label>
+              <ion-badge slot="end">{{user.holds_ready_count}}</ion-badge>
+            </ion-item>
             <ion-item routerDirection="root" routerLink="/checkout-history" detail="true">
               <ion-label>Checkout History</ion-label>
             </ion-item>

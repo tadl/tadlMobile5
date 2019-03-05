@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'card', loadChildren: './card/card.module#CardPageModule' },
   { path: 'fines', loadChildren: './fines/fines.module#FinesPageModule' },
   { path: 'location-detail', loadChildren: './location-detail/location-detail.module#LocationDetailPageModule' },
-  { path: 'checkout-history', loadChildren: './checkout-history/checkout-history.module#CheckoutHistoryPageModule' }
+  { path: 'checkout-history', loadChildren: './checkout-history/checkout-history.module#CheckoutHistoryPageModule' },
+  { path: 'holds-ready', loadChildren: './holds-ready/holds-ready.module#HoldsReadyPageModule' }
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 import { Globals } from '../globals';
@@ -6,11 +6,11 @@ import { User } from '../user';
 import { Item } from '../item';
 
 @Component({
-  selector: 'app-holds',
-  templateUrl: './holds.page.html',
-  styleUrls: ['./holds.page.scss'],
+  selector: 'app-holds-ready',
+  templateUrl: './holds-ready.page.html',
+  styleUrls: ['./holds-ready.page.scss'],
 })
-export class HoldsPage implements OnInit {
+export class HoldsReadyPage implements OnInit {
 
   constructor(
     public globals: Globals,
@@ -20,16 +20,16 @@ export class HoldsPage implements OnInit {
   ) {
   }
 
-  refresh_holds(event) {
-    this.user.get_holds(false, event);
+  refresh_holds_ready(event) {
+    this.user.get_holds(true, event);
   }
 
   ngOnInit() {
     if (this.user.token) {
-      this.user.get_holds();
+      this.user.get_holds(true);
     }
     this.events.subscribe('logged_in', () => {
-      this.user.get_holds();
+      this.user.get_holds(true);
     });
   }
 
