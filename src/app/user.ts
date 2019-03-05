@@ -92,6 +92,7 @@ export class User {
           }
           this.loading.dismiss().then(() => {
             this.events.publish('logged_in');
+            this.events.publish('ready_to_hold');
           });
         } else {
           this.loading.dismiss();
@@ -271,8 +272,10 @@ export class User {
     const onClosedData: string = "Wrapped up!";
     await this.modalController.dismiss(onClosedData);
     this.globals.open_account_menu();
-    this.events.subscribe('logged_in', () => {
-      this.place_hold(id)
+    this.events.unsubscribe('ready_to_hold');
+    this.events.subscribe('ready_to_hold', () => {
+      this.place_hold(id);
+      this.events.unsubscribe('ready_to_hold');
     });
   }
 
