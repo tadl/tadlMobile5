@@ -43,6 +43,7 @@ export class Globals {
   public catalog_renew_url: string = this.catalog_api_base + '/renew_checkouts.json';
   public catalog_holds_manage_url: string = this.catalog_api_base + '/manage_hold.json';
   public catalog_change_hold_pickup_url: string = this.catalog_api_base + '/change_hold_pickup.json';
+  public catalog_fines_url: string = this.catalog_api_base + '/fines.json';
 
   public catalog_covers_small: string = this.catalog_covers_base + '/small/r/';
   public catalog_covers_medium: string = this.catalog_covers_base + '/medium/r/';
@@ -55,6 +56,7 @@ export class Globals {
   public hours_locations_url: string = this.website_schema + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
   public logo_url: string = this.website_schema + this.website_host + '/logo.png'; /* redirected by nginx */
   public square_logo_url: string = this.website_schema + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
+  public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
 
   /* Arrays and Maps to handle multi-location things */
   /* Used for changing pickup locations on holds */

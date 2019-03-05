@@ -35,7 +35,7 @@ export class User {
   holds_count: string;
   holds_ready_count: string;
   overdue: string;
-  fines: string;
+  fines_amount: string;
   fines_exist: boolean = false;
   card: string;
   token: string;
@@ -43,6 +43,7 @@ export class User {
   login_error: string;
   logout_error: string;
   melcat_id: string;
+  fines: any;
   holds: Array<{any}> = [];
   holds_ready: Array<{any}> = [];
   checkouts: Array<{any}> = [];
@@ -59,9 +60,9 @@ export class User {
     this.checkout_count = data['checkouts'];
     this.holds_count = data['holds'];
     this.holds_ready_count = data['holds_ready'];
-    this.fines = data['fines'];
+    this.fines_amount = data['fine'];
     if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
-    if (parseFloat(this.fines) == parseFloat('0.00')) { this.fines_exist = true; }
+    if (parseFloat(this.fines_amount) != parseFloat('0.00')) { this.fines_exist = true; }
     this.card = data['card'];
     this.overdue = data['overdue'];
     this.default_pickup = data['pickup_library'];
@@ -156,13 +157,15 @@ export class User {
           this.checkout_count = '';
           this.holds_count = '';
           this.holds_ready_count = '';
-          this.fines = '';
+          this.fines_amount = '';
           this.card = '';
           this.overdue = '';
           this.melcat_id = '';
           this.fines_exist = false;
           this.default_pickup = '';
+          this.fines = [];
           this.holds = [];
+          this.holds_ready = [];
           this.checkouts = [];
           this.storage.clear();
         }
@@ -203,6 +206,7 @@ export class User {
             this.checkout_history_infinite.target.complete();
             this.checkout_history_loading_more = false;
           } else {
+            // TODO token expired
           }
           this.toast.present(this.globals.server_error_msg);
         }
@@ -213,6 +217,24 @@ export class User {
           this.checkout_history_loading_more = false;
         } else {
         }
+        this.toast.present(this.globals.server_error_msg);
+      });
+  }
+
+  get_fines() {
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("v", "5");
+    let url = this.globals.catalog_fines_url;
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        if (data) {
+          this.fines = data;
+        } else {
+          // TODO handle token expired
+        }
+      },
+      (err) => {
         this.toast.present(this.globals.server_error_msg);
       });
   }
@@ -228,6 +250,7 @@ export class User {
         if (data['checkouts'] && data['user']) {
           this.checkouts = data['checkouts'];
         } else {
+          // TODO handle token expired
         }
       },
       (err) => {
@@ -255,7 +278,6 @@ export class User {
             message += val['title'] + ': ' + val['message'];
           });
           this.toast.present(message);
-
         } else {
           // TODO token is expired
         }
