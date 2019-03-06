@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, Events } from '@ionic/angular';
 
 import { Globals } from '../globals';
@@ -10,7 +10,7 @@ import { Item } from '../item';
   templateUrl: './checkout-history.page.html',
   styleUrls: ['./checkout-history.page.scss'],
 })
-export class CheckoutHistoryPage implements OnInit {
+export class CheckoutHistoryPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor(
@@ -32,6 +32,10 @@ export class CheckoutHistoryPage implements OnInit {
       this.user.get_checkout_history();
       this.events.unsubscribe('logged_in');
     });
+  }
+
+  ngOnDestroy() {
+    this.events.unsubscribe('logged_in');
   }
 
 }

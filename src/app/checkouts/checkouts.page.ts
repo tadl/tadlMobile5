@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 import { Globals } from '../globals';
@@ -10,7 +10,7 @@ import { Item } from '../item';
   templateUrl: './checkouts.page.html',
   styleUrls: ['./checkouts.page.scss'],
 })
-export class CheckoutsPage implements OnInit {
+export class CheckoutsPage implements OnInit, OnDestroy {
 
   constructor(
     public globals: Globals,
@@ -33,4 +33,9 @@ export class CheckoutsPage implements OnInit {
       this.events.unsubscribe('logged_in');
     });
   }
+
+  ngOnDestroy() {
+    this.events.unsubscribe('logged_in');
+  }
+
 }

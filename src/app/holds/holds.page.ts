@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 import { Globals } from '../globals';
@@ -10,7 +10,7 @@ import { Item } from '../item';
   templateUrl: './holds.page.html',
   styleUrls: ['./holds.page.scss'],
 })
-export class HoldsPage implements OnInit {
+export class HoldsPage implements OnInit, OnDestroy {
 
   constructor(
     public globals: Globals,
@@ -32,6 +32,10 @@ export class HoldsPage implements OnInit {
       this.user.get_holds();
       this.events.unsubscribe('logged_in');
     });
+  }
+
+  ngOnDestroy() {
+    this.events.unsubscribe('logged_in');
   }
 
 }
