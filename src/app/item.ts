@@ -15,6 +15,7 @@ import { ItemDetailPage } from './item-detail/item-detail.page';
 export class Item {
 
   featured: any;
+  featured_keys: any = [];
 
   constructor(
     public modalController: ModalController,
@@ -47,10 +48,10 @@ export class Item {
       .subscribe(data => {
         if (data['featured_items']) {
           this.featured = data['featured_items'];
+          this.featured_keys = Object.keys(data['featured_items']);
         }
       },
       (err) => {
-        this.loading.dismiss();
         this.toast.present(this.globals.server_error_msg);
       });
   }
