@@ -19,7 +19,7 @@
   <div *ngIf="item.featured">
     <ion-segment [(ngModel)]="type">
       <ion-segment-button *ngFor="let key of item.featured_keys" [value]="key">
-        <ion-label>{{ key }}</ion-label>
+        <ion-label style="font-size:16px;" padding>{{ key }}</ion-label>
       </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="type">
@@ -37,6 +37,7 @@
   <div *ngIf="results">
     <ion-item-divider>
       <ion-label>{{ this.search_title }}</ion-label>
+      <ion-icon slot="end" name="close" (click)="this.results=''"></ion-icon>
     </ion-item-divider>
     <ion-item *ngFor="let result of this.results" (click)="item.details(result)">
       <ion-thumbnail slot="start">
