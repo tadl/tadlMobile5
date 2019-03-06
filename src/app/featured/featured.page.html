@@ -26,7 +26,7 @@
       <ion-grid *ngFor="let key of item.featured_keys" no-margin no-padding>
         <ion-row *ngSwitchCase="key" no-margin no-padding>
           <ion-col *ngFor="let search of item.featured[key]">
-            <ion-button (click)="featured_search(search.search_link)" expand="full">
+            <ion-button (click)="featured_search(search.search_link, search.nice_title)" expand="full">
               {{ search.nice_title }}
             </ion-button>
           </ion-col>
@@ -35,6 +35,9 @@
     </div>
   </div>
   <div *ngIf="results">
+    <ion-item-divider>
+      <ion-label>{{ this.search_title }}</ion-label>
+    </ion-item-divider>
     <ion-item *ngFor="let result of this.results" (click)="item.details(result)">
       <ion-thumbnail slot="start">
         <ion-img [src]="globals.catalog_covers_medium + result.id"></ion-img>
