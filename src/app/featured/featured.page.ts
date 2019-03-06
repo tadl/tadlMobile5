@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
@@ -15,9 +15,19 @@ import { ToastService } from '../services/toast/toast.service';
   styleUrls: ['./featured.page.scss'],
 })
 export class FeaturedPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
+  fmt: string = "all";
+  infinite: any;
+  location: string = "22";
+  media_type: any;
+  page: any;
+  query: any;
   results: any;
   search_title: any;
+  size: string = "50";
+  sort: string = "pubdateDESC";
+  type: string = "shelving_location";
 
   constructor(
     public globals: Globals,
@@ -31,16 +41,53 @@ export class FeaturedPage implements OnInit {
   featured_search(search, title) {
     search += '&page=0';
     search += '&size=50';
+    search += '&v=5';
     let params = JSON.parse('{"' + decodeURI(search.replace(/\/search\?/, '')).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     let url = this.globals.catalog_search_url;
+    if (this.infinite) { this.infinite.target.disabled = false; }
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.results = data['results'];
         this.search_title = title;
+        this.update_vars(data);
       },
       (err) => {
         this.toast.present(this.globals.server_error_msg);
       });
+  }
+
+  get_more_items(infiniteScroll) {
+    this.page++;
+    this.infinite = infiniteScroll;
+    let params = new HttpParams()
+      .set("fmt", this.fmt)
+      .set("location", this.location)
+      .set("page", this.page)
+      .set("query", this.query)
+      .set("size", this.size)
+      .set("sort", this.sort)
+      .set("type", this.type)
+    let url = this.globals.catalog_search_url;
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        this.results.push.apply(this.results, data['results']);
+        this.infinite.target.complete();
+        if (data['more_results'] == false) { this.infinite.target.disabled = true; }
+        this.update_vars(data);
+      },
+      (err) => {
+        this.toast.present(this.globals.server_error_msg);
+      });
+  }
+
+  update_vars(data) {
+    this.fmt = data['fmt'];
+    this.location = data['location'];
+    this.page = data['page'];
+    this.query = data['query'];
+    this.size = data['size'];
+    this.sort = data['sort'];
+    this.type = data['type'];
   }
 
   ngOnInit() {

@@ -17,12 +17,12 @@
 </ion-header>
 <ion-content>
   <div *ngIf="item.featured">
-    <ion-segment [(ngModel)]="type">
+    <ion-segment [(ngModel)]="media_type">
       <ion-segment-button *ngFor="let key of item.featured_keys" [value]="key">
         <ion-label style="font-size:16px;" padding>{{ key }}</ion-label>
       </ion-segment-button>
     </ion-segment>
-    <div [ngSwitch]="type">
+    <div [ngSwitch]="media_type">
       <ion-grid *ngFor="let key of item.featured_keys" no-margin no-padding>
         <ion-row *ngSwitchCase="key" no-margin no-padding>
           <ion-col *ngFor="let search of item.featured[key]">
@@ -34,7 +34,7 @@
       </ion-grid>
     </div>
   </div>
-  <h2 *ngIf="!type" text-center>Pick a category to get started</h2>
+  <h2 *ngIf="!media_type" text-center>Pick a category to get started</h2>
   <div *ngIf="results">
     <ion-item-divider>
       <ion-label>{{ this.search_title }}</ion-label>
@@ -61,6 +61,11 @@
         </ion-text>
       </ion-label>
     </ion-item>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="get_more_items($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more items ...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
   </div>
 
