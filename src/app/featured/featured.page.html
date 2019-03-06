@@ -34,6 +34,7 @@
       </ion-grid>
     </div>
   </div>
+  <h2 *ngIf="!type" text-center>Pick a category to get started</h2>
   <div *ngIf="results">
     <ion-item-divider>
       <ion-label>{{ this.search_title }}</ion-label>
