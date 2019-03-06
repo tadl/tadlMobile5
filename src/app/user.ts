@@ -208,7 +208,6 @@ export class User {
           } else {
             // TODO token expired
           }
-          this.toast.present(this.globals.server_error_msg);
         }
       },
       (err) => {

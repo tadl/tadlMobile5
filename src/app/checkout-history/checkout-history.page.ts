@@ -30,6 +30,7 @@ export class CheckoutHistoryPage implements OnInit {
     }
     this.events.subscribe('logged_in', () => {
       this.user.get_checkout_history();
+      this.events.unsubscribe('logged_in');
     });
   }
 

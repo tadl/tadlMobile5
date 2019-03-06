@@ -30,6 +30,7 @@ export class HoldsPage implements OnInit {
     }
     this.events.subscribe('logged_in', () => {
       this.user.get_holds();
+      this.events.unsubscribe('logged_in');
     });
   }
 

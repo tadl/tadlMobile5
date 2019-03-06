@@ -30,6 +30,7 @@ export class CheckoutsPage implements OnInit {
     }
     this.events.subscribe('logged_in', () => {
       this.user.get_checkouts();
+      this.events.unsubscribe('logged_in');
     });
   }
 }
