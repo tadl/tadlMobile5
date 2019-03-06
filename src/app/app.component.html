@@ -50,19 +50,19 @@
       <ion-content *ngIf="user.logged_in == true">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
-            <ion-item routerDirection="root" routerLink="/checkouts" detail="false">
+            <ion-item routerDirection="root" routerLink="/checkouts" detail="false" [disabled]="user.checkout_count == 0">
               <ion-label>Checkouts</ion-label>
               <ion-badge slot="end">{{ user.checkout_count }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/holds" detail="false">
+            <ion-item routerDirection="root" routerLink="/holds" detail="false" [disabled]="user.holds_count == 0">
               <ion-label>Holds</ion-label>
               <ion-badge slot="end">{{ user.holds_count }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/holds-ready" detail="false" *ngIf="user.holds_ready_count > 0">
+            <ion-item routerDirection="root" routerLink="/holds-ready" detail="false" [disabled]="user.holds_ready_count == 0">
               <ion-label>Holds Ready for Pickup</ion-label>
               <ion-badge slot="end">{{ user.holds_ready_count }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/fines" detail="false" *ngIf="user.fines_exist">
+            <ion-item routerDirection="root" routerLink="/fines" detail="false" [disabled]="user.fines_exist!=true">
               <ion-label>Fines</ion-label>
               <ion-badge slot="end">${{ user.fines_amount }}</ion-badge>
             </ion-item>
