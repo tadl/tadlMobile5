@@ -51,6 +51,7 @@ export class User {
   checkout_history_page: any = 0;
   checkout_history_loading_more: boolean = false;
   checkout_history_infinite: any;
+  checkout_history_retrieved: boolean = false;
   greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
 
   update_user_object(data) {
@@ -200,6 +201,7 @@ export class User {
             if (data['more_results'] == "false") { this.checkout_history_infinite.target.disabled = true; }
           } else {
             this.checkout_history = data['checkouts'];
+            this.checkout_history_retrieved = true;
           }
         } else {
           if (this.checkout_history_loading_more == true) {

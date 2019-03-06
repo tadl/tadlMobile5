@@ -27,8 +27,11 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="user.checkout_history.length == 0" padding>
+  <div *ngIf="user.checkout_history.length == 0 && user.checkout_history_retrieved == false" padding>
     Checkout History is not yet loaded, or unavailable.
+  </div>
+  <div *ngIf="user.checkout_history.length == 0 && user.checkout_history_retrieved == true" padding>
+    Checkout History is not enabled on your account.
   </div>
   <ion-list *ngIf="user.checkout_history">
     <ion-item *ngFor="let checkout of user.checkout_history" (click)="item.details(checkout)">
@@ -56,4 +59,5 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more items ...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
 </ion-content>
