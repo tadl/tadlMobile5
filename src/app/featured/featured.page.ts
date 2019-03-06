@@ -32,13 +32,11 @@ export class FeaturedPage implements OnInit {
     search += '&page=0';
     search += '&size=50';
     let params = JSON.parse('{"' + decodeURI(search.replace(/\/search\?/, '')).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-    console.log(params);
     let url = this.globals.catalog_search_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.results = data['results'];
         this.search_title = title;
-        console.log(data);
       },
       (err) => {
         this.toast.present(this.globals.server_error_msg);
@@ -47,7 +45,6 @@ export class FeaturedPage implements OnInit {
 
   ngOnInit() {
     this.item.get_featured();
-    console.log(this.item.featured_keys);
   }
 
 }
