@@ -70,17 +70,14 @@ export class User {
   }
 
   login(auto = false) {
-    if (auto == true) {
-      var params = new HttpParams()
-        .set("username", this.username)
-        .set("md5password", this.hashed_password)
-        .set("v", "5");
-    } else {
-      var params = new HttpParams()
-        .set("username", this.username)
-        .set("password", this.password)
-        .set("v", "5");
+    if (auto == false) {
+      this.hashed_password = Md5.hashStr(this.password);
+      this.storage.set('hashed_password', this.hashed_password);
     }
+    let params = new HttpParams()
+      .set("username", this.username)
+      .set("md5password", this.hashed_password)
+      .set("v", "5");
     let url = this.globals.catalog_login_url;
     this.loading.present('Logging in...');
     this.http.get(url, {params: params})
@@ -90,9 +87,6 @@ export class User {
           this.login_error = "";
           this.logout_error = "";
           this.storage.set('username', this.username);
-          if (auto == false) {
-            this.storage.set('hashed_password', Md5.hashStr(this.password));
-          }
           this.loading.dismiss().then(() => {
             this.events.publish('logged_in');
             this.events.publish('ready_to_hold');
