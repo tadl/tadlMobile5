@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 import { Globals } from '../globals';
@@ -9,7 +9,7 @@ import { User } from '../user';
   templateUrl: './fines.page.html',
   styleUrls: ['./fines.page.scss'],
 })
-export class FinesPage implements OnInit {
+export class FinesPage implements OnInit, OnDestroy {
 
   constructor(
     public globals: Globals,
@@ -24,6 +24,10 @@ export class FinesPage implements OnInit {
     this.events.subscribe('logged_in', () => {
       this.user.get_fines();
     });
+  }
+
+  ngOnDestroy() {
+    this.events.unsubscribe('logged_in');
   }
 
 }

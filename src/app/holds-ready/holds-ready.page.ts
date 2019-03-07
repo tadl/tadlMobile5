@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Events } from '@ionic/angular';
 
 import { Globals } from '../globals';
@@ -10,7 +10,7 @@ import { Item } from '../item';
   templateUrl: './holds-ready.page.html',
   styleUrls: ['./holds-ready.page.scss'],
 })
-export class HoldsReadyPage implements OnInit {
+export class HoldsReadyPage implements OnInit, OnDestroy {
 
   constructor(
     public globals: Globals,
@@ -31,6 +31,10 @@ export class HoldsReadyPage implements OnInit {
     this.events.subscribe('logged_in', () => {
       this.user.get_holds(true);
     });
+  }
+
+  ngOnDestroy() {
+    this.events.unsubscribe('logged_in');
   }
 
 }
