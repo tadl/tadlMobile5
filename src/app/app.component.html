@@ -79,11 +79,11 @@
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
             <ion-item>
-              <ion-label>Username</ion-label>
+              <ion-label position="floating">Username</ion-label>
               <ion-input type="text" name="username" [(ngModel)]="user.username" (click)="$event.stopPropagation();"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label>Password</ion-label>
+              <ion-label position="floating">Password</ion-label>
               <ion-input type="password" name="password" [(ngModel)]="user.password" (click)="$event.stopPropagation();"></ion-input>
             </ion-item>
             <ion-button expand="full" color="primary" (click)="$event.stopPropagation();user.login();"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
