@@ -196,5 +196,9 @@ export class Globals {
     await this.modalController.dismiss(onClosedData);
   }
 
+  image_error(e) {
+    console.log(e);
+    e.target.src=this.square_logo_url;
+  }
 
 }
