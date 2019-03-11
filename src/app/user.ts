@@ -239,7 +239,7 @@ export class User {
       });
   }
 
-  get_checkouts(refresher = false) {
+  get_checkouts(refresher?) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -368,7 +368,7 @@ export class User {
     await alert.present();
   }
 
-  get_holds(ready = false, refresher = false) {
+  get_holds(ready = false, refresher?) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
