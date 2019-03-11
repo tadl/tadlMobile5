@@ -40,8 +40,6 @@ export class User {
   card: string;
   token: string;
   default_pickup: string;
-  login_error: string;
-  logout_error: string;
   melcat_id: string;
   fines: any;
   action_retry: any;
@@ -86,8 +84,6 @@ export class User {
       .subscribe(data => {
         if (data['token']) {
           this.update_user_object(data);
-          this.login_error = "";
-          this.logout_error = "";
           this.storage.set('username', this.username);
           this.loading.dismiss().then(() => {
             this.events.publish('logged_in');
@@ -103,7 +99,7 @@ export class User {
       },
       (err) => {
         this.loading.dismiss();
-        this.login_error = this.globals.server_error_msg;
+        this.toast.present(this.globals.server_error_msg);
       });
   }
 
@@ -171,7 +167,7 @@ export class User {
         }
       },
       (err) => {
-        this.logout_error = this.globals.server_error_msg;
+        this.toast.present(this.globals.server_error_msg);
       });
   }
 
@@ -202,22 +198,24 @@ export class User {
             this.checkout_history = data['checkouts'];
             this.checkout_history_retrieved = true;
           }
-        } else {
-          if (this.checkout_history_loading_more == true) {
-            this.checkout_history_infinite.target.complete();
-            this.checkout_history_loading_more = false;
-          } else {
-            // TODO token expired
-          }
         }
       },
       (err) => {
         if (this.checkout_history_loading_more == true) {
           this.checkout_history_infinite.target.complete();
           this.checkout_history_loading_more = false;
-        } else {
         }
-        this.toast.present(this.globals.server_error_msg);
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.get_checkout_history(page, refresher);
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
       });
   }
 
@@ -230,12 +228,20 @@ export class User {
       .subscribe(data => {
         if (data) {
           this.fines = data;
-        } else {
-          // TODO handle token expired
         }
       },
       (err) => {
-        this.toast.present(this.globals.server_error_msg);
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.get_fines();
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
       });
   }
 
