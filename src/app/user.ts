@@ -44,6 +44,7 @@ export class User {
   logout_error: string;
   melcat_id: string;
   fines: any;
+  action_retry: any;
   holds: Array<{any}> = [];
   holds_ready: Array<{any}> = [];
   checkouts: Array<{any}> = [];
@@ -67,6 +68,7 @@ export class User {
     this.card = data['card'];
     this.overdue = data['overdue'];
     this.default_pickup = data['pickup_library'];
+    console.log(this.token);
   }
 
   login(auto = false) {
@@ -90,6 +92,9 @@ export class User {
           this.loading.dismiss().then(() => {
             this.events.publish('logged_in');
             this.events.publish('ready_to_hold');
+            if (this.action_retry == true) {
+              this.events.publish('action_retry');
+            }
           });
         } else {
           this.loading.dismiss();
@@ -366,12 +371,20 @@ export class User {
           } else {
             this.holds = data['holds'];
           }
-        } else {
-          // TODO need to handle when token has expired
         }
       },
       (err) => {
-        this.toast.present(this.globals.server_error_msg);
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.get_holds(ready);
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
       });
   }
 
