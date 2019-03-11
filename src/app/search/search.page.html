@@ -19,7 +19,7 @@
 <ion-content>
   <form action=".">
     <ion-item lines="none" class="searchbox">
-      <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Search" debounce="100" class="searchbox-left"></ion-searchbar>
+      <ion-searchbar (search)="this.get_results()" [(ngModel)]="this.query" [ngModelOptions]="{standalone: true}" placeholder="Search" debounce="10" class="searchbox-left"></ion-searchbar>
       <ion-button color="primary" size="default" slot="end" expand="full" (click)="this.get_results()" class="searchbox-right">Go</ion-button>
     </ion-item>
     <ion-item-divider>
