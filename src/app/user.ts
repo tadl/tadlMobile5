@@ -287,8 +287,20 @@ export class User {
             message += val['title'] + ': ' + val['message'];
           });
           this.toast.present(message);
+        }
+      },
+      (err) => {
+        this.loading.dismiss();
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
         } else {
-          // TODO token is expired
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.renew(cid);
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
         }
       });
   }
@@ -422,12 +434,21 @@ export class User {
           this.holds = data['holds'];
           this.update_user_object(data['user']);
           this.toast.present("Successfully " + action + " hold on " + hold.title_display + ".", 5000);
-        } else {
-          // TODO handle expired token
         }
       },
       (err) => {
-        this.toast.present(this.globals.server_error_msg);
+        this.loading.dismiss();
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.manage_hold(hold, task);
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
       });
   }
 
