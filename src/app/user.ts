@@ -239,7 +239,7 @@ export class User {
       });
   }
 
-  get_checkouts(refresher?) {
+  get_checkouts(refresher = false) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -250,12 +250,20 @@ export class User {
         if (data['checkouts'] && data['user']) {
           this.checkouts = data['checkouts'];
           this.update_user_object(data['user']);
-        } else {
-          // TODO handle token expired
         }
       },
       (err) => {
-        this.toast.present(this.globals.server_error_msg);
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.get_checkouts(refresher);
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
       });
   }
 
@@ -352,7 +360,7 @@ export class User {
     await alert.present();
   }
 
-  get_holds(ready = false, refresher?) {
+  get_holds(ready = false, refresher = false) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -380,7 +388,7 @@ export class User {
         } else {
           this.action_retry = true;
           this.events.subscribe('action_retry', () => {
-            this.get_holds(ready);
+            this.get_holds(ready, refresher);
             this.events.unsubscribe('action_retry');
           });
           this.login(true);
