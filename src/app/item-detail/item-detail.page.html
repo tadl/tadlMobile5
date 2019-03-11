@@ -16,7 +16,7 @@
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <img [src]="globals.image_load(globals.catalog_covers_large + item.id)" class="detail-cover-image" float-left style="width:40%">
+        <img [src]="globals.catalog_covers_large + item.id" class="detail-cover-image" float-left style="width:40%">
         <h4 class="detail-author" *ngIf="item.author_brief">{{ item.author_brief }}</h4>
         <p *ngIf="item.abstract" padding-bottom class="detail-description" [id]="item.id + '-abstract'">
           {{  showAbstract(item) | truncate : 250  }}
