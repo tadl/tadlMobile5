@@ -466,12 +466,20 @@ export class User {
         if (data['hold_id'] == hold.hold_id) {
           this.holds.find(item => item['hold_id'] == data['hold_id'])['pickup_location'] = data['pickup_location'];
           this.toast.present('Changed pickup location for ' + hold.title_display + ' to ' + data['pickup_location'], 5000);
-        } else {
-          // TODO handle expired token
         }
       },
       (err) => {
-        this.toast.present(this.globals.server_error_msg);
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.change_hold_pickup(hold, newloc);
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
       });
   }
 
