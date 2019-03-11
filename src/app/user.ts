@@ -331,13 +331,21 @@ export class User {
             this.toast.present(data['hold']['confirmation'], 5000);
             this.update_user_object(data['user']);
           }
-        } else {
-          // TODO handle expired token
         }
       },
       (err) => {
-        this.loading.dismiss();
-        this.toast.present(this.globals.server_error_msg);
+        if (this.action_retry == true) {
+          this.loading.dismiss();
+          this.toast.present(this.globals.server_error_msg);
+        } else {
+          this.loading.dismiss();
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.place_hold(id);
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
       });
   }
 
