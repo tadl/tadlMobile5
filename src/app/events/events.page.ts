@@ -35,7 +35,13 @@ export class EventsPage implements OnInit {
   ) { }
 
   refresh_events(event) {
-    this.get_events(1, null, event);
+    let loc;
+    if (this.location) {
+      loc = this.location;
+    } else {
+      loc = null;
+    }
+    this.get_events(1, loc, event);
     if (this.infinite) {
       this.infinite.target.disabled = false;
     }
