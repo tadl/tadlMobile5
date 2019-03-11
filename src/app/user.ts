@@ -43,6 +43,7 @@ export class User {
   melcat_id: string;
   fines: any;
   action_retry: any;
+  preferences: any;
   holds: Array<{any}> = [];
   holds_ready: Array<{any}> = [];
   checkouts: Array<{any}> = [];
@@ -238,6 +239,34 @@ export class User {
           this.action_retry = true;
           this.events.subscribe('action_retry', () => {
             this.get_fines();
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
+      });
+  }
+
+  get_preferences() {
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("v", "5");
+    let url = this.globals.catalog_preferences_url;
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        if (data) {
+          this.update_user_object(data['user']);
+          this.preferences = data['preferences'];
+          console.log(this.preferences);
+        }
+      },
+      (err) => {
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.get_preferences();
             this.events.unsubscribe('action_retry');
           });
           this.login(true);

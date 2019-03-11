@@ -45,6 +45,8 @@ export class Globals {
   public catalog_change_hold_pickup_url: string = this.catalog_api_base + '/change_hold_pickup.json';
   public catalog_fines_url: string = this.catalog_api_base + '/fines.json';
   public catalog_featured_url: string = this.catalog_api_base + '/index.json';
+  public catalog_preferences_url: string = this.catalog_api_base + '/preferences.json';
+  public catalog_update_preferences_url: string = this.catalog_api_base + '/update_preferences.json';
 
   public catalog_covers_small: string = this.catalog_covers_base + '/small/r/';
   public catalog_covers_medium: string = this.catalog_covers_base + '/medium/r/';
