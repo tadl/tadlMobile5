@@ -33,36 +33,36 @@
     </ion-item-divider>
     <ion-item>
       <ion-label>Pickup Library</ion-label>
-      <ion-select class="full-width-select" interface="popover" [(ngModel)]="user.preferences.pickup_library">
+      <ion-select class="full-width-select" interface="popover" [(ngModel)]="user.preferences.pickup_library" (ionChange)="update_hold_pickup_location($event)">
         <ion-select-option *ngFor="let location of globals.pickup_locations" [value]="location.code">{{ location.name }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Default Search Location</ion-label>
-      <ion-select class="full-width-select" interface="popover" [(ngModel)]="user.preferences.default_search">
+      <ion-select class="full-width-select" interface="popover" [(ngModel)]="user.preferences.default_search" (ionChange)="update_default_search_location($event)">
         <ion-select-option *ngFor="let location of globals.search_locations" [value]="location.code">{{ location.name }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Keep Circulation History</ion-label>
-      <ion-toggle [(ngModel)]="user.preferences.keep_circ_history"></ion-toggle>
+      <ion-toggle [(ngModel)]="user.preferences.keep_circ_history" (ionChange)="toggle_circ_history($event)"></ion-toggle>
     </ion-item>
     <ion-item-divider>
       <ion-label>User Preferences</ion-label>
     </ion-item-divider>
-    <ion-item>
+    <ion-item (click)="change_username()">
       <ion-label>Username</ion-label>
       {{ user.preferences.username }}
     </ion-item>
-    <ion-item>
+    <ion-item (click)="change_alias()">
       <ion-label>Holdshelf Alias</ion-label>
       {{ user.preferences.hold_shelf_alias }}
     </ion-item>
-    <ion-item>
+    <ion-item (click)="change_email()">
       <ion-label>Email Address</ion-label>
       {{ user.preferences.email }}
     </ion-item>
-    <ion-item>
+    <ion-item (click)="change_password()">
       <ion-label>Password</ion-label>
       g48fwie8fj85...haha just kidding
     </ion-item>
