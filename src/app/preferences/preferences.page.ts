@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Events, ActionSheetController, AlertController } from '@ionic/angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+import { ToastService } from '../services/toast/toast.service';
+
 import { Globals } from '../globals';
 import { User } from '../user';
 
@@ -18,30 +20,41 @@ export class PreferencesPage implements OnInit, OnDestroy {
     public events: Events,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
+    public toast: ToastService,
     private http: HttpClient,
   ) { }
 
-  /* parameters.circ_prefs_changed = true;
+  /* parameters.circ_prefs_changed
 
-     parameters.pickup_library = pickup_library;
-     parameters.default_search = default_search;
-     parameters.keep_circ_history = keep_circ_history;
+     parameters.pickup_library
+     parameters.default_search
+     parameters.keep_circ_history
    */
+
   async update_hold_pickup_location(event) {
     let new_pickup_library = event.detail.value;
     let params = new HttpParams()
+      .set("token", this.user.token)
       .set("circ_prefs_changed", "true")
       .set("pickup_library", new_pickup_library)
+      .set("default_search", this.user.preferences.default_search)
+      .set("keep_circ_history", this.user.preferences.keep_circ_history)
+      .set("keep_hold_history", this.user.preferences.keep_hold_history)
       .set("v", "5");
-    console.log(params);
+    this.user.update_preferences(params);
   }
   async update_default_search_location(event) {
     let new_search_location = event.detail.value;
     let params = new HttpParams()
+      .set("token", this.user.token)
       .set("circ_prefs_changed", "true")
+      .set("pickup_library", this.user.preferences.pickup_library)
       .set("default_search", new_search_location)
+      .set("keep_circ_history", this.user.preferences.keep_circ_history)
+      .set("keep_hold_history", this.user.preferences.keep_hold_history)
       .set("v", "5");
-    console.log(params);
+    console.log(params); // TODO
+    this.user.update_preferences(params);
   }
   async toggle_circ_history(event) { // ActionSheet
     if (event.detail.checked == false) {
@@ -69,27 +82,37 @@ export class PreferencesPage implements OnInit, OnDestroy {
   }
   update_circ_history(val) {
     let params = new HttpParams()
-      .set("keep_circ_history", val.toString())
+      .set("token", this.user.token)
       .set("circ_prefs_changed", "true")
+      .set("pickup_library", this.user.preferences.pickup_library)
+      .set("default_search", this.user.preferences.default_search)
+      .set("keep_circ_history", val.toString())
+      .set("keep_hold_history", this.user.preferences.keep_hold_history)
       .set("v", "5");
-    console.log(params);
+    console.log(params); // TODO
+    this.user.update_preferences(params);
   }
 
-  /* parameters.user_prefs_changed = true;
+  /* parameters.user_prefs_changed
 
-     parameters.username_changed = true;
+     parameters.username_changed
      parameters.username
      parameters.current_password
 
-     parameters.hold_shelf_alias_changed = true;
+     parameters.hold_shelf_alias_changed
      parameters.hold_shelf_alias
      parameters.current_password
 
-     parameters.email_changed = true;
+     parameters.email_changed
      parameters.email
      parameters.current_password
+
+     parameters.password_changed
+     parameters.new_password
+     parameters.current_password
    */
-  async change_username() { // Alert
+
+  async update_username() { // Alert
     const alert = await this.alertController.create({
       header: 'Change Username',
       message: 'Enter your desired new username along with your current password to change your username.',
@@ -108,15 +131,27 @@ export class PreferencesPage implements OnInit, OnDestroy {
         cssClass: 'secondary',
       }, {
         text: 'Ok',
-        handler: (params) => {
-          console.log(params);
+        handler: (values) => {
+          if (values.username != this.user.preferences.username && values.current_password) {
+            let params = new HttpParams()
+              .set("token", this.user.token)
+              .set("user_prefs_changed", "true")
+              .set("username_changed", "true")
+              .set("username", values.username)
+              .set("current_password", values.current_password)
+              .set("v", "5");
+            console.log(params); // TODO
+            this.user.update_preferences(params);
+          } else {
+            console.log("nevermind");
+          }
         }
       }]
     });
     await alert.present();
 
   }
-  async change_alias() { // Alert
+  async update_alias() { // Alert
     const alert = await this.alertController.create({
       header: 'Change Holdshelf Alias',
       message: 'Enter a new holdshelf alias along with your current password to change your holdshelf alias.',
@@ -135,14 +170,26 @@ export class PreferencesPage implements OnInit, OnDestroy {
         cssClass: 'secondary',
       }, {
         text: 'Ok',
-        handler: (params) => {
-          console.log(params);
+        handler: (values) => {
+          if (values.hold_shelf_alias != this.user.preferences.hold_shelf_alias && values.current_password) {
+            let params = new HttpParams()
+              .set("token", this.user.token)
+              .set("user_prefs_changed", "true")
+              .set("hold_shelf_alias_changed", "true")
+              .set("hold_shelf_alias", values.hold_shelf_alias)
+              .set("current_password", values.current_password)
+              .set("v", "5");
+            console.log(params); // TODO
+            this.user.update_preferences(params);
+          } else {
+            console.log("nevermind"); // ALSO TODO (use a toast)
+          }
         }
       }]
     });
     await alert.present();
   }
-  async change_email() { // Alert
+  async update_email() { // Alert
     const alert = await this.alertController.create({
       header: 'Change Email Address',
       message: 'Enter your new email address along with your current password to change your email address.',
@@ -161,14 +208,26 @@ export class PreferencesPage implements OnInit, OnDestroy {
         cssClass: 'secondary',
       }, {
         text: 'Ok',
-        handler: (params) => {
-          console.log(params);
+        handler: (values) => {
+          if (values.email != this.user.preferences.email && values.current_password) {
+            let params = new HttpParams()
+              .set("token", this.user.token)
+              .set("user_prefs_changed", "true")
+              .set("email_changed", "true")
+              .set("email", values.email)
+              .set("current_password", values.current_password)
+              .set("v", "5");
+            console.log(params); // TODO
+            this.user.update_preferences(params);
+          } else {
+            console.log("nevermind"); // ALSO TODO
+          }
         }
       }]
     });
     await alert.present();
   }
-  async change_password() { // Alert
+  async update_password() { // Alert
     const alert = await this.alertController.create({
       header: 'Change Password',
       message: 'Enter your new password (twice) along with your current password to change your password.',
@@ -191,8 +250,24 @@ export class PreferencesPage implements OnInit, OnDestroy {
         cssClass: 'secondary',
       }, {
         text: 'Ok',
-        handler: (params) => {
-          console.log(params);
+        handler: (values) => {
+          if (values.new_password1 != values.new_password2) {
+            this.toast.present("Passwords did not match, please try again.", 5000);
+          } else {
+            if (values.new_password1 == values.new_password2 && values.current_password) {
+              let params = new HttpParams()
+                .set("token", this.user.token)
+                .set("user_prefs_changed", "true")
+                .set("password_changed", "true")
+                .set("new_password", values.new_password1)
+                .set("current_password", values.current_password)
+                .set("v", "5");
+              console.log(params); // TODO
+              this.user.update_preferences(params);
+            } else {
+              console.log("Something went wrong.");
+            }
+          }
         }
       }]
     });
@@ -207,12 +282,103 @@ export class PreferencesPage implements OnInit, OnDestroy {
      parameters.phone_notify
      parameters.text_notify
    */
+
   async update_phone_notify_number() { // Alert
+    const alert = await this.alertController.create({
+      header: 'Change Phone Notify Number',
+      message: "Enter a new phone number where you'd like to receive voice notifications.",
+      inputs: [{
+        name: 'phone_notify_number',
+        type: 'tel',
+        placeholder: '231-111-1111',
+      }],
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+      }, {
+        text: 'Ok',
+        handler: (values) => {
+          if (values.phone_notify_number != this.user.preferences.phone_notify_number) {
+            let params = new HttpParams()
+              .set("token", this.user.token)
+              .set("notify_prefs_changed", "true")
+              .set("phone_notify_number", values.phone_notify_number)
+              .set("text_notify_number", this.user.preferences.text_notify_number)
+              .set("email_notify", this.user.preferences.email_notify)
+              .set("phone_notify", this.user.preferences.phone_notify)
+              .set("text_notify", this.user.preferences.text_notify)
+              .set("v", "5");
+            console.log(params); // TODO
+            this.user.update_preferences(params);
+          } else {
+            this.toast.present("New number matches current number. Enter a new number or press Cancel to cancel.", 5000);
+            return false;
+          }
+        }
+      }]
+    });
+    await alert.present();
   }
   async update_text_notify_number() { // Alert
+    const alert = await this.alertController.create({
+      header: 'Change Text Notify Number',
+      message: "Enter a new phone number where you'd like to receive text notifications.",
+      inputs: [{
+        name: 'text_notify_number',
+        type: 'tel',
+        placeholder: '231-111-1111',
+      }],
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+      }, {
+        text: 'Ok',
+        handler: (values) => {
+          if (values.text_notify_number != this.user.preferences.text_notify_number) {
+            let params = new HttpParams()
+              .set("token", this.user.token)
+              .set("notify_prefs_changed", "true")
+              .set("phone_notify_number", this.user.preferences.phone_notify_number)
+              .set("text_notify_number", values.text_notify_number)
+              .set("email_notify", this.user.preferences.email_notify)
+              .set("phone_notify", this.user.preferences.phone_notify)
+              .set("text_notify", this.user.preferences.text_notify)
+              .set("v", "5");
+            console.log(params); // TODO
+            this.user.update_preferences(params);
+          } else {
+            this.toast.present("New number matches current number. Enter a new number or press Cancel to cancel.", 5000);
+            return false;
+          }
+        }
+      }]
+    });
+    await alert.present();
   }
-  async toggle_notify_method(method) { // just do it
-    console.log(method);
+  async toggle_notify_method(event) { // just do it
+    let params = new HttpParams()
+      .set("token", this.user.token)
+      .set("notify_prefs_changed", "true")
+      .set("phone_notify_number", this.user.preferences.phone_notify_number)
+      .set("text_notify_number", this.user.preferences.text_notify_number)
+      .set(event.target.id, event.detail.checked.toString())
+      .set("v", "5");
+    if (event.target.id == "email_notify") {
+      params = params.append("phone_notify", this.user.preferences.phone_notify);
+      params = params.append("text_notify", this.user.preferences.text_notify);
+    } else if (event.target.id == "phone_notify") {
+      params = params.append("email_notify", this.user.preferences.email_notify);
+      params = params.append("text_notify", this.user.preferences.text_notify);
+    } else if (event.target.id == "text_notify") {
+      params = params.append("phone_notify", this.user.preferences.phone_notify);
+      params = params.append("email_notify", this.user.preferences.email_notify);
+    }
+    console.log(params);
+    console.log("detail.checked: ", event.detail.checked.toString());
+    console.log("what: ", event.target.id);
+    this.user.update_preferences(params);
   }
 
 

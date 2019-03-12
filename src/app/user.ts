@@ -258,7 +258,6 @@ export class User {
         if (data) {
           this.update_user_object(data['user']);
           this.preferences = data['preferences'];
-          console.log(this.preferences);
         }
       },
       (err) => {
@@ -269,6 +268,32 @@ export class User {
           this.action_retry = true;
           this.events.subscribe('action_retry', () => {
             this.action_retry = false;
+            this.events.unsubscribe('action_retry');
+          });
+          this.login(true);
+        }
+      });
+  }
+
+  update_preferences(params) {
+    this.loading.present("Updating...");
+    let url = this.globals.catalog_update_preferences_url;
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        console.log(data);
+        this.loading.dismiss();
+        this.update_user_object(data['user']);
+        this.preferences = data['preferences'];
+      },
+      (err) => {
+        this.loading.dismiss();
+        if (this.action_retry == true) {
+          this.toast.present(this.globals.server_error_msg);
+          this.action_retry = false;
+        } else {
+          this.action_retry = true;
+          this.events.subscribe('action_retry', () => {
+            this.update_preferences(params);
             this.events.unsubscribe('action_retry');
           });
           this.login(true);
