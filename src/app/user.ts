@@ -78,13 +78,18 @@ export class User {
     let params = new HttpParams()
       .set("username", this.username)
       .set("md5password", this.hashed_password)
+      .set("full", "true")
       .set("v", "5");
     let url = this.globals.catalog_login_url;
     this.loading.present('Logging in...');
     this.http.get(url, {params: params})
       .subscribe(data => {
-        if (data['token']) {
-          this.update_user_object(data);
+        console.log(data);
+        if (data['user']['token']) {
+          this.update_user_object(data['user']);
+          this.holds = data['holds'];
+          this.checkouts = data['checkouts'];
+          this.preferences = data['preferences'];
           this.storage.set('username', this.username);
           this.loading.dismiss().then(() => {
             this.events.publish('logged_in');
@@ -93,9 +98,6 @@ export class User {
               this.events.publish('action_retry');
             }
           });
-        } else {
-          this.loading.dismiss();
-          this.toast.present("Invalid username and/or password");
         }
       },
       (err) => {

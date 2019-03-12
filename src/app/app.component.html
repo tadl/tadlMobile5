@@ -62,11 +62,11 @@
               <ion-label>Holds Ready for Pickup</ion-label>
               <ion-badge slot="end">{{ user.holds_ready_count }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/fines" detail="false" [disabled]="user.fines_exist!=true">
+            <ion-item routerDirection="root" routerLink="/fines" detail="false" [disabled]="user.fines_exist != true">
               <ion-label>Fines</ion-label>
               <ion-badge slot="end">${{ user.fines_amount }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/checkout-history" detail="true">
+            <ion-item routerDirection="root" routerLink="/checkout-history" detail="true" *ngIf="user.preferences.keep_circ_history == true">
               <ion-label>Checkout History</ion-label>
             </ion-item>
           </ion-menu-toggle>
