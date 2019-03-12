@@ -21,14 +21,9 @@ export class PreferencesPage implements OnInit, OnDestroy {
     if (this.user.token) {
       this.user.get_preferences();
     }
-    this.events.subscribe('logged_in', () => {
-      this.user.get_preferences();
-      this.events.unsubscribe('logged_in');
-    });
   }
 
   ngOnDestroy() {
-    this.events.unsubscribe('logged_in');
   }
 
 }

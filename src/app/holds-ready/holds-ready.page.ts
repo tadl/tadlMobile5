@@ -28,13 +28,9 @@ export class HoldsReadyPage implements OnInit, OnDestroy {
     if (this.user.token) {
       this.user.get_holds(true);
     }
-    this.events.subscribe('logged_in', () => {
-      this.user.get_holds(true);
-    });
   }
 
   ngOnDestroy() {
-    this.events.unsubscribe('logged_in');
   }
 
 }

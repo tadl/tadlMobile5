@@ -92,8 +92,8 @@ export class User {
           this.preferences = data['preferences'];
           this.storage.set('username', this.username);
           this.loading.dismiss().then(() => {
-            this.events.publish('logged_in');
             this.events.publish('ready_to_hold');
+            this.events.publish('logged_in');
             if (this.action_retry == true) {
               this.events.publish('action_retry');
             }
@@ -268,7 +268,7 @@ export class User {
         } else {
           this.action_retry = true;
           this.events.subscribe('action_retry', () => {
-            this.get_preferences();
+            this.action_retry = false;
             this.events.unsubscribe('action_retry');
           });
           this.login(true);
@@ -296,7 +296,7 @@ export class User {
         } else {
           this.action_retry = true;
           this.events.subscribe('action_retry', () => {
-            this.get_checkouts(refresher);
+            this.action_retry = false;
             this.events.unsubscribe('action_retry');
           });
           this.login(true);
@@ -445,7 +445,7 @@ export class User {
         } else {
           this.action_retry = true;
           this.events.subscribe('action_retry', () => {
-            this.get_holds(ready, refresher);
+            this.action_retry = false;
             this.events.unsubscribe('action_retry');
           });
           this.login(true);

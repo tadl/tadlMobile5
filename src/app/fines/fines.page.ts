@@ -23,6 +23,7 @@ export class FinesPage implements OnInit, OnDestroy {
     }
     this.events.subscribe('logged_in', () => {
       this.user.get_fines();
+      this.events.unsubscribe('logged_in');
     });
   }
 
