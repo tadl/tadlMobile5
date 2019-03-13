@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { User } from '../user';
 import { Globals } from '../globals';
@@ -17,6 +17,7 @@ export class HomePage {
     public user: User,
     private menu: MenuController,
     private router: Router,
+    private platform: Platform,
   ) { }
 
   query: string;
@@ -25,6 +26,15 @@ export class HomePage {
     if (this.query) {
       this.router.navigate(['/search', { query: this.query }]);
     }
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      navigator['app'].exitApp();
+    });
+  }
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }
