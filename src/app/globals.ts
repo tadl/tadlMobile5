@@ -10,7 +10,11 @@ export class Globals {
     private modalController: ModalController,
   ) { }
 
-  /* customizable variables */
+  /* CUSTOMIZABLE VARIABLES */
+
+  /* app version */
+  public app_version: string = "5.00.04";
+
   /* basic information */
   public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
   public catalog_covers_host: string = 'catalog.tadl.org'; /* hostname for catalog extras */
@@ -193,6 +197,7 @@ export class Globals {
     this.menuController.open('right');
   }
 
+  /* closes modals */
   async close_modal() {
     const onClosedData: string = "Wrapped up!";
     await this.modalController.dismiss(onClosedData);
