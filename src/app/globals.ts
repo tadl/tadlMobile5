@@ -13,7 +13,7 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = "5.00.04";
+  public app_version: string = "5.0.5";
 
   /* basic information */
   public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
