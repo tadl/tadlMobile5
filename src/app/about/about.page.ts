@@ -13,6 +13,7 @@ import { User } from '../user';
 export class AboutPage implements OnInit {
 
   platforms: string = this.platform.platforms().join('/');
+  device_keys: any = Object.keys(this.device);
 
   constructor(
     public globals: Globals,
@@ -22,7 +23,6 @@ export class AboutPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.device);
   }
 
 }
