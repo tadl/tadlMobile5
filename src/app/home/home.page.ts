@@ -21,6 +21,7 @@ export class HomePage {
   ) { }
 
   query: string;
+  subscription: any;
 
   search() {
     if (this.query) {
