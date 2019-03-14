@@ -30,7 +30,7 @@ export class AppComponent {
   ) {
     this.initializeApp();
     this.platform.backButton.subscribe(() => {
-      if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+      if (this.routerOutlet) {
         this.routerOutlet.pop();
       }
     });
