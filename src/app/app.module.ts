@@ -34,6 +34,7 @@ import { CardPageModule } from './card/card.module';
     IonicStorageModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    AppRoutingModule,
     EventDetailPageModule,
     NewsDetailPageModule,
     ItemDetailPageModule,
@@ -41,7 +42,6 @@ import { CardPageModule } from './card/card.module';
     CardPageModule,
     NgxBarcodeModule,
     TruncateModule,
-    AppRoutingModule,
   ],
   providers: [
     Globals,
