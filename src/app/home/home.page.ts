@@ -21,7 +21,8 @@ export class HomePage {
   ) { }
 
   query: string;
-  subscription: any;
+  /*
+  subscription: any; */
 
   search() {
     if (this.query) {
@@ -30,12 +31,14 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    /* 
     this.subscription = this.platform.backButton.subscribe(() => {
       navigator['app'].exitApp();
-    });
+    }); */
   }
   ionViewWillLeave() {
-    this.subscription.unsubscribe();
+    /* 
+    this.subscription.unsubscribe(); */
   }
 
 }
