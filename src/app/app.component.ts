@@ -46,15 +46,6 @@ export class AppComponent {
     return await modal.present();
   }
 
-  routerOutletActivate(event) {
-    console.log("ACTIVATE: ", event);
-        console.log(this.routerOutlet);
-  }
-  routerOutletDeactivate(event) {
-    console.log("DEACTIVATE: ", event);
-        console.log(this.routerOutlet);
-  }
-
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.overlaysWebView(false);
@@ -63,9 +54,6 @@ export class AppComponent {
       }
       this.splashScreen.hide();
       this.statusBar.show();
-      this.platform.backButton.subscribe(() => {
-        this.routerOutlet.pop();
-      });
       this.user.autolog();
     });
   }

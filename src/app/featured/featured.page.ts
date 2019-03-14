@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { Platform, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
+import { Location } from '@angular/common';
 
 import { Globals } from '../globals';
 import { Item } from '../item';
@@ -28,6 +28,7 @@ export class FeaturedPage implements OnInit {
   size: string = "50";
   sort: string = "pubdateDESC";
   type: string = "shelving_location";
+  subscription: any;
 
   constructor(
     public globals: Globals,
@@ -35,8 +36,9 @@ export class FeaturedPage implements OnInit {
     public user: User,
     public toast: ToastService,
     private http: HttpClient,
-  ) {
-  }
+    private platform: Platform,
+    private _location: Location,
+  ) { }
 
   featured_search(search, title) {
     search += '&page=0';
@@ -92,6 +94,16 @@ export class FeaturedPage implements OnInit {
 
   ngOnInit() {
     this.item.get_featured();
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

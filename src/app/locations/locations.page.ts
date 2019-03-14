@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
+import { Location } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Globals } from '../globals';
@@ -17,12 +18,15 @@ export class LocationsPage implements OnInit {
 
   url: string = this.globals.hours_locations_url;
   locations: any;
+  subscription: any;
 
   constructor(
     public globals: Globals,
     public toast: ToastService,
     public modalController: ModalController,
     private http: HttpClient,
+    private platform: Platform,
+    private _location: Location,
   ) { }
 
   get_locations() {
@@ -53,10 +57,18 @@ export class LocationsPage implements OnInit {
     return await modal.present();
   }
 
-
-
   ngOnInit() {
     this.get_locations();
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

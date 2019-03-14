@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -17,8 +18,11 @@ export class HoldsReadyPage implements OnInit, OnDestroy {
     public user: User,
     public item: Item,
     public events: Events,
-  ) {
-  }
+    private platform: Platform,
+    private _location: Location,
+  ) { }
+
+  subscription: any;
 
   refresh_holds_ready(event) {
     this.user.get_holds(true, event);
@@ -31,6 +35,16 @@ export class HoldsReadyPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

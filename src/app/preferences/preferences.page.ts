@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Events, ActionSheetController, AlertController } from '@ionic/angular';
+import { Platform, Events, ActionSheetController, AlertController } from '@ionic/angular';
+import { Location } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ToastService } from '../services/toast/toast.service';
@@ -14,6 +15,8 @@ import { User } from '../user';
 })
 export class PreferencesPage implements OnInit, OnDestroy {
 
+  subscription: any;
+
   constructor(
     public globals: Globals,
     public user: User,
@@ -22,6 +25,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
     public alertController: AlertController,
     public toast: ToastService,
     private http: HttpClient,
+    private platform: Platform,
+    private _location: Location,
   ) { }
 
   /* parameters.circ_prefs_changed
@@ -389,6 +394,16 @@ export class PreferencesPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

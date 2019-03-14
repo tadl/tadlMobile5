@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -15,7 +16,11 @@ export class FinesPage implements OnInit, OnDestroy {
     public globals: Globals,
     public user: User,
     public events: Events,
+    private platform: Platform,
+    private _location: Location,
   ) { }
+
+  subscription: any;
 
   ngOnInit() {
     if (this.user.token) {
@@ -29,6 +34,16 @@ export class FinesPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.events.unsubscribe('logged_in');
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

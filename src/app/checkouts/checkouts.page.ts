@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -17,8 +18,11 @@ export class CheckoutsPage implements OnInit, OnDestroy {
     public user: User,
     public events: Events,
     public item: Item,
-  ) { 
-  }
+    private platform: Platform,
+    private _location: Location,
+  ) { }
+
+  subscription: any;
 
   refresh_checkouts(event) {
     this.user.get_checkouts(event);
@@ -31,6 +35,16 @@ export class CheckoutsPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

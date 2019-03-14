@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController, IonInfiniteScroll } from '@ionic/angular';
+import { Platform, ModalController, IonInfiniteScroll } from '@ionic/angular';
+import { Location } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Globals } from '../globals';
@@ -22,12 +23,15 @@ export class NewsPage implements OnInit {
   page: any = 1;
   loading_more: boolean = false;
   infinite: any;
+  subscription: any;
 
   constructor(
     public globals: Globals,
     public toast: ToastService,
     public modalController: ModalController,
     private http: HttpClient,
+    private platform: Platform,
+    private _location: Location,
   ) { }
 
   load_more_data(infiniteScroll) {
@@ -93,6 +97,16 @@ export class NewsPage implements OnInit {
 
   ngOnInit() {
     this.get_news(this.page);
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

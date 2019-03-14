@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { Platform, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
@@ -26,6 +27,8 @@ export class SearchPage implements OnInit {
     public item: Item,
     private http: HttpClient,
     private route: ActivatedRoute,
+    private platform: Platform,
+    private _location: Location,
   ) { }
 
   query: string;
@@ -41,6 +44,7 @@ export class SearchPage implements OnInit {
   more_results: boolean;
   infinite: any;
   loading_more: boolean = false;
+  subscription: any;
 
   get_results(page?) {
     if (!this.query) { return; }
@@ -111,6 +115,16 @@ export class SearchPage implements OnInit {
       this.query = this.route.snapshot.paramMap.get('query');
       this.get_results();
     }
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }

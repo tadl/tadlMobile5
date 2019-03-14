@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { IonInfiniteScroll, Events } from '@ionic/angular';
+import { Platform, IonInfiniteScroll, Events } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 import { Globals } from '../globals';
 import { User } from '../user';
@@ -18,7 +19,11 @@ export class CheckoutHistoryPage implements OnInit, OnDestroy {
     public user: User,
     public events: Events,
     public item: Item,
+    private platform: Platform,
+    private _location: Location,
   ) { }
+
+  subscription: any;
 
   refresh_checkout_history(event) {
     this.user.get_checkout_history(0, event);
@@ -36,6 +41,16 @@ export class CheckoutHistoryPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.events.unsubscribe('logged_in');
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this._location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }
