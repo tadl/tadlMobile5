@@ -48,13 +48,13 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.overlaysWebView(true);
-      this.statusBar.backgroundColorByHexString('#ffffff');
+      this.statusBar.overlaysWebView(false);
       this.splashScreen.hide();
-      this.user.autolog()
+      this.statusBar.show();
       this.platform.backButton.subscribe(() => {
         this.routerOutlet.pop();
       });
+      this.user.autolog();
     });
   }
 
