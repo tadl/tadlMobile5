@@ -54,6 +54,7 @@ export class AppComponent {
       }
       this.splashScreen.hide();
       this.statusBar.show();
+      this.router.initialNavigation();
       this.platform.backButton.subscribe(() => {
         this.routerOutlet.pop();
       });

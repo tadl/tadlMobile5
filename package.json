@@ -1,6 +1,6 @@
 {
   "name": "tadlMobile5",
-  "version": "5.0.8",
+  "version": "5.0.10",
   "author": "Traverse Area District Library Technology Team",
   "homepage": "https://www.tadl.org/",
   "scripts": {
@@ -29,6 +29,7 @@
     "@ionic/storage": "^2.2.0",
     "@yellowspot/ng-truncate": "^1.5.0",
     "cordova-plugin-ionic": "5.3.0",
+    "cordova-plugin-ionic-webview": "^4.0.0",
     "cordova-sqlite-storage": "^3.2.0",
     "core-js": "^2.6.5",
     "date-fns": "^2.0.0-alpha.27",
@@ -71,7 +72,8 @@
         "CHANNEL_NAME": "Production",
         "UPDATE_METHOD": "auto"
       },
-      "cordova-plugin-device": {}
+      "cordova-plugin-device": {},
+      "cordova-plugin-ionic-webview": {}
     }
   }
 }

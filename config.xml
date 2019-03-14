@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-activityName="TADL" id="org.TADL.TADLMobile" version="5.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-activityName="TADL" id="org.TADL.TADLMobile" version="5.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>TADL</name>
     <description>Traverse Area District Library Mobile</description>
     <author email="tech@tadl.org" href="https://www.tadl.org/">Traverse Area District Library Technology Team</author>
@@ -79,7 +79,6 @@
     <plugin name="cordova-plugin-whitelist" spec="1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^3.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-ionic" spec="5.3.0">
         <variable name="APP_ID" value="24d4815d" />
@@ -87,4 +86,5 @@
         <variable name="UPDATE_METHOD" value="background" />
     </plugin>
     <plugin name="cordova-plugin-device" spec="~2.0.2" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
 </widget>

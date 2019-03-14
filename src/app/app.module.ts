@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { TruncateModule } from '@yellowspot/ng-truncate';
@@ -33,9 +32,7 @@ import { CardPageModule } from './card/card.module';
     BrowserModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
-    AppRoutingModule,
     HttpClientModule,
-    HttpModule,
     FormsModule,
     EventDetailPageModule,
     NewsDetailPageModule,
@@ -44,6 +41,7 @@ import { CardPageModule } from './card/card.module';
     CardPageModule,
     NgxBarcodeModule,
     TruncateModule,
+    AppRoutingModule,
   ],
   providers: [
     Globals,
