@@ -33,7 +33,7 @@ export class EventsPage implements OnInit {
     public toast: ToastService,
     public loading: LoadingService,
     public modalController: ModalController,
-    private location: Location,
+    private _location: Location,
     private platform: Platform,
     private http: HttpClient,
   ) { }
@@ -124,7 +124,7 @@ export class EventsPage implements OnInit {
 
   ionViewDidEnter() {
     this.subscription = this.platform.backButton.subscribe(() => {
-      this.location.back();
+      this._location.back();
     });
   }
 
