@@ -29,11 +29,6 @@ export class AppComponent {
     public item: Item,
   ) {
     this.initializeApp();
-    this.platform.backButton.subscribe(() => {
-      if (this.routerOutlet) {
-        this.routerOutlet.pop();
-      }
-    });
   }
 
   async view_card() {
@@ -53,9 +48,13 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.overlaysWebView(true);
+      this.statusBar.backgroundColorByHexString('#ffffff');
       this.splashScreen.hide();
       this.user.autolog()
+      this.platform.backButton.subscribe(() => {
+        this.routerOutlet.pop();
+      });
     });
   }
 
