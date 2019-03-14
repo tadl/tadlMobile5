@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController, IonInfiniteScroll } from '@ionic/angular';
+import { Location } from '@angular/common';
+import { Platform, ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 import { Globals } from '../globals';
@@ -25,12 +26,15 @@ export class EventsPage implements OnInit {
   page: any = 1;
   loading_more: boolean = false;
   infinite: any;
+  subscription: any;
 
   constructor(
     public globals: Globals,
     public toast: ToastService,
     public loading: LoadingService,
     public modalController: ModalController,
+    private location: Location,
+    private platform: Platform,
     private http: HttpClient,
   ) { }
 
@@ -116,6 +120,16 @@ export class EventsPage implements OnInit {
 
   ngOnInit() {
     this.get_events(this.page, this.location);
+  }
+
+  ionViewDidEnter() {
+    this.subscription = this.platform.backButton.subscribe(() => {
+      this.location.back();
+    });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
 }
