@@ -53,7 +53,7 @@ export class AppComponent {
         this.statusBar.backgroundColorByHexString('#33000000');
       }
       if (this.platform.is('ios')) {
-        this.statusBar.styleDefault();
+        this.statusBar.styleBlackTranslucent();
       }
       this.splashScreen.hide();
       this.statusBar.show();

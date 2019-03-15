@@ -27,6 +27,7 @@ export class EventsPage implements OnInit {
   loading_more: boolean = false;
   infinite: any;
   subscription: any;
+  some_error: any;
 
   constructor(
     public globals: Globals,
@@ -89,6 +90,7 @@ export class EventsPage implements OnInit {
             this.infinite.target.complete();
             this.loading_more = false;
           } else {
+            this.some_error = data;
           }
           this.toast.present(this.globals.server_error_msg);
         }
@@ -98,6 +100,7 @@ export class EventsPage implements OnInit {
           this.infinite.target.disabled = true;
           this.loading_more = false;
         } else {
+          this.some_error = data;
         }
         this.toast.present(this.globals.server_error_msg);
       });
