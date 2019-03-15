@@ -52,6 +52,9 @@ export class AppComponent {
       if (this.platform.is('android')) {
         this.statusBar.backgroundColorByHexString('#33000000');
       }
+      if (this.platform.is('ios')) {
+        this.statusBar.styleDefault();
+      }
       this.splashScreen.hide();
       this.statusBar.show();
       this.user.autolog();
