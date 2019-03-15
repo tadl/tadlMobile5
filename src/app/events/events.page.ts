@@ -100,7 +100,7 @@ export class EventsPage implements OnInit {
           this.infinite.target.disabled = true;
           this.loading_more = false;
         } else {
-          this.some_error = data;
+          this.some_error = err;
         }
         this.toast.present(this.globals.server_error_msg);
       });
