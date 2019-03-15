@@ -4,7 +4,7 @@
     <description>Traverse Area District Library Mobile</description>
     <author email="tech@tadl.org" href="https://www.tadl.org/">Traverse Area District Library Technology Team</author>
     <content src="index.html" />
-    <access origin="http://127.0.0.1:8100" />
+    <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
