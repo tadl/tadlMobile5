@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-activityName="TADL" id="org.tadl.tadl" version="5.0.16" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-activityName="TADL" id="org.tadl.tadl" version="5.0.17" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>TADL</name>
     <description>Traverse Area District Library Mobile</description>
     <author email="tech@tadl.org" href="https://www.tadl.org/">Traverse Area District Library Technology Team</author>
     <content src="index.html" />
-    <access origin="*" />
+    <access origin="http://127.0.0.1:8100" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
