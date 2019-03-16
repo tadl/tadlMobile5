@@ -9,6 +9,7 @@ export class Globals {
   constructor(
     private menuController: MenuController,
     private modalController: ModalController,
+    private appVersion: AppVersion,
   ) { }
 
   /* CUSTOMIZABLE VARIABLES */
