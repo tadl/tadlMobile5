@@ -25,16 +25,17 @@
       </ion-item-divider>
       <ion-item>
         <ion-label>App Version</ion-label>
-        <ion-note slot="end" color="dark">{{ globals.app_version }} / {{ globals.app_version_code }}</ion-note>
-        <ion-note slot="end" color="dark" float-right>{{ globals.app_package_name }}</ion-note>
+        <ion-note slot="end" color="dark" *ngIf="this.platform.is('cordova')">{{ globals.app_version }}-{{ globals.app_version_code }}</ion-note>
+        <ion-note slot="end" color="dark" *ngIf="this.platform.is('desktop') || this.platform.is('mobileweb')">Cordova not available</ion-note>
       </ion-item>
 
       <ion-item>
-        <ion-label>
-          <ion-text>Platforms</ion-text>
-          <ion-text><p float-right>{{ platforms }}</p></ion-text>
-        </ion-label>
+        <ion-label>Platforms</ion-label>
+        <ion-note slot="end" color="dark">{{ platforms }}</ion-note>
       </ion-item>
+
+    </ion-list>
+    <ion-list *ngIf="this.platform.is('cordova')">
 
       <ion-item-divider>
         <ion-label>Device Information</ion-label>

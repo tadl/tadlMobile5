@@ -65,9 +65,8 @@ export class Globals {
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
 
   /* app version */
-  public app_version = this.appVersion.getVersionNumber();
-  public app_package_name = this.appVersion.getPackageName();
-  public app_version_code = this.appVersion.getVersionCode();
+  public app_version = JSON.stringify(this.appVersion.getVersionNumber());
+  public app_version_code = JSON.stringify(this.appVersion.getVersionCode());
 
   /* Arrays and Maps to handle multi-location things */
   /* Used for changing pickup locations on holds */
