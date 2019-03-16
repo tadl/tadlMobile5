@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpBackend, HttpXhrBackend, HttpClientModule } from '@angular/common/http';
+import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-native-http-connection-backend';
 import { FormsModule } from '@angular/forms';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { TruncateModule } from '@yellowspot/ng-truncate';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { Platform, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -27,11 +28,11 @@ import { CardPageModule } from './card/card.module';
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
+    NativeHttpModule,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
@@ -43,6 +44,8 @@ import { CardPageModule } from './card/card.module';
     NgxBarcodeModule,
     TruncateModule,
   ],
+  bootstrap: [AppComponent],
+  entryComponents: [],
   providers: [
     Globals,
     User,
@@ -51,8 +54,8 @@ import { CardPageModule } from './card/card.module';
     SplashScreen,
     LoadingService,
     ToastService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend] },
   ],
-  bootstrap: [AppComponent]
 })
 export class AppModule { }
