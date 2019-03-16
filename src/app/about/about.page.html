@@ -28,6 +28,7 @@
         <ion-note slot="end" color="dark" *ngIf="this.platform.is('cordova')">{{ globals.app_version }}-{{ globals.app_version_code }}</ion-note>
         <ion-note slot="end" color="dark" *ngIf="this.platform.is('desktop') || this.platform.is('mobileweb')">Cordova not available</ion-note>
       </ion-item>
+      <ion-item text-wrap *ngIf="this.platform.is('cordova')">{{ globals.app_version }}</ion-item>
 
       <ion-item>
         <ion-label>Platforms</ion-label>
