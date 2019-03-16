@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModalController, MenuController } from '@ionic/angular';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 import { format, parseISO } from 'date-fns';
 
 @Injectable()
@@ -11,9 +12,6 @@ export class Globals {
   ) { }
 
   /* CUSTOMIZABLE VARIABLES */
-
-  /* app version */
-  public app_version: string = "5.0.18";
 
   /* basic information */
   public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
@@ -64,6 +62,11 @@ export class Globals {
   public logo_url: string = this.website_schema + this.website_host + '/logo.png'; /* redirected by nginx */
   public square_logo_url: string = this.website_schema + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
+
+  /* app version */
+  public app_version = this.appVersion.getVersionNumber();
+  public app_package_name = this.appVersion.getPackageName();
+  public app_version_code = this.appVersion.getVersionCode();
 
   /* Arrays and Maps to handle multi-location things */
   /* Used for changing pickup locations on holds */
