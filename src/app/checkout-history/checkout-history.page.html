@@ -27,10 +27,10 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="user.checkout_history.length == 0 && user.checkout_history_retrieved == false" padding>
+  <div *ngIf="user.checkout_history.length == 0 && user.preferences.keep_circ_history == true" padding>
     Checkout History is not yet loaded, or unavailable.
   </div>
-  <div *ngIf="user.checkout_history.length == 0 && user.checkout_history_retrieved == true" padding>
+  <div *ngIf="user.preferences.keep_circ_history == false" padding>
     Checkout History is not enabled on your account.
   </div>
   <ion-list *ngIf="user.checkout_history">
