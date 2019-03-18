@@ -14,6 +14,9 @@ export class Globals {
 
   /* CUSTOMIZABLE VARIABLES */
 
+  /* app version */
+  public app_version: string = '5.0.21';
+
   /* basic information */
   public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
   public catalog_covers_host: string = 'catalog.tadl.org'; /* hostname for catalog extras */
@@ -63,10 +66,6 @@ export class Globals {
   public logo_url: string = this.website_schema + this.website_host + '/logo.png'; /* redirected by nginx */
   public square_logo_url: string = this.website_schema + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
-
-  /* app version */
-  public app_version = JSON.stringify(this.appVersion.getVersionNumber());
-  public app_version_code = JSON.stringify(this.appVersion.getVersionCode());
 
   /* Arrays and Maps to handle multi-location things */
   /* Used for changing pickup locations on holds */
