@@ -30,6 +30,7 @@ export class Globals {
   /* customizable strings */
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute.";
   public greetings: Array<any> = ['Hello', 'Hi', 'Greetings', 'Hiya', 'Yo', 'Howdy'];
+  public reset_card_label: string = "Username or Card #";
 
   /* catalog things */
   public catalog_schema: string = 'https://';
@@ -51,6 +52,7 @@ export class Globals {
   public catalog_featured_url: string = this.catalog_api_base + '/index.json';
   public catalog_preferences_url: string = this.catalog_api_base + '/preferences.json';
   public catalog_update_preferences_url: string = this.catalog_api_base + '/update_preferences.json';
+  public catalog_password_reset_url: string = this.catalog_api_base + '/submit_password_reset.json';
 
   public catalog_covers_small: string = this.catalog_covers_base + '/small/r/';
   public catalog_covers_medium: string = this.catalog_covers_base + '/medium/r/';
