@@ -4,6 +4,7 @@ import { Events, ModalController, ActionSheetController, AlertController } from 
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
+import { parseISO, isBefore } from 'date-fns';
 
 import { LoadingService } from './services/loading/loading.service';
 import { ToastService } from './services/toast/toast.service';
@@ -67,7 +68,6 @@ export class User {
     this.card = data['card'];
     this.overdue = data['overdue'];
     this.default_pickup = data['pickup_library'];
-    console.log(this.token);
   }
 
   login(auto = false) {
@@ -95,6 +95,37 @@ export class User {
           this.checkouts = data['checkouts'];
           this.preferences = data['preferences'];
           this.storage.set('username', this.username);
+          if (data['user']['holds_ready'] > 0) {
+            let items_ready = [];
+            this.holds.forEach(function(item) {
+              if (item['queue_status'].indexOf("Ready for Pickup") !== -1) {
+                items_ready.push(item['id']);
+              }
+            });
+            items_ready = items_ready.join();
+            this.storage.get('items_ready').then((items) => {
+              if (items_ready != items) {
+                this.storage.set('items_ready', items_ready);
+                this.toast.present("You have one or more items available for pickup. View your holds for details.");
+              }
+            });
+          }
+          if (data['user']['overdue'] > 0) {
+            let items_overdue = [];
+            this.checkouts.forEach(function(item) {
+              var due_date = new Date(item['due_date']);
+              if (isBefore(due_date, new Date())) {
+                items_overdue.push(item['id']);
+              }
+            });
+            items_overdue = items_overdue.join();
+            this.storage.get('items_overdue').then((items) => {
+              if (items_overdue != items) {
+                this.storage.set('items_overdue', items_overdue);
+                this.toast.present("You have one or more items overdue. View your checkouts for details.");
+              }
+            });
+          }
           this.loading.dismiss().then(() => {
             this.events.publish('ready_to_hold');
             this.events.publish('logged_in');
@@ -140,7 +171,6 @@ export class User {
         text: 'Cancel',
         role: 'cancel',
         handler: () => {
-          console.log('nevermind');
         }
       }]
     });
@@ -287,7 +317,6 @@ export class User {
     let url = this.globals.catalog_update_preferences_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
-        console.log(data);
         this.loading.dismiss();
         this.update_user_object(data['user']);
         this.preferences = data['preferences'];
@@ -534,7 +563,6 @@ export class User {
         text: 'Nevermind',
         role: 'cancel',
         handler: () => {
-          console.log('nevermind');
         }
       }]
     });
