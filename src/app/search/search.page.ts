@@ -4,6 +4,8 @@ import { Platform, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+
 import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 
@@ -29,6 +31,7 @@ export class SearchPage implements OnInit {
     private route: ActivatedRoute,
     private platform: Platform,
     private _location: Location,
+    private keyboard: Keyboard,
   ) { }
 
   query: string;
@@ -48,6 +51,7 @@ export class SearchPage implements OnInit {
 
   get_results(page?) {
     if (!this.query) { return; }
+    this.keyboard.hide();
     if (!page || this.query != this.prev_query) {
       this.page = 0;
       if (this.infinite && this.infinite.target.disabled == true) {

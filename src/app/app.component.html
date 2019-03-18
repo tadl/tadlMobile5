@@ -54,6 +54,7 @@
       <ion-content *ngIf="user.logged_in == true">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
+            <ion-item-divider><ion-label>{{ user.full_name }}</ion-label></ion-item-divider>
             <ion-item routerDirection="root" routerLink="/checkouts" detail="false" [disabled]="user.checkout_count == 0">
               <ion-label>Checkouts</ion-label>
               <ion-badge slot="end">{{ user.checkout_count }}</ion-badge>
@@ -78,8 +79,8 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
-        <ion-button expand="full" color="success" (click)="view_card();"><ion-ripple-effect></ion-ripple-effect>View Card</ion-button>
-        <ion-button expand="full" color="danger" (click)="user.logout()"><ion-ripple-effect></ion-ripple-effect>Log Out</ion-button>
+        <ion-button margin expand="full" color="success" (click)="view_card();"><ion-ripple-effect></ion-ripple-effect>View Card</ion-button>
+        <ion-button margin expand="full" color="danger" (click)="user.logout()"><ion-ripple-effect></ion-ripple-effect>Log Out</ion-button>
       </ion-content>
       <ion-content *ngIf="user.logged_in == false">
         <ion-list>
@@ -92,7 +93,7 @@
               <ion-label position="floating">Password</ion-label>
               <ion-input type="password" name="password" [(ngModel)]="user.password" (click)="$event.stopPropagation();"></ion-input>
             </ion-item>
-            <ion-button expand="full" color="primary" (click)="$event.stopPropagation();user.login();"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
+            <ion-button margin expand="full" color="primary" (click)="$event.stopPropagation();user.login();"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>

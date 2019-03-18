@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ModalController, MenuController } from '@ionic/angular';
-import { AppVersion } from '@ionic-native/app-version/ngx';
 import { format, parseISO } from 'date-fns';
 
 @Injectable()
@@ -9,13 +8,12 @@ export class Globals {
   constructor(
     private menuController: MenuController,
     private modalController: ModalController,
-    private appVersion: AppVersion,
   ) { }
 
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.21';
+  public app_version: string = '5.0.22';
 
   /* basic information */
   public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */

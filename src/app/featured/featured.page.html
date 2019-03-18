@@ -26,7 +26,7 @@
       <ion-grid *ngFor="let key of item.featured_keys" no-margin no-padding>
         <ion-row *ngSwitchCase="key" no-margin no-padding>
           <ion-col *ngFor="let search of item.featured[key]">
-            <ion-button (click)="featured_search(search.search_link, search.nice_title)" expand="full">
+            <ion-button (click)="featured_search(search.search_link, search.nice_title)" expand="full" [color]="(this.search_title == search.nice_title) ? 'primary' : 'light'">
               {{ search.nice_title }}
             </ion-button>
           </ion-col>
