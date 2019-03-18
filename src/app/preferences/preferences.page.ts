@@ -16,6 +16,7 @@ import { User } from '../user';
 export class PreferencesPage implements OnInit, OnDestroy {
 
   subscription: any;
+  ignore_change: boolean = false;
 
   constructor(
     public globals: Globals,
@@ -58,7 +59,6 @@ export class PreferencesPage implements OnInit, OnDestroy {
       .set("keep_circ_history", this.user.preferences.keep_circ_history)
       .set("keep_hold_history", this.user.preferences.keep_hold_history)
       .set("v", "5");
-    console.log(params); // TODO
     this.user.update_preferences(params);
   }
   async toggle_circ_history(event) { // ActionSheet
@@ -76,13 +76,18 @@ export class PreferencesPage implements OnInit, OnDestroy {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
+            this.ignore_change = true;
             this.user.preferences.keep_circ_history = true;
           }
         }]
       });
       await actionSheet.present();
     } else {
-      this.update_circ_history(event.detail.checked);
+      if (this.ignore_change == true) {
+        this.ignore_change = false;
+      } else {
+        this.update_circ_history(event.detail.checked);
+      }
     }
   }
   update_circ_history(val) {
@@ -94,7 +99,6 @@ export class PreferencesPage implements OnInit, OnDestroy {
       .set("keep_circ_history", val.toString())
       .set("keep_hold_history", this.user.preferences.keep_hold_history)
       .set("v", "5");
-    console.log(params); // TODO
     this.user.update_preferences(params);
   }
 
@@ -145,10 +149,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
               .set("username", values.username)
               .set("current_password", values.current_password)
               .set("v", "5");
-            console.log(params); // TODO
             this.user.update_preferences(params);
           } else {
-            console.log("nevermind");
           }
         }
       }]
@@ -184,10 +186,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
               .set("hold_shelf_alias", values.hold_shelf_alias)
               .set("current_password", values.current_password)
               .set("v", "5");
-            console.log(params); // TODO
             this.user.update_preferences(params);
           } else {
-            console.log("nevermind"); // ALSO TODO (use a toast)
           }
         }
       }]
@@ -222,10 +222,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
               .set("email", values.email)
               .set("current_password", values.current_password)
               .set("v", "5");
-            console.log(params); // TODO
             this.user.update_preferences(params);
           } else {
-            console.log("nevermind"); // ALSO TODO
           }
         }
       }]
@@ -267,10 +265,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
                 .set("new_password", values.new_password1)
                 .set("current_password", values.current_password)
                 .set("v", "5");
-              console.log(params); // TODO
               this.user.update_preferences(params);
             } else {
-              console.log("Something went wrong.");
             }
           }
         }
@@ -305,16 +301,22 @@ export class PreferencesPage implements OnInit, OnDestroy {
         text: 'Ok',
         handler: (values) => {
           if (values.phone_notify_number != this.user.preferences.phone_notify_number) {
+            let temp_number = values.phone_notify_number.replace(/\D/g, '');
+            if (temp_number.length == 10) {
+              temp_number = temp_number.replace(/^(\d{0,3})(\d{0,3})(\d{0,4})/, '$1-$2-$3');
+            } else {
+              this.toast.present("Please enter a 10-digit phone number.", 5000);
+              return;
+            }
             let params = new HttpParams()
               .set("token", this.user.token)
               .set("notify_prefs_changed", "true")
-              .set("phone_notify_number", values.phone_notify_number)
+              .set("phone_notify_number", temp_number)
               .set("text_notify_number", this.user.preferences.text_notify_number)
               .set("email_notify", this.user.preferences.email_notify)
               .set("phone_notify", this.user.preferences.phone_notify)
               .set("text_notify", this.user.preferences.text_notify)
               .set("v", "5");
-            console.log(params); // TODO
             this.user.update_preferences(params);
           } else {
             this.toast.present("New number matches current number. Enter a new number or press Cancel to cancel.", 5000);
@@ -342,16 +344,22 @@ export class PreferencesPage implements OnInit, OnDestroy {
         text: 'Ok',
         handler: (values) => {
           if (values.text_notify_number != this.user.preferences.text_notify_number) {
+            let temp_number = values.text_notify_number.replace(/\D/g, '');
+            if (temp_number.length == 10) {
+              temp_number = temp_number.replace(/^(\d{0,3})(\d{0,3})(\d{0,4})/, '$1-$2-$3');
+            } else {
+              this.toast.present("Please enter a 10-digit phone number.", 5000);
+              return;
+            }
             let params = new HttpParams()
               .set("token", this.user.token)
               .set("notify_prefs_changed", "true")
               .set("phone_notify_number", this.user.preferences.phone_notify_number)
-              .set("text_notify_number", values.text_notify_number)
+              .set("text_notify_number", temp_number)
               .set("email_notify", this.user.preferences.email_notify)
               .set("phone_notify", this.user.preferences.phone_notify)
               .set("text_notify", this.user.preferences.text_notify)
               .set("v", "5");
-            console.log(params); // TODO
             this.user.update_preferences(params);
           } else {
             this.toast.present("New number matches current number. Enter a new number or press Cancel to cancel.", 5000);
@@ -380,9 +388,6 @@ export class PreferencesPage implements OnInit, OnDestroy {
       params = params.append("phone_notify", this.user.preferences.phone_notify);
       params = params.append("email_notify", this.user.preferences.email_notify);
     }
-    console.log(params);
-    console.log("detail.checked: ", event.detail.checked.toString());
-    console.log("what: ", event.target.id);
     this.user.update_preferences(params);
   }
 
