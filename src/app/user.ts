@@ -72,6 +72,10 @@ export class User {
 
   login(auto = false) {
     if (auto == false) {
+      if (!this.username || !this.password) {
+        this.toast.present("Username and password are required.", 5000);
+        return;
+      }
       this.hashed_password = Md5.hashStr(this.password);
       this.storage.set('hashed_password', this.hashed_password);
     }
@@ -85,7 +89,7 @@ export class User {
     this.http.get(url, {params: params})
       .subscribe(data => {
         console.log(data);
-        if (data['user']['token']) {
+        if (data['user']) {
           this.update_user_object(data['user']);
           this.holds = data['holds'];
           this.checkouts = data['checkouts'];
@@ -98,6 +102,9 @@ export class User {
               this.events.publish('action_retry');
             }
           });
+        } else {
+          this.loading.dismiss();
+          this.toast.present("Username or password were incorrect. Please try again.", 5000);
         }
       },
       (err) => {
