@@ -102,10 +102,10 @@ export class User {
                 items_ready.push(item['id']);
               }
             });
-            items_ready = items_ready.join();
+            let items_ready_str = items_ready.join();
             this.storage.get('items_ready').then((items) => {
-              if (items_ready != items) {
-                this.storage.set('items_ready', items_ready);
+              if (items_ready_str != items) {
+                this.storage.set('items_ready', items_ready_str);
                 this.toast.present("You have one or more items available for pickup. View your holds for details.");
               }
             });
@@ -118,10 +118,10 @@ export class User {
                 items_overdue.push(item['id']);
               }
             });
-            items_overdue = items_overdue.join();
+            let items_overdue_str = items_overdue.join();
             this.storage.get('items_overdue').then((items) => {
-              if (items_overdue != items) {
-                this.storage.set('items_overdue', items_overdue);
+              if (items_overdue_str != items) {
+                this.storage.set('items_overdue', items_overdue_str);
                 this.toast.present("You have one or more items overdue. View your checkouts for details.");
               }
             });
