@@ -27,11 +27,16 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="user.checkout_history.length == 0 && user.preferences.keep_circ_history == true" padding>
-    Checkout History is not yet loaded, or unavailable.
+  <div *ngIf="!user.logged_in" padding>
+    This page will update once you are logged in.
   </div>
-  <div *ngIf="user.preferences.keep_circ_history == false" padding>
-    Checkout History is not enabled on your account.
+  <div *ngIf="user.logged_in">
+    <div *ngIf="user.checkout_history.length == 0 && user.preferences.keep_circ_history == true" padding>
+      Checkout History is not yet loaded, or unavailable.
+    </div>
+    <div *ngIf="user.preferences.keep_circ_history == false" padding>
+      Checkout History is not enabled on your account.
+    </div>
   </div>
   <ion-list *ngIf="user.checkout_history">
     <ion-item *ngFor="let checkout of user.checkout_history" (click)="item.details(checkout)">
