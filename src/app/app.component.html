@@ -85,16 +85,18 @@
       <ion-content *ngIf="user.logged_in == false">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
-            <ion-item>
-              <ion-label position="floating">Username</ion-label>
-              <ion-input type="text" name="username" [(ngModel)]="user.username" (click)="$event.stopPropagation();"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" name="password" [(ngModel)]="user.password" (click)="$event.stopPropagation();"></ion-input>
-            </ion-item>
-            <ion-button margin-top expand="full" color="primary" type="submit" (click)="$event.stopPropagation();user.login();"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
-            <ion-button expand="full" fill="clear" routerDirection="back" routerLink="/password-reset">Trouble logging in?</ion-button>
+            <form>
+              <ion-item>
+                <ion-label position="floating">Username</ion-label>
+                <ion-input type="text" name="username" [(ngModel)]="user.username" (keyup.enter)="user.login()" (click)="$event.stopPropagation();"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input type="password" name="password" [(ngModel)]="user.password" (keyup.enter)="user.login()" (click)="$event.stopPropagation();"></ion-input>
+              </ion-item>
+              <ion-button margin-top expand="full" color="primary" (click)="user.login()"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
+              <ion-button expand="full" fill="clear" routerDirection="back" routerLink="/password-reset">Trouble logging in?</ion-button>
+            </form>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
