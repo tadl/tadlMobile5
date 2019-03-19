@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Platform, IonInfiniteScroll, Events } from '@ionic/angular';
+import { Platform, IonInfiniteScroll, Events, ModalController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { Globals } from '../globals';
 import { User } from '../user';
 import { Item } from '../item';
+import { ItemDetailPage } from '../item-detail/item-detail.page';
 
 @Component({
   selector: 'app-checkout-history',
@@ -20,12 +21,32 @@ export class CheckoutHistoryPage implements OnInit, OnDestroy {
     public item: Item,
     private platform: Platform,
     private _location: Location,
+    private modalController: ModalController,
   ) { }
 
   subscription: any;
 
   refresh_checkout_history(event) {
     this.user.get_checkout_history(0, event);
+  }
+
+  async details(item) {
+    this.subscription.unsubscribe();
+    const modal = await this.modalController.create({
+      component: ItemDetailPage,
+      componentProps: {
+        "item": item,
+      }
+    });
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        console.log('Modal sent data: ', dataReturned);
+        this.subscription = this.platform.backButton.subscribe(() => {
+          this._location.back();
+        });
+      }
+    });
+    return await modal.present();
   }
 
   ngOnInit() {

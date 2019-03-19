@@ -39,7 +39,7 @@
     </div>
   </div>
   <ion-list *ngIf="user.checkout_history">
-    <ion-item *ngFor="let checkout of user.checkout_history" (click)="item.details(checkout)">
+    <ion-item *ngFor="let checkout of user.checkout_history" (click)="details(checkout)">
       <ion-thumbnail slot="start">
         <ion-img [src]="globals.catalog_covers_medium + checkout.id"></ion-img>
       </ion-thumbnail>
