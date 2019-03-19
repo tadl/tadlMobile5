@@ -75,7 +75,7 @@
       </ion-item>
     </ion-list>
   </form>
-  <ion-item *ngFor="let result of this.results" (click)="item.details(result)">
+  <ion-item *ngFor="let result of this.results" (click)="details(result)">
     <ion-thumbnail slot="start">
       <ion-img [src]="globals.catalog_covers_medium + result.id"></ion-img>
     </ion-thumbnail>

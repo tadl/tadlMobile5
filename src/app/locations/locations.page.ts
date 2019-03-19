@@ -43,6 +43,7 @@ export class LocationsPage implements OnInit {
   }
 
   async view_details(location) {
+    this.subscription.unsubscribe();
     const modal = await this.modalController.create({
       component: LocationDetailPage,
       componentProps: {
@@ -52,6 +53,9 @@ export class LocationsPage implements OnInit {
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
         console.log('Modal sent data: ', dataReturned);
+        this.subscription = this.platform.backButton.subscribe(() => {
+          this._location.back();
+        });
       }
     });
     return await modal.present();

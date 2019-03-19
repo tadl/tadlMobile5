@@ -1,17 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Platform, IonInfiniteScroll } from '@ionic/angular';
+import { Platform, ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
-
 import { Keyboard } from '@ionic-native/keyboard/ngx';
-
-import { LoadingService } from '../services/loading/loading.service';
-import { ToastService } from '../services/toast/toast.service';
-
 import { Globals } from '../globals';
 import { User } from '../user';
 import { Item } from '../item';
+import { LoadingService } from '../services/loading/loading.service';
+import { ToastService } from '../services/toast/toast.service';
+import { ItemDetailPage } from '../item-detail/item-detail.page';
 
 @Component({
   selector: 'app-search',
@@ -32,6 +30,7 @@ export class SearchPage implements OnInit {
     private platform: Platform,
     private _location: Location,
     private keyboard: Keyboard,
+    private modalController: ModalController,
   ) { }
 
   query: string;
@@ -112,6 +111,25 @@ export class SearchPage implements OnInit {
     this.loading_more = true;
     this.infinite = infiniteScroll;
     this.get_results(this.page);
+  }
+
+  async details(item) {
+    this.subscription.unsubscribe();
+    const modal = await this.modalController.create({
+      component: ItemDetailPage,
+      componentProps: {
+        "item": item,
+      }
+    });
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        console.log('Modal sent data: ', dataReturned);
+        this.subscription = this.platform.backButton.subscribe(() => {
+          this._location.back();
+        });
+      }
+    });
+    return await modal.present();
   }
 
   ngOnInit() {

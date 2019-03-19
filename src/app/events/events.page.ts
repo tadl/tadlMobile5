@@ -109,6 +109,7 @@ export class EventsPage implements OnInit {
   }
 
   async view_details(event) {
+    this.subscription.unsubscribe();
     const modal = await this.modalController.create({
       component: EventDetailPage,
       componentProps: {
@@ -118,6 +119,9 @@ export class EventsPage implements OnInit {
     modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
         console.log('Modal sent data: ', dataReturned);
+        this.subscription = this.platform.backButton.subscribe(() => {
+          this._location.back();
+        });
       }
     });
     return await modal.present();

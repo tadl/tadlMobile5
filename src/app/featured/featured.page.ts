@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Platform, IonInfiniteScroll } from '@ionic/angular';
+import { Platform, ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 
@@ -8,6 +8,7 @@ import { Item } from '../item';
 import { User } from '../user';
 
 import { ToastService } from '../services/toast/toast.service';
+import { ItemDetailPage } from '../item-detail/item-detail.page';
 
 @Component({
   selector: 'app-featured',
@@ -38,6 +39,7 @@ export class FeaturedPage implements OnInit {
     private http: HttpClient,
     private platform: Platform,
     private _location: Location,
+    private modalController: ModalController,
   ) { }
 
   featured_search(search, title) {
@@ -90,6 +92,25 @@ export class FeaturedPage implements OnInit {
     this.size = data['size'];
     this.sort = data['sort'];
     this.type = data['type'];
+  }
+
+  async details(item) {
+    this.subscription.unsubscribe();
+    const modal = await this.modalController.create({
+      component: ItemDetailPage,
+      componentProps: {
+        "item": item,
+      }
+    });
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        console.log('Modal sent data: ', dataReturned);
+        this.subscription = this.platform.backButton.subscribe(() => {
+          this._location.back();
+        });
+      }
+    });
+    return await modal.present();
   }
 
   ngOnInit() {
