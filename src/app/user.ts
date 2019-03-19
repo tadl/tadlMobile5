@@ -90,8 +90,12 @@ export class User {
         console.log(data);
         if (data['user']) {
           this.update_user_object(data['user']);
-          this.holds = data['holds'];
-          this.checkouts = data['checkouts'];
+          if (this.holds != data['holds']) {
+            this.holds = data['holds'];
+          }
+          if (this.checkouts != data['checkouts']) {
+            this.checkouts = data['checkouts'];
+          }
           this.preferences = data['preferences'];
           this.storage.set('username', this.username);
           if (data['user']['holds_ready'] > 0) {
@@ -345,7 +349,9 @@ export class User {
       .subscribe(data => {
         if (refresher) { refresher.target.complete(); }
         if (data['checkouts'] && data['user']) {
-          this.checkouts = data['checkouts'];
+          if (this.checkouts != data['checkouts']) {
+            this.checkouts = data['checkouts'];
+          }
           this.update_user_object(data['user']);
         }
       },
@@ -494,7 +500,9 @@ export class User {
           if (ready == true) {
             this.holds_ready = data['holds'];
           } else {
-            this.holds = data['holds'];
+            if (this.holds != data['holds']) {
+              this.holds = data['holds'];
+            }
           }
         }
       },
