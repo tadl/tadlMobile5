@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Platform, Events } from '@ionic/angular';
 import { Location } from '@angular/common';
-
 import { Globals } from '../globals';
 import { User } from '../user';
 

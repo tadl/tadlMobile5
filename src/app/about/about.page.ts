@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Platform } from '@ionic/angular';
 import { Device } from '@ionic-native/device/ngx';
-
 import { Globals } from '../globals';
 import { User } from '../user';
 

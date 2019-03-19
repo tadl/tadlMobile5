@@ -2,11 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform, ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
-
 import { Globals } from '../globals';
 import { Item } from '../item';
 import { User } from '../user';
-
 import { ToastService } from '../services/toast/toast.service';
 import { ItemDetailPage } from '../item-detail/item-detail.page';
 

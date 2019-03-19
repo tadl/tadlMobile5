@@ -6,7 +6,6 @@ import { NativeHttpModule, NativeHttpBackend, NativeHttpFallback } from 'ionic-n
 import { FormsModule } from '@angular/forms';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { TruncateModule } from '@yellowspot/ng-truncate';
-
 import { Platform, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -14,10 +13,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Globals } from './globals';
 import { User } from './user';
 import { Item } from './item';
-
 import { LoadingService } from './services/loading/loading.service';
 import { ToastService } from './services/toast/toast.service';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EventDetailPageModule } from './event-detail/event-detail.module';

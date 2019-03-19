@@ -2,9 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Platform, Events, ActionSheetController, AlertController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 import { ToastService } from '../services/toast/toast.service';
-
 import { Globals } from '../globals';
 import { User } from '../user';
 

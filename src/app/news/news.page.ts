@@ -2,11 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform, ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
 import { Globals } from '../globals';
-
 import { ToastService } from '../services/toast/toast.service';
-
 import { NewsDetailPage } from '../news-detail/news-detail.page';
 
 @Component({

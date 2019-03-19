@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, MenuController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-
 import { User } from '../user';
 import { Globals } from '../globals';
 

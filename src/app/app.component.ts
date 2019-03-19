@@ -3,11 +3,9 @@ import { Platform, MenuController, ModalController, IonRouterOutlet } from '@ion
 import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { Globals } from './globals';
 import { User } from './user';
 import { Item } from './item';
-
 import { CardPage } from './card/card.page';
 
 @Component({

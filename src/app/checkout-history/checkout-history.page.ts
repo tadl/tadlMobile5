@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Platform, IonInfiniteScroll, Events } from '@ionic/angular';
 import { Location } from '@angular/common';
-
 import { Globals } from '../globals';
 import { User } from '../user';
 import { Item } from '../item';

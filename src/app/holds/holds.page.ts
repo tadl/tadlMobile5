@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Platform, ModalController, Events } from '@ionic/angular';
 import { Location } from '@angular/common';
-
 import { Globals } from '../globals';
 import { User } from '../user';
 import { Item } from '../item';
-
 import { ItemDetailPage } from '../item-detail/item-detail.page';
 
 @Component({
