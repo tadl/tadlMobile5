@@ -55,10 +55,19 @@ export class AppComponent {
       if (this.platform.is('ios')) {
         this.statusBar.styleDefault();
       }
+      if (this.platform.is('cordova')) {
+        document.addEventListener("resume", this.onResume, false);
+      }
       this.splashScreen.hide();
       this.statusBar.show();
       this.user.autolog();
     });
+  }
+
+  onResume() {
+    setTimeout(function() {
+      this.user.autolog();
+    }, 0);
   }
 
 }
