@@ -90,10 +90,10 @@ export class User {
         console.log(data);
         if (data['user']) {
           this.update_user_object(data['user']);
-          if (this.holds != data['holds']) {
+          if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
             this.holds = data['holds'];
           }
-          if (this.checkouts != data['checkouts']) {
+          if (JSON.stringify(this.checkouts) != JSON.stringify(data['checkouts'])) {
             this.checkouts = data['checkouts'];
           }
           this.preferences = data['preferences'];
@@ -349,7 +349,7 @@ export class User {
       .subscribe(data => {
         if (refresher) { refresher.target.complete(); }
         if (data['checkouts'] && data['user']) {
-          if (this.checkouts != data['checkouts']) {
+          if (JSON.stringify(this.checkouts) != JSON.stringify(data['checkouts'])) {
             this.checkouts = data['checkouts'];
           }
           this.update_user_object(data['user']);
@@ -500,7 +500,7 @@ export class User {
           if (ready == true) {
             this.holds_ready = data['holds'];
           } else {
-            if (this.holds != data['holds']) {
+            if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
               this.holds = data['holds'];
             }
           }
