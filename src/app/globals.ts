@@ -54,6 +54,7 @@ export class Globals {
   public catalog_preferences_url: string = this.catalog_api_base + '/preferences.json';
   public catalog_update_preferences_url: string = this.catalog_api_base + '/update_preferences.json';
   public catalog_password_reset_url: string = this.catalog_api_base + '/submit_password_reset.json';
+  public catalog_square_covers_url: string = this.catalog_api_base + '/';
 
   public catalog_covers_small: string = this.catalog_covers_base + '/small/r/';
   public catalog_covers_medium: string = this.catalog_covers_base + '/medium/r/';

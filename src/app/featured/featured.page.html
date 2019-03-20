@@ -16,29 +16,32 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div *ngIf="item.featured">
-    <ion-segment [(ngModel)]="media_type">
-      <ion-segment-button *ngFor="let key of item.featured_keys" [value]="key">
-        <ion-label style="font-size:16px;" padding>{{ key }}</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-    <div [ngSwitch]="media_type">
-      <ion-grid *ngFor="let key of item.featured_keys" no-margin no-padding>
-        <ion-row *ngSwitchCase="key" no-margin no-padding>
-          <ion-col *ngFor="let search of item.featured[key]">
-            <ion-button (click)="featured_search(search.search_link, search.nice_title)" expand="full" [color]="(this.search_title == search.nice_title) ? 'primary' : 'light'">
-              {{ search.nice_title }}
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+  <div *ngIf="this.results==''">
+    <div *ngIf="item.featured">
+      <ion-segment [(ngModel)]="media_type">
+        <ion-segment-button *ngFor="let key of item.featured_keys" [value]="key">
+          <ion-label style="font-size:16px;" padding>{{ key }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <div [ngSwitch]="media_type">
+        <ion-grid *ngFor="let key of item.featured_keys" no-margin no-padding>
+          <ion-row *ngSwitchCase="key" no-margin no-padding>
+            <ion-col *ngFor="let search of item.featured[key]">
+              <img [src]="globals.catalog_square_covers_url + search.title + '_box.jpg'" (click)="featured_search(search.search_link, search.nice_title)">
+              <ion-button (click)="featured_search(search.search_link, search.nice_title)" expand="full" [color]="(this.search_title == search.nice_title) ? 'primary' : 'light'">
+                {{ search.nice_title }}
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
     </div>
   </div>
   <h2 *ngIf="!media_type" text-center>Pick a category to get started</h2>
   <div *ngIf="results">
-    <ion-item-divider>
+    <ion-item-divider (click)="this.results=''">
       <ion-label>{{ this.search_title }}</ion-label>
-      <ion-icon slot="end" name="close" (click)="this.results=''"></ion-icon>
+      <ion-note slot="end" color="dark">close</ion-note>
     </ion-item-divider>
     <ion-item *ngFor="let result of this.results" (click)="details(result)">
       <ion-thumbnail slot="start">

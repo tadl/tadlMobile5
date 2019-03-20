@@ -22,7 +22,7 @@ export class FeaturedPage implements OnInit {
   media_type: any = "Books";
   page: any;
   query: any;
-  results: any;
+  results: any = '';
   search_title: any;
   size: string = "50";
   sort: string = "pubdateDESC";
