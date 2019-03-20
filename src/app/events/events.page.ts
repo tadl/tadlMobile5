@@ -17,7 +17,7 @@ export class EventsPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   url: string = this.globals.events_api_url;
-  events: any;
+  web_events: any;
   location: any = '';
   location_previous: any = '';
   page: any = 1;
@@ -25,6 +25,7 @@ export class EventsPage implements OnInit {
   infinite: any;
   subscription: any;
   some_error: any;
+  more_web_events: boolean = true;
 
   constructor(
     public globals: Globals,
@@ -44,9 +45,6 @@ export class EventsPage implements OnInit {
       loc = null;
     }
     this.get_events(1, loc, event);
-    if (this.infinite) {
-      this.infinite.target.disabled = false;
-    }
   }
 
   load_more_data(infiniteScroll) {
@@ -58,7 +56,13 @@ export class EventsPage implements OnInit {
     }
     this.loading_more = true;
     this.infinite = infiniteScroll;
-    this.get_events(this.page, this.location);
+    if (this.more_web_events == false) {
+      this.infinite.target.complete();
+      this.loading_more = false;
+      this.infinite.target.disabled = true;
+    } else {
+      this.get_events(this.page, this.location);
+    }
   }
 
   get_events(page, loc?, refresher?) {
@@ -72,15 +76,25 @@ export class EventsPage implements OnInit {
     }
     this.http.get(this.url, {params: params})
       .subscribe(data => {
-        if (refresher) { refresher.target.complete(); }
+        if (refresher) {
+          refresher.target.complete();
+          if (this.infinite) {
+            this.infinite.target.disabled = false;
+          }
+        }
         if (data['events']) {
           if (this.loading_more) {
-            this.events.push.apply(this.events, data['events']);
+            this.web_events.push.apply(this.web_events, data['events']);
             this.infinite.target.complete();
             this.loading_more = false;
             if (!data['next_rest_url']) { this.infinite.target.disabled = true; }
           } else {
-            this.events = data['events'];
+            this.web_events = data['events'];
+            if (!data['next_rest_url']) {
+              this.more_web_events = false;
+            } else {
+              this.more_web_events = true;
+            }
           }
         } else {
           if (this.loading_more) {

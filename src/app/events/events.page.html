@@ -27,7 +27,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="!this.events" text-center>
+  <div *ngIf="!this.web_events" text-center>
     <ion-progress-bar type="indeterminate"></ion-progress-bar>
     <ion-grid>
       <ion-row>
@@ -44,7 +44,7 @@
     <div>{{ some_error }}</div>
   </div>
 
-  <ion-list *ngIf="this.events">
+  <ion-list *ngIf="this.web_events">
 
     <ion-item *ngIf="globals.multi_location == true">
       <ion-label class="location-label">Location</ion-label>
@@ -54,7 +54,7 @@
       </ion-select>
     </ion-item>
 
-    <ion-item *ngFor="let event of this.events" (click)="view_details(event)" detail="true">
+    <ion-item *ngFor="let event of this.web_events" (click)="view_details(event)" detail="true">
       <ion-thumbnail slot="start" *ngIf="event.image && event.image.extension != 'pdf'">
         <ion-img [src]="event.image.sizes.thumbnail.url"></ion-img>
       </ion-thumbnail>
