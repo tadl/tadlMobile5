@@ -111,7 +111,7 @@ export class User {
               }
             });
           }
-          if (data['user']['overdue'] > 0) {
+          if (data['user']['overdue'] > 0) { // TODO: this should be improved
             let items_overdue = [];
             this.checkouts.forEach(function(item) {
               var due_date = new Date(item['due_date']);
@@ -147,8 +147,8 @@ export class User {
 
   autolog() {
     this.storage.get('username').then((val) => {
-      this.username = val;
-      if (typeof this.username != 'undefined' && this.username) {
+      if (val) {
+        this.username = val;
         this.storage.get('hashed_password').then((val) => {
           this.hashed_password = val;
           this.login(true);

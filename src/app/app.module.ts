@@ -28,7 +28,10 @@ import { CardPageModule } from './card/card.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__db',
+      driverOrder: ['indexeddb', 'websql'],
+    }),
     NativeHttpModule,
     HttpClientModule,
     FormsModule,
