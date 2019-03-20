@@ -10,6 +10,10 @@ import { Platform, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { BrowserTab } from '@ionic-native/browser-tab/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Globals } from './globals';
 import { User } from './user';
 import { Item } from './item';
@@ -52,6 +56,10 @@ import { CardPageModule } from './card/card.module';
     Item,
     StatusBar,
     SplashScreen,
+    BrowserTab,
+    Device,
+    Keyboard,
+    InAppBrowser,
     LoadingService,
     ToastService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

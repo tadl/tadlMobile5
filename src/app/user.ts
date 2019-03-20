@@ -126,6 +126,8 @@ export class User {
                 this.toast.present("You have one or more items overdue. View your checkouts for details.");
               }
             });
+          } else {
+            this.storage.remove('items_overdue');
           }
           this.loading.dismiss().then(() => {
             this.events.publish('ready_to_hold');

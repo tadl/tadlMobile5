@@ -51,7 +51,7 @@
         <ion-label color="dark">Total Owed</ion-label>
         <ion-note slot="end" color="dark">${{ user.fines_amount }}</ion-note>
       </ion-item>
-      <ion-button expand="full" [href]="globals.pay_fines_url">Pay Fines</ion-button>
+      <ion-button expand="full" (click)="globals.open_url(globals.pay_fines_url)">Pay Fines</ion-button>
     </ion-list>
   </div>
 

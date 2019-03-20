@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ModalController, MenuController } from '@ionic/angular';
+import { Platform, ModalController, MenuController } from '@ionic/angular';
+import { BrowserTab } from '@ionic-native/browser-tab/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { format, parseISO } from 'date-fns';
 
 @Injectable()
@@ -8,13 +10,16 @@ export class Globals {
   constructor(
     private menuController: MenuController,
     private modalController: ModalController,
+    private platform: Platform,
+    private browserTab: BrowserTab,
+    private iab: InAppBrowser,
   ) { }
 
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.27';
-  public update_version: string = '13';
+  public app_version: string = '5.0.28';
+  public update_version: string = '0';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -205,6 +210,22 @@ export class Globals {
   async close_modal() {
     const onClosedData: string = "Wrapped up!";
     await this.modalController.dismiss(onClosedData);
+  }
+
+  /* link handler */
+  open_url(url) {
+    if (this.platform.is('cordova')) {
+      this.browserTab.isAvailable()
+        .then(isAvailable => {
+          if (isAvailable) {
+            this.browserTab.openUrl(url);
+          } else {
+            this.iab.create(url, '_system');
+          }
+        });
+    } else {
+      this.iab.create(url, '_system');
+    }
   }
 
 }
