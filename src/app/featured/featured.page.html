@@ -26,7 +26,7 @@
       <div [ngSwitch]="media_type">
         <ion-grid *ngFor="let key of item.featured_keys" no-margin no-padding>
           <ion-row *ngSwitchCase="key" no-margin no-padding>
-            <ion-col *ngFor="let search of item.featured[key]">
+            <ion-col size="6" *ngFor="let search of item.featured[key]">
               <img [src]="globals.catalog_square_covers_url + search.title + '_box.jpg'" (click)="featured_search(search.search_link, search.nice_title)">
               <ion-button (click)="featured_search(search.search_link, search.nice_title)" expand="full" [color]="(this.search_title == search.nice_title) ? 'primary' : 'light'">
                 {{ search.nice_title }}
@@ -39,7 +39,7 @@
   </div>
   <h2 *ngIf="!media_type" text-center>Pick a category to get started</h2>
   <div *ngIf="results">
-    <ion-item-divider (click)="this.results=''">
+    <ion-item-divider (click)="this.results='';this.search_title='cats'">
       <ion-label>{{ this.search_title }}</ion-label>
       <ion-note slot="end" color="dark">close</ion-note>
     </ion-item-divider>
