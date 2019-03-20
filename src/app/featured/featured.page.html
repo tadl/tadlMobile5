@@ -41,7 +41,7 @@
   <div *ngIf="results">
     <ion-item-divider (click)="this.results='';this.search_title='cats'">
       <ion-label>{{ this.search_title }}</ion-label>
-      <ion-note slot="end" color="dark">close</ion-note>
+      <ion-icon name="close" slot="end"></ion-icon>
     </ion-item-divider>
     <ion-item *ngFor="let result of this.results" (click)="details(result)">
       <ion-thumbnail slot="start">
