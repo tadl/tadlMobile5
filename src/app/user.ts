@@ -4,7 +4,7 @@ import { Events, ModalController, ActionSheetController, AlertController } from 
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
-import { parseISO, isBefore } from 'date-fns';
+import { format, formatDistance, parseISO, isBefore, isAfter } from 'date-fns';
 import { LoadingService } from './services/loading/loading.service';
 import { ToastService } from './services/toast/toast.service';
 
@@ -93,9 +93,7 @@ export class User {
           if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
             this.holds = data['holds'];
           }
-          if (JSON.stringify(this.checkouts) != JSON.stringify(data['checkouts'])) {
-            this.checkouts = data['checkouts'];
-          }
+          this.process_checkouts(data['checkouts']);
           this.preferences = data['preferences'];
           this.storage.set('username', this.username);
           if (data['user']['holds_ready'] > 0) {
@@ -340,6 +338,22 @@ export class User {
       });
   }
 
+  process_checkouts(data) {
+    let date_today = new Date().toISOString().split("T")[0];
+    data.forEach(function(checkout, index) {
+      if (isBefore(new Date(checkout['due_date']), parseISO(date_today))) {
+        data[index]['overdue'] = true;
+        data[index]['due_words'] = formatDistance(new Date(checkout['due_date']), parseISO(date_today)) + ' ago';
+      } else {
+        data[index]['overdue'] = false;
+        data[index]['due_words'] = 'in ' + formatDistance(new Date(checkout['due_date']), parseISO(date_today));
+      }
+    });
+    if (JSON.stringify(this.checkouts) != JSON.stringify(data)) {
+      this.checkouts = data;
+    }
+  }
+
   get_checkouts(refresher?) {
     let params = new HttpParams()
       .set("token", this.token)
@@ -349,9 +363,7 @@ export class User {
       .subscribe(data => {
         if (refresher) { refresher.target.complete(); }
         if (data['checkouts'] && data['user']) {
-          if (JSON.stringify(this.checkouts) != JSON.stringify(data['checkouts'])) {
-            this.checkouts = data['checkouts'];
-          }
+          this.process_checkouts(data['checkouts']);
           this.update_user_object(data['user']);
         }
       },
@@ -381,10 +393,10 @@ export class User {
       .subscribe(data => {
         this.loading.dismiss();
         if (data['errors'].length == 0 && data['checkouts'] && data['user']) {
-          this.checkouts = data['checkouts'];
+          this.process_checkouts(data['checkouts']);
           this.toast.present(data['message']);
         } else if (data['checkouts'] && data['user']) {
-          this.checkouts = data['checkouts'];
+          this.process_checkouts(data['checkouts']);
           let message = data['message'] + ': ';
           data['errors'].forEach(function(val) {
             message += val['title'] + ': ' + val['message'];
@@ -409,10 +421,7 @@ export class User {
   }
 
   renew_all() {
-    let url = this.globals.catalog_renew_url;
-    let ids = [];
-    this.checkouts.forEach(function(item) { ids.push(item['checkout_id']); });
-    this.renew(ids.join());
+    this.renew(this.checkouts.filter(item => item['renew_attempts'] > 0).map(item => item['checkout_id']).join());
   }
 
   async login_and_place_hold(id) {

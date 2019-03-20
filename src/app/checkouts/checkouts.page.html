@@ -33,11 +33,9 @@
       <h2 margin-horizontal [innerHTML]="checkout.title"></h2>
       <ion-card-content>
         <img [src]="this.globals.catalog_covers_medium + checkout.id" float-left padding-end padding-bottom style="width: 35%;">
+        <h1 *ngIf="checkout.overdue"><ion-text color="danger">This item is overdue</ion-text></h1>
         <p><strong>{{ checkout.author }}</strong></p>
-        <p>
-          <span>Due </span>
-          <span [innerHTML]="checkout.due_date"></span>
-        </p>
+        <p>Due {{ checkout.due_date }} ({{ checkout.due_words }})</p>
         <p><span *ngIf="checkout.renew_attempts == 0">No </span><span *ngIf="checkout.renew_attempts > 0">{{ checkout.renew_attempts }} </span>Renewal<span *ngIf="(checkout.renew_attempts > 1) || (checkout.renew_attempts == 0)">s</span> remaining</p>
         <p>Barcode: {{ checkout.barcode }}</p>
         <ion-grid style="clear: both;">
