@@ -31,7 +31,7 @@
     <ion-card *ngFor="let hold of this.user.holds_ready" no-margin>
       <h2 margin-horizontal [innerHTML]="hold.title_display"></h2>
       <ion-card-content>
-        <img [src]="this.globals.catalog_covers_medium + hold.id" float-left padding-end padding-bottom style="width: 35%">
+        <img [src]="globals.catalog_covers_large + hold.id" float-left padding-end padding-bottom style="width: 35%">
         <p><strong>{{ hold.author }}</strong></p>
         <p *ngIf="hold.hold_status != ''">Position {{ hold.queue_state[0] }} in queue with {{ hold.queue_state[1] }} eligible cop<span *ngIf="hold.queue_state[1] > 1 || hold.queue_state[1] == 0">ies</span><span *ngIf="hold.queue_state[1] == 1">y</span></p>
         <p *ngIf="globals.multi_location==true">Pickup location: {{ hold.pickup_location }}</p>

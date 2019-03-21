@@ -32,8 +32,8 @@
           <h2 [innerHTML]="location.fullname"></h2>
         </ion-text>
         <ion-text>
-          <p *ngIf="location[this.globals.day_today().toLowerCase()]=='Closed'">Closed today</p>
-          <p *ngIf="location[this.globals.day_today().toLowerCase()]!='Closed'">Open {{ location[this.globals.day_today().toLowerCase()] }} today</p>
+          <p *ngIf="location[globals.day_today().toLowerCase()]=='Closed'">Closed today</p>
+          <p *ngIf="location[globals.day_today().toLowerCase()]!='Closed'">Open {{ location[globals.day_today().toLowerCase()] }} today</p>
         </ion-text>
         <ion-text color="medium">
           <p>{{ location.address }}, {{ location.citystatezip }}</p>
