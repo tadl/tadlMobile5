@@ -74,8 +74,10 @@ export class EventsPage implements OnInit {
     if (this.loading_more == false && this.infinite) {
       this.infinite.target.disabled = false;
     }
+    this.globals.api_loading = true;
     this.http.get(this.url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (refresher) {
           refresher.target.complete();
           if (this.infinite) {
@@ -107,6 +109,7 @@ export class EventsPage implements OnInit {
           this.toast.present(this.globals.server_error_msg);
         }
       }, (err) => {
+        this.globals.api_loading = false;
         if (this.infinite) {
           this.infinite.target.complete();
           this.infinite.target.disabled = true;

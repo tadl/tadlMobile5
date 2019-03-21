@@ -27,14 +27,17 @@ export class LocationsPage implements OnInit {
   ) { }
 
   get_locations() {
+    this.globals.api_loading = true;
     this.http.get(this.url)
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (data['locations']) {
           this.locations = data['locations'];
         } else {
           this.toast.present(this.globals.server_error_msg);
         }
       }, (err) => {
+        this.globals.api_loading = false;
         this.toast.present(this.globals.server_error_msg);
       });
   }

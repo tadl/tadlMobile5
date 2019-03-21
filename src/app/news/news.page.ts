@@ -43,8 +43,10 @@ export class NewsPage implements OnInit {
       .set("page", page)
       .set("per_page", "20")
       .set("categories_exclude", this.globals.news_category_exclude)
+    this.globals.api_loading = true;
     this.http.get(this.url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (refresher) { refresher.target.complete(); }
         if (data) {
           if (this.loading_more) {
@@ -63,6 +65,7 @@ export class NewsPage implements OnInit {
           this.toast.present(this.globals.server_error_msg);
         }
       }, (err) => {
+        this.globals.api_loading = false;
         if (this.loading_more) {
           this.infinite.target.complete();
           this.infinite.target.disabled = true;

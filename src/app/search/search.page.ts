@@ -68,8 +68,10 @@ export class SearchPage implements OnInit {
       .set("limit_available", this.limit_available.toString())
       .set("fmt", this.format);
     var url = this.globals.catalog_search_url;
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         this.prev_query = this.query;
         if (data['results']) {
           if (data['type']) { this.type = data['type']; }
@@ -91,6 +93,7 @@ export class SearchPage implements OnInit {
         }
       },
       (err) => {
+        this.globals.api_loading = false;
         if (this.loading_more == true) {
           this.infinite.target.complete();
           this.loading_more = false;

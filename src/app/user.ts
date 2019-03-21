@@ -84,7 +84,7 @@ export class User {
       .set("full", "true")
       .set("v", "5");
     let url = this.globals.catalog_login_url;
-    this.loading.present('Logging in...');
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
         console.log(data);
@@ -129,20 +129,19 @@ export class User {
           } else {
             this.storage.remove('items_overdue');
           }
-          this.loading.dismiss().then(() => {
-            this.events.publish('ready_to_hold');
-            this.events.publish('logged_in');
-            if (this.action_retry == true) {
-              this.events.publish('action_retry');
-            }
-          });
+          this.globals.api_loading = false;
+          this.events.publish('ready_to_hold');
+          this.events.publish('logged_in');
+          if (this.action_retry == true) {
+            this.events.publish('action_retry');
+          }
         } else {
-          this.loading.dismiss();
+          this.globals.api_loading = false;
           this.toast.present("Username or password were incorrect. Please try again.", 5000);
         }
       },
       (err) => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         this.toast.present(this.globals.server_error_msg);
       });
   }
@@ -228,8 +227,10 @@ export class User {
       .set("v", "5")
       .set("page", this.checkout_history_page);
     let url = this.globals.catalog_checkout_history_url;
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (refresher) { refresher.target.complete(); }
         if (data['user'] && data['checkouts']) {
           if (this.checkout_history_loading_more == true) {
@@ -244,6 +245,7 @@ export class User {
         }
       },
       (err) => {
+        this.globals.api_loading = false;
         if (this.checkout_history_loading_more == true) {
           this.checkout_history_infinite.target.complete();
           this.checkout_history_loading_more = false;
@@ -267,13 +269,16 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_fines_url;
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (data) {
           this.fines = data;
         }
       },
       (err) => {
+        this.globals.api_loading = false;
         if (this.action_retry == true) {
           this.toast.present(this.globals.server_error_msg);
           this.action_retry = false;
@@ -293,14 +298,17 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_preferences_url;
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (data) {
           this.update_user_object(data['user']);
           this.preferences = data['preferences'];
         }
       },
       (err) => {
+        this.globals.api_loading = false;
         if (this.action_retry == true) {
           this.toast.present(this.globals.server_error_msg);
           this.action_retry = false;
@@ -316,16 +324,16 @@ export class User {
   }
 
   update_preferences(params) {
-    this.loading.present("Updating...");
+    this.globals.api_loading = true;
     let url = this.globals.catalog_update_preferences_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         this.update_user_object(data['user']);
         this.preferences = data['preferences'];
       },
       (err) => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         if (this.action_retry == true) {
           this.toast.present(this.globals.server_error_msg);
           this.action_retry = false;
@@ -361,8 +369,10 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_checkouts_url;
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (refresher) { refresher.target.complete(); }
         if (data['checkouts'] && data['user']) {
           this.process_checkouts(data['checkouts']);
@@ -370,6 +380,7 @@ export class User {
         }
       },
       (err) => {
+        this.globals.api_loading = false;
         if (this.action_retry == true) {
           this.toast.present(this.globals.server_error_msg);
           this.action_retry = false;
@@ -390,10 +401,10 @@ export class User {
       .set("token", this.token)
       .set("checkout_ids", cid)
       .set("v", "5");
-    this.loading.present('Renewing...');
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         if (data['errors'].length == 0 && data['checkouts'] && data['user']) {
           this.process_checkouts(data['checkouts']);
           this.toast.present(data['message']);
@@ -407,7 +418,7 @@ export class User {
         }
       },
       (err) => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         if (this.action_retry == true) {
           this.toast.present(this.globals.server_error_msg);
           this.action_retry = false;
@@ -444,10 +455,10 @@ export class User {
       .set("v", "5");
     if (force) { params = params.append("force", "true"); }
     let url = this.globals.catalog_place_hold_url;
-    this.loading.present('Placing hold...');
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         if (data['user'] && data['hold']) {
           if (data['hold']['need_to_force'] == true) {
             this.force_needed(data['hold']['id'], data['hold']['error']);
@@ -461,10 +472,10 @@ export class User {
       },
       (err) => {
         if (this.action_retry == true) {
-          this.loading.dismiss();
+          this.globals.api_loading = false;
           this.toast.present(this.globals.server_error_msg);
         } else {
-          this.loading.dismiss();
+          this.globals.api_loading = false;
           this.action_retry = true;
           this.events.subscribe('action_retry', () => {
             this.place_hold(id);
@@ -503,8 +514,10 @@ export class User {
     } else {
       var url = this.globals.catalog_holds_url;
     }
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (refresher) { refresher.target.complete(); }
         if (data['holds'] && data['user']) {
           this.update_user_object(data['user']);
@@ -518,6 +531,7 @@ export class User {
         }
       },
       (err) => {
+        this.globals.api_loading = false;
         if (this.action_retry == true) {
           this.toast.present(this.globals.server_error_msg);
           this.action_retry = false;
@@ -542,10 +556,10 @@ export class User {
     if (task == "activate") { var action = "activated"; }
     else if (task == "suspend") { var action = "suspended"; }
     else if (task == "cancel") { var action = "canceled"; }
-    this.loading.present('One moment...');
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         if (data['holds'] && data['user']) {
           this.holds = data['holds'];
           this.update_user_object(data['user']);
@@ -553,7 +567,7 @@ export class User {
         }
       },
       (err) => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         if (this.action_retry == true) {
           this.toast.present(this.globals.server_error_msg);
           this.action_retry = false;
@@ -595,10 +609,10 @@ export class User {
       .set("hold_status", hold.hold_status)
       .set("pickup_location", newloc.detail.value)
       .set("v", "5");
-    this.loading.present("Changing pickup location...");
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
-        this.loading.dismiss();
+        this.globals.api_loading = false;
         if (data['hold_id'] == hold.hold_id) {
           this.holds.find(item => item['hold_id'] == data['hold_id'])['pickup_location'] = data['pickup_location'];
           this.toast.present('Changed pickup location for ' + hold.title_display + ' to ' + data['pickup_location'], 5000);

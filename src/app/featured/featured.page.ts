@@ -47,13 +47,16 @@ export class FeaturedPage implements OnInit {
     let params = JSON.parse('{"' + decodeURI(search.replace(/\/search\?/, '')).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     let url = this.globals.catalog_search_url;
     if (this.infinite) { this.infinite.target.disabled = false; }
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         this.results = data['results'];
         this.search_title = title;
         this.update_vars(data);
       },
       (err) => {
+        this.globals.api_loading = false;
         this.toast.present(this.globals.server_error_msg);
       });
   }
@@ -70,14 +73,17 @@ export class FeaturedPage implements OnInit {
       .set("sort", this.sort)
       .set("type", this.type)
     let url = this.globals.catalog_search_url;
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         this.results.push.apply(this.results, data['results']);
         this.infinite.target.complete();
         if (data['more_results'] == false) { this.infinite.target.disabled = true; }
         this.update_vars(data);
       },
       (err) => {
+        this.globals.api_loading = false;
         this.toast.present(this.globals.server_error_msg);
       });
   }
