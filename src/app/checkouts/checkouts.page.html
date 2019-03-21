@@ -32,7 +32,7 @@
     <ion-card *ngFor="let checkout of user.checkouts" no-margin>
       <h2 margin-horizontal [innerHTML]="checkout.title"></h2>
       <ion-card-content>
-        <img [src]="globals.catalog_covers_large + checkout.id" float-left padding-end padding-bottom style="width: 35%;">
+        <img [src]="globals.catalog_covers_large + checkout.id" (error)="globals.image_error($event)" float-left padding-end padding-bottom style="width: 35%;">
         <h1 *ngIf="checkout.overdue"><ion-text color="danger">This item is overdue</ion-text></h1>
         <p><strong>{{ checkout.author }}</strong></p>
         <p>Due {{ checkout.due_date }} ({{ checkout.due_words }})</p>

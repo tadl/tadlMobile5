@@ -17,7 +17,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.29';
-  public update_version: string = '0';
+  public update_version: string = '1';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -216,6 +216,11 @@ export class Globals {
   /* link handler */
   open_url(url) {
     this.iab.create(url, '_system');
+  }
+
+  /* image error */
+  image_error(event) {
+    event.target.src = this.square_logo_url;
   }
 
 }
