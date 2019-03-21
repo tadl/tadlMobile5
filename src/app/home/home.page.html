@@ -35,7 +35,7 @@
     </ion-row>
     <ion-row *ngIf="user.logged_in">
       <ion-col size="12">
-        <p *ngIf="user.checkout_count > 0 || user.holds_count > 0 || user.fines_exist == true" text-wrap>
+        <p *ngIf="user.checkout_count > 0 || user.holds_count > 0 || user.fines_exist == true" text-wrap margin-horizontal>
           You have<span *ngIf="user.checkout_count > 0"> {{ user.checkout_count }} item<span *ngIf="user.checkout_count != 1">s</span> checked out<span *ngIf="user.overdue > 0"> ({{ user.overdue }} overdue)</span></span><span *ngIf="user.holds_count == 0 && user.fines_exist == false">.</span><span *ngIf="user.checkout_count > 0 && user.holds_count > 0">,</span><span *ngIf="user.holds_count > 0"> {{ user.holds_count }} item<span *ngIf="user.holds_count != 1">s</span> on hold<span *ngIf="user.holds_ready_count > 0"> ({{ user.holds_ready_count }} ready for pickup!)</span><span *ngIf="user.holds_ready_count == 0 && user.fines_exist == false">.</span><span *ngIf="user.fines_exist == true"><span *ngIf="user.checkout_count > 0 || user.holds_count > 0"> and</span> ${{ user.fines_amount }} in fines.</span></span>
         </p>
       </ion-col>
