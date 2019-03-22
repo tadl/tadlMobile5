@@ -16,8 +16,8 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.29';
-  public update_version: string = '1';
+  public app_version: string = '5.0.30';
+  public update_version: string = '0';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */

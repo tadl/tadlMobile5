@@ -1,6 +1,6 @@
 {
   "name": "tadlMobile5",
-  "version": "5.0.29",
+  "version": "5.0.30",
   "author": "Traverse Area District Library Technology Team",
   "homepage": "https://www.tadl.org/",
   "scripts": {
@@ -42,7 +42,7 @@
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
     "cordova-plugin-whitelist": "1.3.3",
-    "cordova-sqlite-storage": "^3.2.0",
+    "cordova-sqlite-storage": "3.2.0",
     "core-js": "^2.6.5",
     "date-fns": "^2.0.0-alpha.27",
     "ionic-native-http-connection-backend": "^5.0.4",
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.12.3",
-    "@angular-devkit/build-angular": "~0.12.3",
+    "@angular-devkit/build-angular": "^0.13.6",
     "@angular-devkit/core": "~7.2.3",
     "@angular-devkit/schematics": "~7.2.3",
     "@angular/cli": "~7.2.3",
@@ -92,7 +92,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-advanced-http": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-sqlite-storage": {}
     },
     "platforms": []
   }
