@@ -17,7 +17,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.29';
-  public update_version: string = '0';
+  public update_version: string = '1';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
