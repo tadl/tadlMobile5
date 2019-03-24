@@ -33,13 +33,6 @@
         <h2>{{ user.greeting }}, {{ user.username }}!</h2>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="user.logged_in">
-      <ion-col size="12">
-        <p *ngIf="user.checkout_count > 0 || user.holds_count > 0 || user.fines_exist == true" text-wrap margin-horizontal>
-          You have<span *ngIf="user.checkout_count > 0"> {{ user.checkout_count }} item<span *ngIf="user.checkout_count != 1">s</span> checked out<span *ngIf="user.overdue > 0"> ({{ user.overdue }} overdue)</span></span><span *ngIf="user.holds_count == 0 && user.fines_exist == false">.</span><span *ngIf="user.checkout_count > 0 && user.holds_count > 0">,</span><span *ngIf="user.holds_count > 0"> {{ user.holds_count }} item<span *ngIf="user.holds_count != 1">s</span> on hold<span *ngIf="user.holds_ready_count > 0"> ({{ user.holds_ready_count }} ready for pickup!)</span><span *ngIf="user.holds_ready_count == 0 && user.fines_exist == false">.</span><span *ngIf="user.fines_exist == true"><span *ngIf="user.checkout_count > 0 || user.holds_count > 0"> and</span> ${{ user.fines_amount }} in fines.</span></span>
-        </p>
-      </ion-col>
-    </ion-row>
     <ion-row class="searchbox">
       <ion-col size="12" class="searchbox">
         <form action=".">
@@ -48,6 +41,24 @@
             <ion-button color="primary" size="default" slot="end" expand="full" (click)="this.search()" class="searchbox-right">Go!</ion-button>
           </ion-item>
         </form>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="user.logged_in">
+      <ion-col size="12" *ngIf="user.checkout_count > 0 || user.holds_count > 0 || user.fines_exist == true">
+        <ion-item *ngIf="user.checkout_count > 0" color="primary" lines="full" detail="false" routerLink="/checkouts" routerDirection="root">
+          <ion-label>Checkouts</ion-label>
+          <ion-badge slot="end" color="light">{{ user.checkout_count }}</ion-badge>
+          <ion-badge slot="end" color="danger" *ngIf="user.overdue > 0">{{ user.overdue }} overdue!</ion-badge>
+        </ion-item>
+        <ion-item *ngIf="user.holds_count > 0" color="primary" lines="full" detail="false" routerLink="/holds" routerDirection="root">
+          <ion-label>Holds</ion-label>
+          <ion-badge slot="end" color="light">{{ user.holds_count }}</ion-badge>
+          <ion-badge slot="end" color="success" *ngIf="user.holds_ready_count > 0">{{ user.holds_ready_count }} ready for pickup!</ion-badge>
+        </ion-item>
+        <ion-item *ngIf="user.fines_exist" color="primary" lines="full" detail="false" routerLink="/fines" routerDirection="root">
+          <ion-label>Fines and Fees</ion-label>
+          <ion-badge slot="end" color="danger">${{ user.fines_amount }}</ion-badge>
+        </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
