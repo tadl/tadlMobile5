@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Platform, ModalController, MenuController } from '@ionic/angular';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { format, parseISO } from 'date-fns';
 
 @Injectable()
@@ -10,13 +9,12 @@ export class Globals {
     private menuController: MenuController,
     private modalController: ModalController,
     private platform: Platform,
-    private iab: InAppBrowser,
   ) { }
 
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.30';
+  public app_version: string = '5.0.31';
   public update_version: string = '0';
 
   /* basic information */
@@ -211,11 +209,6 @@ export class Globals {
   async close_modal() {
     const onClosedData: string = "Wrapped up!";
     await this.modalController.dismiss(onClosedData);
-  }
-
-  /* link handler */
-  open_url(url) {
-    this.iab.create(url, '_system');
   }
 
   /* image error */
