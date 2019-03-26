@@ -20,18 +20,18 @@ export class LocationDetailPage implements OnInit {
   ) { }
 
   open_map() {
-    ln.isAppAvailable(ln.APP.GOOGLE_MAPS, function(isAvailable) {
+    this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS, function(isAvailable) {
       var app;
       if (isAvailable) {
-        app = ln.APP.GOOGLE_MAPS;
+        app = this.ln.APP.GOOGLE_MAPS;
       } else {
         if (this.platform.is('ios')) {
-          app = ln.APP.APPLE_MAPS;
+          app = this.ln.APP.APPLE_MAPS;
         } else {
-          app = ln.APP.USER_SELECT;
+          app = this.ln.APP.USER_SELECT;
         }
       }
-      ln.navigate(this.address, {
+      this.ln.navigate(this.address, {
         app: app
       });
     });
