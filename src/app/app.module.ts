@@ -12,6 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Globals } from './globals';
 import { User } from './user';
@@ -57,6 +58,7 @@ import { CardPageModule } from './card/card.module';
     SplashScreen,
     Device,
     Keyboard,
+    LaunchNavigator,
     InAppBrowser,
     LoadingService,
     ToastService,

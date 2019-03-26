@@ -17,6 +17,9 @@
     <div text-center>
       <ion-text>{{ location.citystatezip }}</ion-text>
     </div>
+    <div margin-top text-center *ngIf="platform.is('cordova')">
+      <ion-button (click)="open_map()">View in Maps</ion-button>>
+    </div>
     <p text-center>
       <ion-text>
         <a href="tel:{{ location.phone }}">{{ location.phone }}</a> &bull; <a href="mailto:{{ location.email }}">{{ location.email }}</a>

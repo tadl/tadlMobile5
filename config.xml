@@ -91,4 +91,7 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="2.1.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="3.0.0" />
     <plugin name="cordova-sqlite-storage" spec="3.2.0" />
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="5.0.4">
+        <variable name="GOOGLE_API_KEY_FOR_ANDROID" value="AIzaSyAOvxq0Rpa0muS2pvnZInp0RIS1HEbzsVk" />
+    </plugin>
 </widget>
