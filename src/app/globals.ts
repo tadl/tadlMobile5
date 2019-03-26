@@ -14,7 +14,7 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.31';
+  public app_version: string = '5.0.32';
   public update_version: string = '0';
 
   /* basic information */

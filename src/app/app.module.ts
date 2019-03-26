@@ -34,7 +34,7 @@ import { CardPageModule } from './card/card.module';
     IonicModule.forRoot(),
     IonicStorageModule.forRoot({
       name: '__db',
-      driverOrder: ['sqlite', 'websql', 'indexeddb'],
+      driverOrder: ['websql', 'indexeddb'],
     }),
     NativeHttpModule,
     HttpClientModule,
