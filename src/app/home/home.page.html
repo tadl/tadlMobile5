@@ -45,12 +45,12 @@
     </ion-row>
     <ion-row *ngIf="user.logged_in">
       <ion-col size="12" *ngIf="user.checkout_count > 0 || user.holds_count > 0 || user.fines_exist == true">
-        <ion-item *ngIf="user.checkout_count > 0" color="primary" lines="full" detail="false" routerLink="/checkouts" routerDirection="root">
+        <ion-item *ngIf="user.checkout_count > 0" color="primary" lines="full" detail="false" routerLink="/checkouts" routerDirection="root" class="home-item">
           <ion-label>Checkouts</ion-label>
           <ion-badge slot="end" color="light">{{ user.checkout_count }}</ion-badge>
           <ion-badge slot="end" color="danger" *ngIf="user.overdue > 0">{{ user.overdue }} overdue!</ion-badge>
         </ion-item>
-        <ion-item *ngIf="user.holds_count > 0" color="primary" lines="full" detail="false" routerLink="/holds" routerDirection="root">
+        <ion-item *ngIf="user.holds_count > 0" color="primary" lines="full" detail="false" routerLink="/holds" routerDirection="root" class="home-item">
           <ion-label>Holds</ion-label>
           <ion-badge slot="end" color="light">{{ user.holds_count }}</ion-badge>
           <ion-badge slot="end" color="success" *ngIf="user.holds_ready_count > 0">{{ user.holds_ready_count }} ready for pickup!</ion-badge>
