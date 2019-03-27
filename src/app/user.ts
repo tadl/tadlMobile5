@@ -52,7 +52,6 @@ export class User {
   checkout_history_loading_more: boolean = false;
   checkout_history_infinite: any;
   checkout_history_retrieved: boolean = false;
-  greeting: string = this.globals.greetings[Math.floor(Math.random() * this.globals.greetings.length)];
 
   update_user_object(data) {
     this.logged_in = true;

@@ -31,7 +31,6 @@ export class Globals {
 
   /* customizable strings */
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute.";
-  public greetings: Array<any> = ['Hello', 'Hi', 'Greetings', 'Hiya', 'Yo', 'Howdy'];
   public reset_card_label: string = "Username or Card #";
 
   /* catalog things */
