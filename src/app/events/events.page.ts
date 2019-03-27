@@ -24,7 +24,6 @@ export class EventsPage implements OnInit {
   loading_more: boolean = false;
   infinite: any;
   subscription: any;
-  some_error: any;
   more_web_events: boolean = true;
 
   constructor(
@@ -103,8 +102,6 @@ export class EventsPage implements OnInit {
             this.infinite.target.complete();
             this.loading_more = false;
           } else {
-            this.some_error = "IF FAILED: ";
-            this.some_error += JSON.stringify(data);
           }
           this.toast.present(this.globals.server_error_msg);
         }
@@ -115,8 +112,6 @@ export class EventsPage implements OnInit {
           this.infinite.target.disabled = true;
           this.loading_more = false;
         } else {
-          this.some_error = "ERROR: ";
-          this.some_error += JSON.stringify(err);
         }
         this.toast.present(this.globals.server_error_msg);
       });
