@@ -191,7 +191,7 @@ export class User {
     await actionSheet.present();
   }
 
-  actually_logout() {
+  actually_logout(token_only = false) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -199,9 +199,11 @@ export class User {
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data["success"] || data["error"] == "not logged in or invalid token") {
-          delete this.stored_accounts[this.id];
-          this.stored_accounts_keys = Object.keys(this.stored_accounts);
-          this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
+          if (!token_only) {
+            delete this.stored_accounts[this.id];
+            this.stored_accounts_keys = Object.keys(this.stored_accounts);
+            this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
+          }
           this.clear_user();
         }
       },
@@ -237,7 +239,7 @@ export class User {
 
   switch_user() {
     this.update_stored_accounts();
-    this.clear_user();
+    this.actually_logout(true);
   }
 
   update_stored_accounts() {
