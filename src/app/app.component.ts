@@ -68,4 +68,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
     this.cdr.detectChanges();
   }
 
+  ngOnInit() {
+  }
+
 }
