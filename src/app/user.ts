@@ -203,8 +203,10 @@ export class User {
             delete this.stored_accounts[this.id];
             this.stored_accounts_keys = Object.keys(this.stored_accounts);
             this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
+            this.clear_user();
+          } else {
+            this.clear_user();
           }
-          this.clear_user();
         }
       },
       (err) => {
@@ -229,6 +231,7 @@ export class User {
     this.melcat_id = '';
     this.fines_exist = false;
     this.default_pickup = '';
+    this.preferences = {};
     this.fines = [];
     this.holds = [];
     this.holds_ready = [];
@@ -257,6 +260,7 @@ export class User {
       };
       this.stored_accounts[this.id] = user;
       this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
+      this.stored_accounts_keys = Object.keys(this.stored_accounts);
     }
   }
 
@@ -370,7 +374,7 @@ export class User {
       });
   }
 
-  update_preferences(params) {
+  update_preferences(params, password?) {
     this.globals.api_loading = true;
     let url = this.globals.catalog_update_preferences_url;
     this.http.get(url, {params: params})
@@ -378,6 +382,9 @@ export class User {
         this.globals.api_loading = false;
         this.update_user_object(data['user']);
         this.preferences = data['preferences'];
+        if (password) {
+          this.hashed_password = Md5.hashStr(password);
+        }
       },
       (err) => {
         this.globals.api_loading = false;

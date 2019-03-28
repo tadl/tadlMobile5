@@ -263,7 +263,7 @@ export class PreferencesPage implements OnInit, OnDestroy {
                 .set("new_password", values.new_password1)
                 .set("current_password", values.current_password)
                 .set("v", "5");
-              this.user.update_preferences(params);
+              this.user.update_preferences(params, values.new_password1);
             } else {
             }
           }
