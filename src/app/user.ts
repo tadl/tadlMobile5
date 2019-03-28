@@ -1,5 +1,5 @@
 import { Globals } from './globals';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { Events, ModalController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
@@ -21,6 +21,7 @@ export class User {
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     public modalController: ModalController,
+    private zone: NgZone,
     private http: HttpClient,
     private router: Router,
     private storage: Storage,
@@ -205,12 +206,13 @@ export class User {
             delete this.stored_accounts[this.id];
             this.stored_accounts_keys = Object.keys(this.stored_accounts);
             this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
-            this.clear_user();
           } else {
-            this.clear_user();
           }
+          this.zone.run(() => {
+            this.clear_user();
+            this.router.navigate(['/home']);
+          });
         }
-        this.router.navigate(['/home']);
       },
       (err) => {
         this.toast.present(this.globals.server_error_msg);
