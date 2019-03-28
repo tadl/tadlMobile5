@@ -1,6 +1,7 @@
 import { Globals } from './globals';
 import { Component, ViewChild } from '@angular/core';
 import { Events, ModalController, ActionSheetController, AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -21,6 +22,7 @@ export class User {
     public alertController: AlertController,
     public modalController: ModalController,
     private http: HttpClient,
+    private router: Router,
     private storage: Storage,
   ) {
   }
@@ -174,12 +176,12 @@ export class User {
 
   async logout() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Please confirm",
+      header: "Please confirm you'd like to log out.",
       buttons: [{
         text: 'Log Out',
         role: 'destructive',
         handler: () => {
-          this.actually_logout();
+          this.actually_logout(false);
         }
       }, {
         text: 'Cancel',
@@ -191,7 +193,7 @@ export class User {
     await actionSheet.present();
   }
 
-  actually_logout(token_only = false) {
+  actually_logout(token_only?) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -199,7 +201,7 @@ export class User {
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data["success"] || data["error"] == "not logged in or invalid token") {
-          if (!token_only) {
+          if (token_only == false) {
             delete this.stored_accounts[this.id];
             this.stored_accounts_keys = Object.keys(this.stored_accounts);
             this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
@@ -208,6 +210,7 @@ export class User {
             this.clear_user();
           }
         }
+        this.router.navigate(['/home']);
       },
       (err) => {
         this.toast.present(this.globals.server_error_msg);
