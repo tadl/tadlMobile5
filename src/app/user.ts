@@ -199,8 +199,10 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_logout_url;
+    this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
+        this.globals.api_loading = false;
         if (data["success"] || data["error"] == "not logged in or invalid token") {
           if (token_only == false) {
             delete this.stored_accounts[this.id];
