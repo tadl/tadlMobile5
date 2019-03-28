@@ -52,7 +52,7 @@
           <ion-title>Account</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content *ngIf="user.logged_in == true">
+      <ion-content *ngIf="user.logged_in">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
             <ion-item-divider><ion-label>{{ user.full_name }}</ion-label></ion-item-divider>
@@ -68,11 +68,11 @@
               <ion-label>Holds Ready for Pickup</ion-label>
               <ion-badge slot="end">{{ user.holds_ready_count }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/fines" detail="false" [disabled]="user.fines_exist != true">
+            <ion-item routerDirection="root" routerLink="/fines" detail="false" [disabled]="!user.fines_exist">
               <ion-label>Fines</ion-label>
               <ion-badge slot="end">${{ user.fines_amount }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/checkout-history" detail="true" *ngIf="user.preferences.keep_circ_history == true">
+            <ion-item routerDirection="root" routerLink="/checkout-history" detail="true" *ngIf="user.preferences.keep_circ_history">
               <ion-label>Checkout History</ion-label>
             </ion-item>
             <ion-item routerDirection="root" routerLink="/preferences" detail="true">
@@ -82,11 +82,26 @@
         </ion-list>
         <ion-button margin-bottom expand="full" color="success" (click)="view_card();"><ion-ripple-effect></ion-ripple-effect>View Card</ion-button>
         <ion-button expand="full" color="danger" (click)="user.logout()"><ion-ripple-effect></ion-ripple-effect>Log Out</ion-button>
+        <ion-button expand="full" fill="clear" (click)="user.switch_user()">Switch User</ion-button>
       </ion-content>
-      <ion-content *ngIf="user.logged_in == false">
+
+
+
+      <ion-content *ngIf="!user.logged_in">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
+            <div *ngIf="user.stored_accounts">
+              <ion-item-divider>
+                <ion-label>Stored Accounts</ion-label>
+              </ion-item-divider>
+              <ion-item *ngFor="let key of user.stored_accounts_keys" (click)="$event.stopPropagation();user.login_as(key);" detail="true">
+                <ion-label>{{ user.stored_accounts[key]['full_name'] }}</ion-label>
+              </ion-item>
+            </div>
             <form>
+              <ion-item-divider>
+                <ion-label>Log in</ion-label>
+              </ion-item-divider>
               <ion-item>
                 <ion-label position="floating">Username</ion-label>
                 <ion-input type="text" name="username" [(ngModel)]="user.username" (keyup.enter)="user.login()" (click)="$event.stopPropagation();"></ion-input>
@@ -95,7 +110,7 @@
                 <ion-label position="floating">Password</ion-label>
                 <ion-input type="password" name="password" [(ngModel)]="user.password" (keyup.enter)="user.login()" (click)="$event.stopPropagation();"></ion-input>
               </ion-item>
-              <ion-button margin-top expand="full" color="primary" (click)="user.login()"><ion-ripple-effect></ion-ripple-effect>Log in</ion-button>
+              <ion-button margin-top expand="full" color="primary" (click)="user.login()"><ion-ripple-effect></ion-ripple-effect>Go</ion-button>
               <ion-button expand="full" fill="clear" routerDirection="root" routerLink="/password-reset">Trouble logging in?</ion-button>
             </form>
           </ion-menu-toggle>

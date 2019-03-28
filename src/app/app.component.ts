@@ -59,6 +59,7 @@ export class AppComponent {
       this.splashScreen.hide();
       this.statusBar.show();
       this.user.autolog();
+      this.user.update_stored_accounts();
     });
   }
 

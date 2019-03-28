@@ -41,6 +41,7 @@ export class User {
   token: string;
   default_pickup: string;
   melcat_id: string;
+  id: string;
   fines: any;
   action_retry: any;
   preferences: any;
@@ -52,6 +53,8 @@ export class User {
   checkout_history_loading_more: boolean = false;
   checkout_history_infinite: any;
   checkout_history_retrieved: boolean = false;
+  stored_accounts: any = {};
+  stored_accounts_keys: Array<string> = [];
 
   update_user_object(data) {
     this.logged_in = true;
@@ -61,11 +64,18 @@ export class User {
     this.holds_count = data['holds'];
     this.holds_ready_count = data['holds_ready'];
     this.fines_amount = data['fine'];
+    this.id = data['melcat_id'];
     if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
     if (parseFloat(this.fines_amount) != parseFloat('0.00')) { this.fines_exist = true; }
     this.card = data['card'];
     this.overdue = data['overdue'];
     this.default_pickup = data['pickup_library'];
+  }
+
+  login_as(id) {
+    this.username = this.stored_accounts[id]['username'];
+    this.hashed_password = this.stored_accounts[id]['hashed_password'];
+    this.login(true);
   }
 
   login(auto = false) {
@@ -75,7 +85,6 @@ export class User {
         return;
       }
       this.hashed_password = Md5.hashStr(this.password);
-      this.storage.set('hashed_password', this.hashed_password);
     }
     let params = new HttpParams()
       .set("username", this.username)
@@ -89,12 +98,14 @@ export class User {
         console.log(data);
         if (data['user']) {
           this.update_user_object(data['user']);
+          this.update_stored_accounts();
           if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
             this.holds = data['holds'];
           }
           this.process_checkouts(data['checkouts']);
           this.preferences = data['preferences'];
           this.storage.set('username', this.username);
+          this.storage.set('hashed_password', this.hashed_password);
           if (data['user']['holds_ready'] > 0) {
             let items_ready = [];
             this.holds.forEach(function(item) {
@@ -186,30 +197,59 @@ export class User {
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data["success"] || data["error"] == "not logged in or invalid token") {
-          this.logged_in = false;
-          this.username = '';
-          this.password = '';
-          this.token = '';
-          this.full_name = '';
-          this.checkout_count = '';
-          this.holds_count = '';
-          this.holds_ready_count = '';
-          this.fines_amount = '';
-          this.card = '';
-          this.overdue = '';
-          this.melcat_id = '';
-          this.fines_exist = false;
-          this.default_pickup = '';
-          this.fines = [];
-          this.holds = [];
-          this.holds_ready = [];
-          this.checkouts = [];
-          this.storage.clear();
+          this.clear_user();
         }
       },
       (err) => {
         this.toast.present(this.globals.server_error_msg);
       });
+  }
+
+  clear_user() {
+    this.logged_in = false;
+    this.username = '';
+    this.password = '';
+    this.hashed_password = '';
+    this.token = '';
+    this.full_name = '';
+    this.checkout_count = '';
+    this.holds_count = '';
+    this.holds_ready_count = '';
+    this.fines_amount = '';
+    this.card = '';
+    this.overdue = '';
+    this.melcat_id = '';
+    this.fines_exist = false;
+    this.default_pickup = '';
+    this.fines = [];
+    this.holds = [];
+    this.holds_ready = [];
+    this.checkouts = [];
+    this.storage.remove('hashed_password');
+    this.storage.remove('username');
+  }
+
+  switch_user() {
+    this.update_stored_accounts();
+    this.clear_user();
+  }
+
+  update_stored_accounts() {
+    this.storage.get('stored_accounts').then((data) => {
+      if (data) {
+        this.stored_accounts = JSON.parse(data);
+        this.stored_accounts_keys = Object.keys(this.stored_accounts);
+      }
+    });
+    if (this.id) {
+      let user = {
+        hashed_password: this.hashed_password,
+        username: this.username,
+        full_name: this.full_name
+      };
+      this.stored_accounts[this.id] = user;
+      this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
+    }
   }
 
   get_more_checkout_history(infiniteScroll) {
