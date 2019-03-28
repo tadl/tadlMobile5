@@ -120,6 +120,8 @@ export class User {
                 this.toast.present("You have one or more items available for pickup. View your holds for details.");
               }
             });
+          } else {
+            this.storage.remove('items_ready');
           }
           if (data['user']['overdue'] > 0) { // TODO: this should be improved
             let items_overdue = [];
@@ -197,6 +199,9 @@ export class User {
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data["success"] || data["error"] == "not logged in or invalid token") {
+          delete this.stored_accounts[this.id];
+          this.stored_accounts_keys = Object.keys(this.stored_accounts);
+          this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
           this.clear_user();
         }
       },
@@ -218,6 +223,7 @@ export class User {
     this.fines_amount = '';
     this.card = '';
     this.overdue = '';
+    this.id = '';
     this.melcat_id = '';
     this.fines_exist = false;
     this.default_pickup = '';

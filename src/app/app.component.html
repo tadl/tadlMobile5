@@ -90,7 +90,7 @@
       <ion-content *ngIf="!user.logged_in">
         <ion-list>
           <ion-menu-toggle auto-hide="false" menu="right">
-            <div *ngIf="user.stored_accounts">
+            <div *ngIf="user.stored_accounts_keys.length > 0">
               <ion-item-divider>
                 <ion-label>Stored Accounts</ion-label>
               </ion-item-divider>
