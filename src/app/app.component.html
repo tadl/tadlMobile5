@@ -91,7 +91,7 @@
               <ion-item-divider>
                 <ion-label>Stored Accounts</ion-label>
               </ion-item-divider>
-              <ion-item *ngFor="let key of user.stored_accounts_keys" (click)="$event.stopPropagation();user.login_as(key);" detail="true">
+              <ion-item *ngFor="let key of user.stored_accounts_keys" (click)="$event.stopPropagation();user.login_as(key);" detail="true" lines="full">
                 <ion-label>
                   <ion-text>
                     <h2>{{ user.stored_accounts[key]['full_name'] }}</h2>
@@ -106,15 +106,15 @@
               <ion-item-divider>
                 <ion-label>Log in</ion-label>
               </ion-item-divider>
-              <ion-item>
+              <ion-item lines="full">
                 <ion-label position="floating">Username</ion-label>
                 <ion-input type="text" name="username" [(ngModel)]="user.username" (keyup.enter)="user.login()" (click)="$event.stopPropagation();"></ion-input>
               </ion-item>
-              <ion-item>
+              <ion-item lines="full">
                 <ion-label position="floating">Password</ion-label>
                 <ion-input type="password" name="password" [(ngModel)]="user.password" (keyup.enter)="user.login()" (click)="$event.stopPropagation();"></ion-input>
               </ion-item>
-              <ion-button margin-top expand="full" color="primary" (click)="user.login()"><ion-ripple-effect></ion-ripple-effect>Go</ion-button>
+              <ion-button margin-top expand="full" color="primary" (click)="$event.stopPropagation();user.login();"><ion-ripple-effect></ion-ripple-effect>Go</ion-button>
               <ion-button expand="full" fill="clear" routerDirection="root" routerLink="/password-reset">Trouble logging in?</ion-button>
             </form>
           </ion-menu-toggle>
