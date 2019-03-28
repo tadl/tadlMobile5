@@ -1,4 +1,4 @@
-import { NgModule, ChangeDetectorRef } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpBackend, HttpXhrBackend, HttpClientModule } from '@angular/common/http';
@@ -56,7 +56,6 @@ import { CardPageModule } from './card/card.module';
     Item,
     StatusBar,
     SplashScreen,
-    ChangeDetectorRef,
     Device,
     Keyboard,
     LaunchNavigator,

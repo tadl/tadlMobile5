@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { Platform, MenuController, ModalController, IonRouterOutlet } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -12,7 +12,7 @@ import { CardPage } from './card/card.page';
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterContentChecked {
   @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
 
   constructor(
@@ -22,6 +22,7 @@ export class AppComponent {
     private menu: MenuController,
     private modalController: ModalController,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     public globals: Globals,
     public user: User,
     public item: Item,
@@ -61,6 +62,10 @@ export class AppComponent {
       this.user.autolog();
       this.user.update_stored_accounts();
     });
+  }
+
+  ngAfterContentChecked() {
+    this.cdr.detectChanges();
   }
 
 }

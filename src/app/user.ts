@@ -1,5 +1,5 @@
 import { Globals } from './globals';
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Events, ModalController, ActionSheetController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
@@ -21,7 +21,6 @@ export class User {
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     public modalController: ModalController,
-    private change: ChangeDetectorRef,
     private http: HttpClient,
     private router: Router,
     private storage: Storage,
@@ -242,7 +241,6 @@ export class User {
     this.checkouts = [];
     this.storage.remove('hashed_password');
     this.storage.remove('username');
-    this.change.detectChanges();
   }
 
   switch_user() {
