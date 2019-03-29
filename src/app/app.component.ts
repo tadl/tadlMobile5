@@ -70,7 +70,11 @@ export class AppComponent implements OnInit, AfterContentChecked {
           }, 3000);
         });
         setTimeout(() => {
-          this.globals.net = JSON.stringify(this.network.type);
+          if (this.network.type == "none") {
+            this.globals.net_status = "offline";
+          } else {
+            this.globals.net_status = "online";
+          }
         }, 3000);
       }
       this.splashScreen.hide();

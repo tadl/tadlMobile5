@@ -15,7 +15,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.33';
-  public update_version: string = '3';
+  public update_version: string = '4';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -73,7 +73,6 @@ export class Globals {
   public api_loading: boolean = false;
   public net_status: string = "online";
   public net_type: string = "undefined";
-  public net: any;
 
   /* Arrays and Maps to handle multi-location things */
   /* Used for changing pickup locations on holds */
