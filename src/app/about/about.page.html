@@ -43,6 +43,14 @@
         <ion-label>Platforms</ion-label>
         <ion-note slot="end" color="dark">{{ platforms }}</ion-note>
       </ion-item>
+      <ion-item>
+        <ion-label>Network Status</ion-label>
+        <ion-note slot="end" color="dark">{{ globals.net_status }}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Network Type</ion-label>
+        <ion-note slot="end" color="dark">{{ globals.net_type }}</ion-note>
+      </ion-item>
 
     </ion-list>
     <ion-list *ngIf="this.platform.is('cordova')">
