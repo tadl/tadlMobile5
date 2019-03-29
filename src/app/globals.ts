@@ -14,8 +14,8 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.33';
-  public update_version: string = '4';
+  public app_version: string = '5.0.34';
+  public update_version: string = '0';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -65,13 +65,15 @@ export class Globals {
   public events_api_url: string = this.website_schema + this.website_host + '/wp-json/tribe/events/v1/events';
   public news_api_url: string = this.website_schema + this.website_host + '/wp-json/wp/v2/posts';
   public hours_locations_url: string = this.website_schema + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
-  public logo_url: string = this.website_schema + this.website_host + '/logo.png'; /* redirected by nginx */
-  public square_logo_url: string = this.website_schema + this.website_host + '/logo-clock-only.png'; /* redirected by nginx */
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
+
+  /* static assets */
+  public logo_url: string = '/assets/logo.png';
+  public square_logo_url: string = '/assets/logo-clock-only.png';
 
   /* test */
   public api_loading: boolean = false;
-  public net_status: string = "online";
+  public net_status: string = "offline";
   public net_type: string = "undefined";
 
   /* Arrays and Maps to handle multi-location things */

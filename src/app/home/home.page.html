@@ -23,7 +23,7 @@
         <ion-img [src]="globals.logo_url" class="logo-noauth"></ion-img>
       </ion-col>
     </ion-row>
-    <ion-row class="searchbox">
+    <ion-row class="searchbox" *ngIf="globals.net_status == 'online'">
       <ion-col size="12" class="searchbox">
         <form action=".">
           <ion-item lines="none" class="searchbox">
@@ -33,7 +33,7 @@
         </form>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="user.logged_in">
+    <ion-row *ngIf="user.logged_in && globals.net_status == 'online'">
       <ion-col size="12" *ngIf="user.checkout_count > 0 || user.holds_count > 0 || user.fines_exist == true">
         <ion-item *ngIf="user.checkout_count > 0" color="light" lines="none" detail="false" routerLink="/checkouts" routerDirection="root" class="home-item">
           <ion-label>
@@ -55,7 +55,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="globals.net_status == 'online'">
       <ion-col size="6">
         <ion-list>
           <ion-button routerDirection="root" routerLink="/search" expand="full">
@@ -90,4 +90,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-button expand="full" *ngIf="!this.platform.is('cordova')" (click)="globals.net_status = (globals.net_status == 'online') ? 'offline' : 'online'">Fake Network Status Toggle</ion-button>
 </ion-content>

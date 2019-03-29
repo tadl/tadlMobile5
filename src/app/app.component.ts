@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
+import { Component, ViewChild, NgZone, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { Platform, MenuController, ModalController, IonRouterOutlet } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
     private modalController: ModalController,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private zone: NgZone,
     private network: Network,
     public globals: Globals,
     public user: User,
@@ -61,19 +62,31 @@ export class AppComponent implements OnInit, AfterContentChecked {
       });
       if (this.platform.is('cordova')) {
         let disconnect_subscribe = this.network.onDisconnect().subscribe(() => {
-          this.globals.net_status = "offline";
+          this.zone.run(() => {
+            this.globals.net_status = "offline";
+          });
         });
         let connect_subscribe = this.network.onConnect().subscribe(() => {
-          this.globals.net_status = "online";
+          this.zone.run(() => {
+            this.globals.net_status = "online";
+            this.user.autolog();
+          });
           setTimeout(() => {
-            this.globals.net_type = this.network.type;
+            this.zone.run(() => {
+              this.globals.net_type = this.network.type;
+            });
           }, 3000);
         });
         setTimeout(() => {
           if (this.network.type == "none") {
-            this.globals.net_status = "offline";
+            this.zone.run(() => {
+              this.globals.net_status = "offline";
+            });
           } else {
-            this.globals.net_status = "online";
+            this.zone.run(() => {
+              this.globals.net_status = "online";
+              this.globals.net_type = this.network.type;
+            });
           }
         }, 3000);
       }

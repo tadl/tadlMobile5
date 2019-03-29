@@ -17,9 +17,7 @@
 </ion-header>
 
 <ion-content>
-
     <ion-list>
-
       <ion-item-divider>
         <ion-label>Information</ion-label>
       </ion-item-divider>
@@ -51,10 +49,8 @@
         <ion-label>Network Type</ion-label>
         <ion-note slot="end" color="dark">{{ globals.net_type }}</ion-note>
       </ion-item>
-
     </ion-list>
     <ion-list *ngIf="this.platform.is('cordova')">
-
       <ion-item-divider>
         <ion-label>Device Information</ion-label>
       </ion-item-divider>
@@ -88,8 +84,5 @@
           <ion-text><p float-right>{{ device.version }}</p></ion-text>
         </ion-label>
       </ion-item>
-
     </ion-list>
-
 </ion-content>
-
