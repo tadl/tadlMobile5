@@ -69,7 +69,9 @@ export class AppComponent implements OnInit, AfterContentChecked {
             this.globals.net_type = this.network.type;
           }, 3000);
         });
-        this.globals.net = JSON.stringify(this.network);
+        setTimeout(() => {
+          this.globals.net = JSON.stringify(this.network.type);
+        }, 3000);
       }
       this.splashScreen.hide();
       this.statusBar.show();
