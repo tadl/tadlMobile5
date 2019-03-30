@@ -15,7 +15,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.34';
-  public update_version: string = '1';
+  public update_version: string = '2';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -73,7 +73,7 @@ export class Globals {
 
   /* test */
   public api_loading: boolean = false;
-  public net_status: string = "offline";
+  public net_status: string = "online";
   public net_type: string = "undefined";
 
   /* Arrays and Maps to handle multi-location things */
