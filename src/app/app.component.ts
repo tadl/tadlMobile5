@@ -77,23 +77,23 @@ export class AppComponent implements OnInit, AfterContentChecked {
             });
           }, 3000);
         });
-        setTimeout(() => {
-          if (this.network.type == "none") {
-            this.zone.run(() => {
-              this.globals.net_status = "offline";
-            });
-          } else {
-            this.zone.run(() => {
-              this.globals.net_status = "online";
-              this.globals.net_type = this.network.type;
-            });
-          }
-        }, 3000);
+        if (this.network.type == "none") {
+          this.zone.run(() => {
+            this.globals.net_status = "offline";
+          });
+        } else {
+          this.zone.run(() => {
+            this.globals.net_status = "online";
+            this.globals.net_type = this.network.type;
+          });
+        }
       }
       this.splashScreen.hide();
       this.statusBar.show();
-      this.user.autolog();
-      this.user.update_stored_accounts();
+      if (this.globals.net_status == "online") {
+        this.user.autolog();
+        this.user.update_stored_accounts();
+      }
     });
   }
 

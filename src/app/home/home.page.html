@@ -19,8 +19,10 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" text-center>
-        <ion-img [src]="globals.logo_url" class="logo-noauth"></ion-img>
+      <ion-col size="12">
+        <p text-center>
+          <img [src]="globals.logo_url" class="logo-noauth">
+        </p>
       </ion-col>
     </ion-row>
     <ion-row class="searchbox" *ngIf="globals.net_status == 'online'">
@@ -87,6 +89,19 @@
             <ion-label>Featured</ion-label>
           </ion-button>
         </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="globals.net_status == 'offline'">
+      <ion-col size="1">
+      </ion-col>
+      <ion-col size="2">
+        <img src="/assets/offline.png" style="max-width:32px;width:100%;">
+      </ion-col>
+      <ion-col size="9">
+        <h2 no-margin>Offline</h2>
+        <p no-margin>
+          No data or wifi connection is detected. This app has limited functionality without network access.
+        </p>
       </ion-col>
     </ion-row>
   </ion-grid>

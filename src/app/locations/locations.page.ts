@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform, ModalController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Platform, ModalController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { Globals } from '../globals';
+import { format, formatDistance, isBefore } from 'date-fns';
 import { ToastService } from '../services/toast/toast.service';
 import { LocationDetailPage } from '../location-detail/location-detail.page';
 
@@ -16,6 +18,7 @@ export class LocationsPage implements OnInit {
   url: string = this.globals.hours_locations_url;
   locations: any;
   subscription: any;
+  offline_updated: any;
 
   constructor(
     public globals: Globals,
@@ -24,22 +27,37 @@ export class LocationsPage implements OnInit {
     private http: HttpClient,
     private platform: Platform,
     private _location: Location,
+    private storage: Storage,
   ) { }
 
   get_locations() {
-    this.globals.api_loading = true;
-    this.http.get(this.url)
-      .subscribe(data => {
-        this.globals.api_loading = false;
-        if (data['locations']) {
-          this.locations = data['locations'];
-        } else {
+    if (this.globals.net_status == "online") {
+      this.globals.api_loading = true;
+      this.http.get(this.url)
+        .subscribe(data => {
+          this.globals.api_loading = false;
+          if (data['locations']) {
+            this.locations = data['locations'];
+            this.storage.set('locations', JSON.stringify(data['locations'])).then(() => {
+              this.storage.set('locations_timestamp', new Date());
+            });
+          } else {
+            this.toast.present(this.globals.server_error_msg);
+          }
+        }, (err) => {
+          this.globals.api_loading = false;
           this.toast.present(this.globals.server_error_msg);
+        });
+    } else {
+      this.storage.get('locations').then((data) => {
+        if (data) {
+          this.locations = JSON.parse(data);
+          this.storage.get('locations_timestamp').then((data) => {
+            this.offline_updated = formatDistance(new Date(data), new Date()) + ' ago';
+          });
         }
-      }, (err) => {
-        this.globals.api_loading = false;
-        this.toast.present(this.globals.server_error_msg);
       });
+    }
   }
 
   async view_details(location) {
