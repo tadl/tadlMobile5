@@ -1,7 +1,6 @@
 import { Globals } from './globals';
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Events, ModalController, ActionSheetController, AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Events, ModalController, ActionSheetController, AlertController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
@@ -23,7 +22,7 @@ export class User {
     public modalController: ModalController,
     private zone: NgZone,
     private http: HttpClient,
-    private router: Router,
+    private nav: NavController,
     private storage: Storage,
   ) {
   }
@@ -208,11 +207,10 @@ export class User {
             delete this.stored_accounts[this.id];
             this.stored_accounts_keys = Object.keys(this.stored_accounts);
             this.storage.set('stored_accounts', JSON.stringify(this.stored_accounts));
-          } else {
           }
           this.zone.run(() => {
             this.clear_user();
-            this.router.navigate(['/home']);
+            this.nav.navigateRoot('/home');
           });
         }
       },
