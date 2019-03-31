@@ -492,8 +492,22 @@ export class User {
       });
   }
 
-  renew_all() {
-    this.renew(this.checkouts.filter(item => item['renew_attempts'] > 0).map(item => item['checkout_id']).join());
+  async renew_all() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Attempt to renew all items?",
+      buttons: [{
+        text: 'Renew All',
+        handler: () => {
+          this.renew(this.checkouts.filter(item => item['renew_attempts'] > 0).map(item => item['checkout_id']).join());
+        }
+      }, {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 
   async login_and_place_hold(id) {
