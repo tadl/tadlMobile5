@@ -80,9 +80,8 @@
           </ion-card-header>
           <ion-card-content>
             <p>Copy number {{ item.barcode }}</p>
-            <p *ngIf="item.return_date == '*'">Currently checked out</p>
+            <p *ngIf="item.return_date == '*'">Currently checked out; due {{ item.due_date }}</p>
             <p>Checked out {{ item.checkout_date }}</p>
-            <p *ngIf="item.due_date">Due {{ item.due_date }}</p>
             <p *ngIf="item.return_date != '*'">Returned: {{ item.return_date }}</p>
           </ion-card-content>
         </ion-card>
