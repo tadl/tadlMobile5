@@ -80,6 +80,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
         if (this.network.type == "none") {
           this.zone.run(() => {
             this.globals.net_status = "offline";
+            this.globals.net_type = this.network.type;
           });
         } else {
           this.zone.run(() => {
