@@ -74,6 +74,18 @@
             <ion-button expand="full" *ngIf="item.renew_attempts > 0" (click)="user.renew(item.checkout_id)">Renew</ion-button>
           </ion-card-content>
         </ion-card>
+        <ion-card class="detail-history" *ngIf="item.barcode && item.checkout_date && item.return_date">
+          <ion-card-header>
+            <ion-card-subtitle>You've checked out this item</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Copy number {{ item.barcode }}</p>
+            <p *ngIf="item.return_date == '*'">Currently checked out</p>
+            <p>Checked out {{ item.checkout_date }}</p>
+            <p *ngIf="item.due_date">Due {{ item.due_date }}</p>
+            <p *ngIf="item.return_date != '*'">Returned: {{ item.return_date }}</p>
+          </ion-card-content>
+        </ion-card>
         <p class="detail-publisher" *ngIf="item.publisher">Published by {{ item.publisher }}<span *ngIf="item.publisher_location">, {{ item.publisher_location }}</span><span *ngIf="item.sort_year">, {{ item.sort_year }}</span></p>
         <p class="detail-description" *ngIf="item.physical_description" [innerHTML]="item.physical_description"></p>
         <p class="detail-electronic" *ngIf="item.electronic == true">Electronic resource from {{ item.source }}</p>
