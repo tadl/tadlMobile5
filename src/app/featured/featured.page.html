@@ -18,12 +18,12 @@
 <ion-content>
   <div *ngIf="this.results==''">
     <div *ngIf="item.featured">
-      <ion-segment [(ngModel)]="media_type">
+      <ion-segment [(ngModel)]="item.media_type">
         <ion-segment-button *ngFor="let key of item.featured_keys" [value]="key">
           <ion-label style="font-size:16px;" padding>{{ key }}</ion-label>
         </ion-segment-button>
       </ion-segment>
-      <div [ngSwitch]="media_type">
+      <div [ngSwitch]="item.media_type">
         <ion-grid *ngFor="let key of item.featured_keys" no-margin no-padding>
           <ion-row *ngSwitchCase="key" no-margin no-padding>
             <ion-col size="6" *ngFor="let search of item.featured[key]">
@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <h2 *ngIf="!media_type" text-center>Pick a category to get started</h2>
+  <h2 *ngIf="!item.media_type" text-center>Pick a category to get started</h2>
   <div *ngIf="results">
     <ion-item-divider (click)="this.results='';this.search_title='cats'">
       <ion-label>{{ this.search_title }}</ion-label>

@@ -11,6 +11,7 @@ export class Item {
 
   featured: any;
   featured_keys: any = [];
+  media_type: any;
 
   constructor(
     public globals: Globals,
@@ -28,6 +29,7 @@ export class Item {
         if (data['featured_items']) {
           this.featured = data['featured_items'];
           this.featured_keys = Object.keys(data['featured_items']);
+          this.media_type = this.featured_keys[0];
         }
       },
       (err) => {

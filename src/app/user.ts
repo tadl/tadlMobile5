@@ -48,7 +48,6 @@ export class User {
   action_retry: any;
   preferences: any;
   holds: Array<{any}> = [];
-  holds_ready: Array<{any}> = [];
   checkouts: Array<{any}> = [];
   checkout_history: Array<{any}> = [];
   checkout_history_page: any = 0;
@@ -239,7 +238,6 @@ export class User {
     this.preferences = {};
     this.fines = [];
     this.holds = [];
-    this.holds_ready = [];
     this.checkouts = [];
     this.storage.remove('hashed_password');
     this.storage.remove('username');
@@ -578,7 +576,7 @@ export class User {
     await alert.present();
   }
 
-  get_holds(ready = false, refresher?) {
+  get_holds(refresher?) {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
@@ -594,12 +592,8 @@ export class User {
         if (refresher) { refresher.target.complete(); }
         if (data['holds'] && data['user']) {
           this.update_user_object(data['user']);
-          if (ready == true) {
-            this.holds_ready = data['holds'];
-          } else {
-            if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
-              this.holds = data['holds'];
-            }
+          if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
+            this.holds = data['holds'];
           }
         }
       },

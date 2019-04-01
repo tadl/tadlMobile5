@@ -56,11 +56,11 @@
   </div>
 
   <div *ngIf="(!user.fines_exist && !user.logged_in) || (user.fines_exist && !user.logged_in)">
-    <p margin>Fines are loading. Hang tight!</p><!-- TODO: wording/design -->
+    <p margin>Fines are loading. One moment...</p>
   </div>
 
   <div *ngIf="!user.fines_exist && user.logged_in">
-    <p margin>You have no fines on your account. Congrats!</p><!-- TODO DITTO -->
+    <p margin>You have no fines on your account. Hooray!</p>
   </div>
 
 </ion-content>

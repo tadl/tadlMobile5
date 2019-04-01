@@ -67,7 +67,7 @@
               <ion-label>Holds</ion-label>
               <ion-badge slot="end">{{ user.holds_count }}</ion-badge>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/holds-ready" detail="false" [disabled]="user.holds_ready_count == 0" *ngIf="globals.net_status == 'online'">
+            <ion-item routerDirection="root" routerLink="/holds" detail="false" [disabled]="user.holds_ready_count == 0" *ngIf="globals.net_status == 'online'">
               <ion-label>Holds Ready for Pickup</ion-label>
               <ion-badge slot="end">{{ user.holds_ready_count }}</ion-badge>
             </ion-item>

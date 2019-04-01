@@ -15,7 +15,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.34';
-  public update_version: string = '8';
+  public update_version: string = '2019040101';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -32,6 +32,8 @@ export class Globals {
   /* customizable strings */
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute.";
   public reset_card_label: string = "Username or Card #";
+
+  /* *** Do not edit below here *** */
 
   /* catalog things */
   public catalog_schema: string = 'https://';
@@ -71,7 +73,7 @@ export class Globals {
   public logo_url: string = '/assets/logo.png';
   public square_logo_url: string = '/assets/logo-clock-only.png';
 
-  /* test */
+  /* global vars */
   public api_loading: boolean = false;
   public net_status: string = "online";
   public net_type: string = "undefined";

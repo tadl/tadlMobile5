@@ -19,7 +19,6 @@ export class FeaturedPage implements OnInit {
   fmt: string = "all";
   infinite: any;
   location: string = "22";
-  media_type: any = "Books";
   page: any;
   query: any;
   results: any = '';
