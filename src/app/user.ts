@@ -580,11 +580,7 @@ export class User {
     let params = new HttpParams()
       .set("token", this.token)
       .set("v", "5");
-    if (ready == true) {
-      var url = this.globals.catalog_holds_pickup_url;
-    } else {
-      var url = this.globals.catalog_holds_url;
-    }
+    var url = this.globals.catalog_holds_url;
     this.globals.api_loading = true;
     this.http.get(url, {params: params})
       .subscribe(data => {
