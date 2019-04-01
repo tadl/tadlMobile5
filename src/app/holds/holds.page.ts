@@ -26,7 +26,7 @@ export class HoldsPage implements OnInit, OnDestroy {
   subscription: any;
 
   refresh_holds(event) {
-    this.user.get_holds(false, event);
+    this.user.get_holds(event);
   }
 
   async details(item) {
