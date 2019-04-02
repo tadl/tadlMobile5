@@ -45,9 +45,10 @@
           </ion-card-header>
           <ion-card-content>
             <p *ngIf="item.hold_status != ''">Position {{ item.queue_state[0] }} in queue with {{ item.queue_state[1] }} eligible cop<span *ngIf="item.queue_state[1] > 1 || item.queue_state[1] == 0">ies</span><span *ngIf="item.queue_state[1] == 1">y</span></p>
-            <p *ngIf="globals.multi_location == true">Pickup location: {{ item.pickup_location }}</p>
+            <p *ngIf="globals.multi_location == true && item.queue_status.startsWith('Ready')">Pickup location: {{ item.pickup_location }}</p>
             <p *ngIf="globals.multi_location == true && !item.queue_status.startsWith('Ready')">
-              <ion-select class="full-width-select" interface="popover" placeholder="Change Pickup Location" (ionChange)="user.change_hold_pickup(item, $event)">
+              <ion-label>Pickup Location (click to change)</ion-label>
+              <ion-select class="full-width-select" interface="popover" [value]="item.pickup_location_code" (ionChange)="user.change_hold_pickup(item, $event)">
                 <ion-select-option *ngFor="let loc of globals.pickup_locations" [value]="loc.code">
                   {{ loc.name }}
                 </ion-select-option>
