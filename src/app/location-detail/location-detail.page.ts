@@ -22,16 +22,6 @@ export class LocationDetailPage implements OnInit {
   ) { }
 
   open_map() {
-    let app;
-    let gmaps = (this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS)) ? true : false;
-    if (this.platform.is('android')) {
-      app = (gmaps) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
-    } else {
-      app = (gmaps) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
-    }
-    let options: LaunchNavigatorOptions = {
-      app: app
-    };
     this.ln.navigate(this.address);
   }
 
