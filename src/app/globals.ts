@@ -15,8 +15,8 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.34';
-  public update_version: string = '2019040307';
+  public app_version: string = '5.0.35';
+  public update_version: string = '2019040300';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -87,7 +87,7 @@ export class Globals {
     { name: 'Kingsley', code: '25' },
     { name: 'Peninsula', code: '26' },
     { name: 'Fife Lake', code: '27' },
-    { name: 'East Bay', code: '28' }
+    { name: 'East Bay', code: '28' },
   ];
 
   /* Used for searching */
@@ -98,7 +98,7 @@ export class Globals {
     { name: 'Kingsley', code: '25' },
     { name: 'Peninsula', code: '26' },
     { name: 'Fife Lake', code: '27' },
-    { name: 'East Bay', code: '28' }
+    { name: 'East Bay', code: '28' },
   ];
 
   /* Used for displaying location name on item details */
@@ -108,7 +108,7 @@ export class Globals {
     ['TADL-PCL', 'Peninsula'],
     ['TADL-IPL', 'Interlochen'],
     ['TADL-FLPL', 'Fife Lake'],
-    ['TADL-WOOD', 'Traverse City']
+    ['TADL-WOOD', 'Traverse City'],
   ]);
 
   /* Used for filtering events by location */
@@ -118,7 +118,7 @@ export class Globals {
     { venue: 99, name: 'Fife Lake' },
     { venue: 100, name: 'Interlochen' },
     { venue: 101, name: 'Kingsley' },
-    { venue: 102, name: 'Peninsula' }
+    { venue: 102, name: 'Peninsula' },
   ];
 
   /* Formats */
@@ -182,7 +182,7 @@ export class Globals {
     }
   }
 
-  /* returns today's date, for displaying hours today */
+  /* returns today's day, for displaying hours today */
   day_today() {
     return format(new Date(), 'EEEE');
   }
@@ -227,7 +227,7 @@ export class Globals {
     this.api_loading = true;
     setTimeout(() => {
       this.api_loading = false;
-    }, 6000);
+    }, 8000);
   }
 
 }
