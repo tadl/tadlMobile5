@@ -32,10 +32,7 @@ export class LocationDetailPage implements OnInit {
     let options: LaunchNavigatorOptions = {
       app: app
     };
-    this.ln.navigate(this.address, options).then(
-      success => console.log('Launched navigator'),
-      error => this.toast.present('Error' + error)
-    );
+    this.ln.navigate(this.address);
   }
 
   ngOnInit() {
