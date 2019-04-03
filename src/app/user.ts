@@ -419,8 +419,12 @@ export class User {
         data[index]['due_words'] = 'in ' + formatDistance(new Date(checkout['due_date']), parseISO(date_today));
       }
     });
-    if (JSON.stringify(this.checkouts) != JSON.stringify(data)) {
-      this.checkouts = data;
+    let existing_ids = this.checkouts.map(item => item['checkout_id']).join();
+    let new_ids = data.map(item => item['checkout_id']).join();
+    if (existing_ids != new_ids) {
+      this.zone.run(() => {
+        this.checkouts = data;
+      });
     }
   }
 
@@ -591,8 +595,12 @@ export class User {
         if (refresher) { refresher.target.complete(); }
         if (data['holds'] && data['user']) {
           this.update_user_object(data['user']);
-          if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
-            this.holds = data['holds'];
+          let existing_ids = this.holds.map(item => item['hold_id']).join();
+          let new_ids = data['holds'].map(item => item['hold_id']).join();
+          if (existing_ids != new_ids) {
+            this.zone.run(() => {
+              this.holds = data['holds'];
+            });
           }
         }
       },
