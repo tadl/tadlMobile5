@@ -23,16 +23,19 @@ export class LocationDetailPage implements OnInit {
 
   open_map() {
     let app;
+    let gmaps = (this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS)) ? true : false;
     if (this.platform.is('android')) {
-      app = (this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS)) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
+      app = (gmaps) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
     } else {
-      app = (this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS)) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
+      app = (gmaps) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
     }
-    this.ln.navigate(this.address, {
+    let options: LaunchNavigatorOptions = {
       app: app
-    }).then(
+    };
+    this.ln.navigate(this.address, options).then(
       success => console.log('Launched navigator'),
-      error => this.toast.present('Error' + error));
+      error => this.toast.present('Error' + error)
+    );
   }
 
   ngOnInit() {
