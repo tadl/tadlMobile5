@@ -24,7 +24,7 @@ export class LocationDetailPage implements OnInit {
     if (this.platform.is('android')) {
       app = (this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS)) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
     } else {
-      app = (this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS)) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.APPLE_MAPS;
+      app = (this.ln.isAppAvailable(this.ln.APP.GOOGLE_MAPS)) ? this.ln.APP.GOOGLE_MAPS : this.ln.APP.USER_SELECT;
     }
     this.ln.navigate(this.address, {
       app: app
