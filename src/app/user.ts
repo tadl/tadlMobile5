@@ -5,27 +5,12 @@ import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
 import { format, formatDistance, parseISO, isBefore, isAfter } from 'date-fns';
-import { LoadingService } from './services/loading/loading.service';
 import { ToastService } from './services/toast/toast.service';
 
 @Component({
 })
 
 export class User {
-  constructor(
-    public globals: Globals,
-    public events: Events,
-    public loading: LoadingService,
-    public toast: ToastService,
-    public actionSheetController: ActionSheetController,
-    public alertController: AlertController,
-    public modalController: ModalController,
-    private zone: NgZone,
-    private http: HttpClient,
-    private nav: NavController,
-    private storage: Storage,
-  ) {
-  }
 
   username: string;
   password: any = ''
@@ -56,6 +41,19 @@ export class User {
   checkout_history_retrieved: boolean = false;
   stored_accounts: any = {};
   stored_accounts_keys: Array<string> = [];
+
+  constructor(
+    public globals: Globals,
+    public events: Events,
+    public toast: ToastService,
+    public actionSheetController: ActionSheetController,
+    public alertController: AlertController,
+    public modalController: ModalController,
+    private zone: NgZone,
+    private http: HttpClient,
+    private nav: NavController,
+    private storage: Storage,
+  ) { }
 
   update_user_object(data) {
     this.zone.run(() => {

@@ -11,6 +11,7 @@ import { User } from '../user';
   templateUrl: './preferences.page.html',
   styleUrls: ['./preferences.page.scss'],
 })
+
 export class PreferencesPage implements OnInit, OnDestroy {
 
   subscription: any;
@@ -28,13 +29,6 @@ export class PreferencesPage implements OnInit, OnDestroy {
     private _location: Location,
   ) { }
 
-  /* parameters.circ_prefs_changed
-
-     parameters.pickup_library
-     parameters.default_search
-     parameters.keep_circ_history
-   */
-
   async update_hold_pickup_location(event) {
     let new_pickup_library = event.detail.value;
     let params = new HttpParams()
@@ -47,6 +41,7 @@ export class PreferencesPage implements OnInit, OnDestroy {
       .set("v", "5");
     this.user.update_preferences(params);
   }
+
   async update_default_search_location(event) {
     let new_search_location = event.detail.value;
     let params = new HttpParams()
@@ -59,7 +54,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
       .set("v", "5");
     this.user.update_preferences(params);
   }
-  async toggle_circ_history(event) { // ActionSheet
+
+  async toggle_circ_history(event) {
     if (event.detail.checked == false) {
       const actionSheet = await this.actionSheetController.create({
         header: 'Warning! Turning off your checkout history will delete your existing history. It can not be recovered.',
@@ -88,6 +84,7 @@ export class PreferencesPage implements OnInit, OnDestroy {
       }
     }
   }
+
   update_circ_history(val) {
     let params = new HttpParams()
       .set("token", this.user.token)
@@ -100,26 +97,7 @@ export class PreferencesPage implements OnInit, OnDestroy {
     this.user.update_preferences(params);
   }
 
-  /* parameters.user_prefs_changed
-
-     parameters.username_changed
-     parameters.username
-     parameters.current_password
-
-     parameters.hold_shelf_alias_changed
-     parameters.hold_shelf_alias
-     parameters.current_password
-
-     parameters.email_changed
-     parameters.email
-     parameters.current_password
-
-     parameters.password_changed
-     parameters.new_password
-     parameters.current_password
-   */
-
-  async update_username() { // Alert
+  async update_username() {
     const alert = await this.alertController.create({
       header: 'Change Username',
       message: 'Enter your desired new username along with your current password to change your username.',
@@ -154,9 +132,9 @@ export class PreferencesPage implements OnInit, OnDestroy {
       }]
     });
     await alert.present();
-
   }
-  async update_alias() { // Alert
+
+  async update_alias() {
     const alert = await this.alertController.create({
       header: 'Change Holdshelf Alias',
       message: 'Enter a new holdshelf alias along with your current password to change your holdshelf alias.',
@@ -192,7 +170,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
     });
     await alert.present();
   }
-  async update_email() { // Alert
+
+  async update_email() {
     const alert = await this.alertController.create({
       header: 'Change Email Address',
       message: 'Enter your new email address along with your current password to change your email address.',
@@ -228,7 +207,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
     });
     await alert.present();
   }
-  async update_password() { // Alert
+
+  async update_password() {
     const alert = await this.alertController.create({
       header: 'Change Password',
       message: 'Enter your new password (twice) along with your current password to change your password.',
@@ -273,16 +253,7 @@ export class PreferencesPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  /* parameters.notify_prefs_changed = true;
-
-     parameters.phone_notify_number
-     parameters.text_notify_number
-     parameters.email_notify
-     parameters.phone_notify
-     parameters.text_notify
-   */
-
-  async update_phone_notify_number() { // Alert
+  async update_phone_notify_number() {
     const alert = await this.alertController.create({
       header: 'Change Phone Notify Number',
       message: "Enter a new phone number where you'd like to receive voice notifications.",
@@ -325,7 +296,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
     });
     await alert.present();
   }
-  async update_text_notify_number() { // Alert
+
+  async update_text_notify_number() {
     const alert = await this.alertController.create({
       header: 'Change Text Notify Number',
       message: "Enter a new phone number where you'd like to receive text notifications.",
@@ -368,7 +340,8 @@ export class PreferencesPage implements OnInit, OnDestroy {
     });
     await alert.present();
   }
-  async toggle_notify_method(event) { // just do it
+
+  async toggle_notify_method(event) {
     let params = new HttpParams()
       .set("token", this.user.token)
       .set("notify_prefs_changed", "true")

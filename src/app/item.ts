@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Globals } from './globals';
-import { LoadingService } from './services/loading/loading.service';
 import { ToastService } from './services/toast/toast.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class Item {
 
   constructor(
     public globals: Globals,
-    public loading: LoadingService,
     public toast: ToastService,
     private http: HttpClient,
   ) { }

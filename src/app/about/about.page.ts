@@ -11,6 +11,7 @@ import { User } from '../user';
   templateUrl: './about.page.html',
   styleUrls: ['./about.page.scss'],
 })
+
 export class AboutPage implements OnInit {
 
   platforms: string = this.platform.platforms().join('/');

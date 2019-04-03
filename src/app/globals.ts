@@ -5,6 +5,7 @@ import { format, parseISO } from 'date-fns';
 @Injectable()
 
 export class Globals {
+
   constructor(
     private menuController: MenuController,
     private modalController: ModalController,
@@ -15,7 +16,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.34';
-  public update_version: string = '2019040306';
+  public update_version: string = '2019040307';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -152,7 +153,7 @@ export class Globals {
     ['software, multimedia', 'document'],
     ['kit', 'briefcase'],
     ['mixed-material', 'briefcase'],
-    ['three dimensional object', 'archive']
+    ['three dimensional object', 'archive'],
   ]);
 
   /* Sort Options */
@@ -161,7 +162,7 @@ export class Globals {
     ['Newest to Oldest', 'pubdateDESC'],
     ['Oldest to Newest', 'pubdateASC'],
     ['Title A to Z', 'titleAZ'],
-    ['Title Z to A', 'titleZA'] 
+    ['Title Z to A', 'titleZA'],
   ]
 
   /* FUNctions */

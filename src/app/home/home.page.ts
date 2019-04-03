@@ -11,6 +11,10 @@ import { Globals } from '../globals';
 })
 
 export class HomePage {
+
+  query: string;
+  subscription: any;
+
   constructor(
     public globals: Globals,
     public user: User,
@@ -19,9 +23,6 @@ export class HomePage {
     private router: Router,
     private platform: Platform,
   ) { }
-
-  query: string;
-  subscription: any;
 
   search() {
     if (this.query) {

@@ -6,6 +6,7 @@ import { Globals } from '../globals';
   templateUrl: './news-detail.page.html',
   styleUrls: ['./news-detail.page.scss'],
 })
+
 export class NewsDetailPage implements OnInit {
 
   post: any;

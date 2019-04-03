@@ -7,6 +7,7 @@ import { User } from '../user';
   templateUrl: './item-detail.page.html',
   styleUrls: ['./item-detail.page.scss'],
 })
+
 export class ItemDetailPage implements OnInit {
 
   item: any;

@@ -11,7 +11,10 @@ import { ItemDetailPage } from '../item-detail/item-detail.page';
   templateUrl: './holds.page.html',
   styleUrls: ['./holds.page.scss'],
 })
+
 export class HoldsPage implements OnInit, OnDestroy {
+
+  subscription: any;
 
   constructor(
     public globals: Globals,
@@ -22,8 +25,6 @@ export class HoldsPage implements OnInit, OnDestroy {
     private _location: Location,
     private modalController: ModalController,
   ) { }
-
-  subscription: any;
 
   refresh_holds(event) {
     this.user.get_holds(event);

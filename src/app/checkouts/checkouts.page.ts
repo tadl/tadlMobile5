@@ -11,7 +11,10 @@ import { ItemDetailPage } from '../item-detail/item-detail.page';
   templateUrl: './checkouts.page.html',
   styleUrls: ['./checkouts.page.scss'],
 })
+
 export class CheckoutsPage implements OnInit, OnDestroy {
+
+  subscription: any;
 
   constructor(
     public globals: Globals,
@@ -22,8 +25,6 @@ export class CheckoutsPage implements OnInit, OnDestroy {
     private _location: Location,
     private modalController: ModalController,
   ) { }
-
-  subscription: any;
 
   refresh_checkouts(event) {
     this.user.get_checkouts(event);

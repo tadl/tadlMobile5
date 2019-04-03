@@ -13,6 +13,7 @@ import { LocationDetailPage } from '../location-detail/location-detail.page';
   templateUrl: './locations.page.html',
   styleUrls: ['./locations.page.scss'],
 })
+
 export class LocationsPage implements OnInit {
 
   url: string = this.globals.hours_locations_url;

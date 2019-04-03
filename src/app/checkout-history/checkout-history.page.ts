@@ -11,8 +11,11 @@ import { ItemDetailPage } from '../item-detail/item-detail.page';
   templateUrl: './checkout-history.page.html',
   styleUrls: ['./checkout-history.page.scss'],
 })
+
 export class CheckoutHistoryPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
+  subscription: any;
 
   constructor(
     public globals: Globals,
@@ -23,8 +26,6 @@ export class CheckoutHistoryPage implements OnInit, OnDestroy {
     private _location: Location,
     private modalController: ModalController,
   ) { }
-
-  subscription: any;
 
   refresh_checkout_history(event) {
     this.user.get_checkout_history(0, event);

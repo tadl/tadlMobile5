@@ -7,7 +7,6 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { Globals } from '../globals';
 import { User } from '../user';
 import { Item } from '../item';
-import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 import { ItemDetailPage } from '../item-detail/item-detail.page';
 
@@ -16,22 +15,9 @@ import { ItemDetailPage } from '../item-detail/item-detail.page';
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
 })
+
 export class SearchPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
-  constructor(
-    public globals: Globals,
-    public user: User,
-    public loading: LoadingService,
-    public toast: ToastService,
-    public item: Item,
-    private http: HttpClient,
-    private route: ActivatedRoute,
-    private platform: Platform,
-    private _location: Location,
-    private keyboard: Keyboard,
-    private modalController: ModalController,
-  ) { }
 
   query: string;
   prev_query: string = "";
@@ -47,6 +33,19 @@ export class SearchPage implements OnInit {
   infinite: any;
   loading_more: boolean = false;
   subscription: any;
+
+  constructor(
+    public globals: Globals,
+    public user: User,
+    public toast: ToastService,
+    public item: Item,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private platform: Platform,
+    private _location: Location,
+    private keyboard: Keyboard,
+    private modalController: ModalController,
+  ) { }
 
   get_results(page?) {
     if (!this.query) { return; }

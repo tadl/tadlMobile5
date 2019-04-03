@@ -13,6 +13,7 @@ import { ItemDetailPage } from '../item-detail/item-detail.page';
   templateUrl: './featured.page.html',
   styleUrls: ['./featured.page.scss'],
 })
+
 export class FeaturedPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 

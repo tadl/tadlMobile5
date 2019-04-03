@@ -6,6 +6,7 @@ import { Globals } from '../globals';
   templateUrl: './card.page.html',
   styleUrls: ['./card.page.scss'],
 })
+
 export class CardPage implements OnInit {
 
   constructor(

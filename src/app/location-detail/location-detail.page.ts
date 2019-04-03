@@ -8,6 +8,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
   templateUrl: './location-detail.page.html',
   styleUrls: ['./location-detail.page.scss'],
 })
+
 export class LocationDetailPage implements OnInit {
 
   location: any;

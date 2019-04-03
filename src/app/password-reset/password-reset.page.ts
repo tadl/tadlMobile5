@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Globals } from '../globals';
-import { LoadingService } from '../services/loading/loading.service';
 import { ToastService } from '../services/toast/toast.service';
 
 @Component({
@@ -9,6 +8,7 @@ import { ToastService } from '../services/toast/toast.service';
   templateUrl: './password-reset.page.html',
   styleUrls: ['./password-reset.page.scss'],
 })
+
 export class PasswordResetPage implements OnInit {
 
   reset_name: string;
@@ -16,7 +16,6 @@ export class PasswordResetPage implements OnInit {
 
   constructor(
     public globals: Globals,
-    public loading: LoadingService,
     public toast: ToastService,
     private http: HttpClient,
   ) { }

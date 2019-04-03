@@ -13,10 +13,14 @@ import { CardPage } from './card/card.page';
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
+
 export class AppComponent implements OnInit, AfterContentChecked {
   @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
 
   constructor(
+    public globals: Globals,
+    public user: User,
+    public item: Item,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -26,9 +30,6 @@ export class AppComponent implements OnInit, AfterContentChecked {
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
     private network: Network,
-    public globals: Globals,
-    public user: User,
-    public item: Item,
   ) {
     this.initializeApp();
   }

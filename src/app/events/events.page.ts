@@ -4,7 +4,6 @@ import { Platform, ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Globals } from '../globals';
 import { ToastService } from '../services/toast/toast.service';
-import { LoadingService } from '../services/loading/loading.service';
 import { EventDetailPage } from '../event-detail/event-detail.page';
 
 @Component({
@@ -29,7 +28,6 @@ export class EventsPage implements OnInit {
   constructor(
     public globals: Globals,
     public toast: ToastService,
-    public loading: LoadingService,
     public modalController: ModalController,
     private _location: Location,
     private platform: Platform,

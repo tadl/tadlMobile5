@@ -9,7 +9,10 @@ import { User } from '../user';
   templateUrl: './fines.page.html',
   styleUrls: ['./fines.page.scss'],
 })
+
 export class FinesPage implements OnInit, OnDestroy {
+
+  subscription: any;
 
   constructor(
     public globals: Globals,
@@ -18,8 +21,6 @@ export class FinesPage implements OnInit, OnDestroy {
     private platform: Platform,
     private _location: Location,
   ) { }
-
-  subscription: any;
 
   ngOnInit() {
     if (this.user.token) {

@@ -17,7 +17,6 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { Globals } from './globals';
 import { User } from './user';
 import { Item } from './item';
-import { LoadingService } from './services/loading/loading.service';
 import { ToastService } from './services/toast/toast.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -60,10 +59,10 @@ import { CardPageModule } from './card/card.module';
     Keyboard,
     Network,
     LaunchNavigator,
-    LoadingService,
     ToastService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HttpBackend, useClass: NativeHttpFallback, deps: [Platform, NativeHttpBackend, HttpXhrBackend] },
   ],
 })
+
 export class AppModule { }

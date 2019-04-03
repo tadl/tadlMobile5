@@ -6,6 +6,7 @@ import { Globals } from '../globals';
   templateUrl: './event-detail.page.html',
   styleUrls: ['./event-detail.page.scss'],
 })
+
 export class EventDetailPage implements OnInit {
 
   event: any;
