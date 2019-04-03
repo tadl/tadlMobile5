@@ -58,19 +58,21 @@ export class User {
   stored_accounts_keys: Array<string> = [];
 
   update_user_object(data) {
-    this.logged_in = true;
-    this.token = data['token'];
-    this.full_name = data['full_name'];
-    this.checkout_count = data['checkouts'];
-    this.holds_count = data['holds'];
-    this.holds_ready_count = data['holds_ready'];
-    this.fines_amount = data['fine'];
-    this.id = data['melcat_id'];
-    if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
-    if (parseFloat(this.fines_amount) != parseFloat('0.00')) { this.fines_exist = true; }
-    this.card = data['card'];
-    this.overdue = data['overdue'];
-    this.default_pickup = data['pickup_library'];
+    this.zone.run(() => {
+      this.logged_in = true;
+      this.token = data['token'];
+      this.full_name = data['full_name'];
+      this.checkout_count = data['checkouts'];
+      this.holds_count = data['holds'];
+      this.holds_ready_count = data['holds_ready'];
+      this.fines_amount = data['fine'];
+      this.id = data['melcat_id'];
+      if (this.globals.use_melcat == true) { this.melcat_id = data['melcat_id']; }
+      if (parseFloat(this.fines_amount) != parseFloat('0.00')) { this.fines_exist = true; }
+      this.card = data['card'];
+      this.overdue = data['overdue'];
+      this.default_pickup = data['pickup_library'];
+    });
   }
 
   login_as(id) {
@@ -219,28 +221,30 @@ export class User {
   }
 
   clear_user() {
-    this.logged_in = false;
-    this.username = '';
-    this.password = '';
-    this.hashed_password = '';
-    this.token = '';
-    this.full_name = '';
-    this.checkout_count = '';
-    this.holds_count = '';
-    this.holds_ready_count = '';
-    this.fines_amount = '';
-    this.card = '';
-    this.overdue = '';
-    this.id = '';
-    this.melcat_id = '';
-    this.fines_exist = false;
-    this.default_pickup = '';
-    this.preferences = {};
-    this.fines = [];
-    this.holds = [];
-    this.checkouts = [];
-    this.storage.remove('hashed_password');
-    this.storage.remove('username');
+    this.zone.run(() => {
+      this.logged_in = false;
+      this.username = '';
+      this.password = '';
+      this.hashed_password = '';
+      this.token = '';
+      this.full_name = '';
+      this.checkout_count = '';
+      this.holds_count = '';
+      this.holds_ready_count = '';
+      this.fines_amount = '';
+      this.card = '';
+      this.overdue = '';
+      this.id = '';
+      this.melcat_id = '';
+      this.fines_exist = false;
+      this.default_pickup = '';
+      this.preferences = {};
+      this.fines = [];
+      this.holds = [];
+      this.checkouts = [];
+      this.storage.remove('hashed_password');
+      this.storage.remove('username');
+    });
   }
 
   switch_user() {
@@ -677,8 +681,11 @@ export class User {
       .subscribe(data => {
         this.globals.api_loading = false;
         if (data['hold_id'] == hold.hold_id) {
-          this.holds.find(item => item['hold_id'] == data['hold_id'])['pickup_location'] = data['pickup_location'];
-          this.toast.present('Changed pickup location for ' + hold.title_display + ' to ' + data['pickup_location'], 5000);
+          this.zone.run(() => {
+            this.holds.find(item => item['hold_id'] == data['hold_id'])['pickup_location'] = data['pickup_location'];
+            this.holds.find(item => item['hold_id'] == data['hold_id'])['pickup_location_code'] = data['pickup_location_code'];
+            this.toast.present('Changed pickup location for ' + hold.title_display + ' to ' + data['pickup_location'], 5000);
+          });
         }
       },
       (err) => {
