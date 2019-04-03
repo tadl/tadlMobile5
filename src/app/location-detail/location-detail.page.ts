@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Globals } from '../globals';
 import { Platform } from '@ionic/angular';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
-import { ToastService } from '../services/toast/toast.service';
 
 @Component({
   selector: 'app-location-detail',
@@ -16,7 +15,6 @@ export class LocationDetailPage implements OnInit {
 
   constructor(
     public globals: Globals,
-    private toast: ToastService,
     private ln: LaunchNavigator,
     private platform: Platform,
   ) { }
