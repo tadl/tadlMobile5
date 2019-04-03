@@ -32,7 +32,7 @@ export class LocationsPage implements OnInit {
 
   get_locations() {
     if (this.globals.net_status == "online") {
-      this.globals.api_loading = true;
+      this.globals.loading_show();
       this.http.get(this.url)
         .subscribe(data => {
           this.globals.api_loading = false;

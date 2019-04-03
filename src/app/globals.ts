@@ -15,7 +15,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.34';
-  public update_version: string = '2019040202';
+  public update_version: string = '2019040300';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -219,6 +219,14 @@ export class Globals {
   /* image error */
   image_error(event) {
     event.target.src = this.square_logo_url;
+  }
+
+  /* api loading indicator */
+  loading_show() {
+    this.api_loading = true;
+    setTimeout(() => {
+      this.api_loading = false;
+    }, 6000);
   }
 
 }

@@ -68,7 +68,7 @@ export class SearchPage implements OnInit {
       .set("limit_available", this.limit_available.toString())
       .set("fmt", this.format);
     var url = this.globals.catalog_search_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;

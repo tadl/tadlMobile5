@@ -73,7 +73,7 @@ export class EventsPage implements OnInit {
     if (this.loading_more == false && this.infinite) {
       this.infinite.target.disabled = false;
     }
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(this.url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;

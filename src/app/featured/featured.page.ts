@@ -46,7 +46,7 @@ export class FeaturedPage implements OnInit {
     let params = JSON.parse('{"' + decodeURI(search.replace(/\/search\?/, '')).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     let url = this.globals.catalog_search_url;
     if (this.infinite) { this.infinite.target.disabled = false; }
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -72,7 +72,7 @@ export class FeaturedPage implements OnInit {
       .set("sort", this.sort)
       .set("type", this.type)
     let url = this.globals.catalog_search_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;

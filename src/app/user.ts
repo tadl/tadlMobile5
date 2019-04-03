@@ -93,7 +93,7 @@ export class User {
       .set("full", "true")
       .set("v", "5");
     let url = this.globals.catalog_login_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         console.log(data);
@@ -197,7 +197,7 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_logout_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -281,7 +281,7 @@ export class User {
       .set("v", "5")
       .set("page", this.checkout_history_page);
     let url = this.globals.catalog_checkout_history_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -323,7 +323,7 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_fines_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -352,7 +352,7 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_preferences_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -378,7 +378,7 @@ export class User {
   }
 
   update_preferences(params, password?) {
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     let url = this.globals.catalog_update_preferences_url;
     this.http.get(url, {params: params})
       .subscribe(data => {
@@ -426,7 +426,7 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     let url = this.globals.catalog_checkouts_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -458,7 +458,7 @@ export class User {
       .set("token", this.token)
       .set("checkout_ids", cid)
       .set("v", "5");
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -526,7 +526,7 @@ export class User {
       .set("v", "5");
     if (force) { params = params.append("force", "true"); }
     let url = this.globals.catalog_place_hold_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -581,7 +581,7 @@ export class User {
       .set("token", this.token)
       .set("v", "5");
     var url = this.globals.catalog_holds_url;
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -619,7 +619,7 @@ export class User {
     if (task == "activate") { var action = "activated"; }
     else if (task == "suspend") { var action = "suspended"; }
     else if (task == "cancel") { var action = "canceled"; }
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
@@ -672,7 +672,7 @@ export class User {
       .set("hold_status", hold.hold_status)
       .set("pickup_location", newloc.detail.value)
       .set("v", "5");
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;

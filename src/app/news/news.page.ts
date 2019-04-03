@@ -43,7 +43,7 @@ export class NewsPage implements OnInit {
       .set("page", page)
       .set("per_page", "20")
       .set("categories_exclude", this.globals.news_category_exclude)
-    this.globals.api_loading = true;
+    this.globals.loading_show();
     this.http.get(this.url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
