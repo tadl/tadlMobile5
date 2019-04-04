@@ -100,9 +100,7 @@ export class User {
         if (data['user']) {
           this.update_user_object(data['user']);
           this.update_stored_accounts();
-          if (JSON.stringify(this.holds) != JSON.stringify(data['holds'])) {
-            this.holds = data['holds'];
-          }
+          this.process_holds(data['holds']);
           this.process_checkouts(data['checkouts']);
           this.preferences = data['preferences'];
           this.storage.set('username', this.username);
@@ -408,6 +406,16 @@ export class User {
       });
   }
 
+  process_holds(data) {
+    let existing = this.holds.map(item => item['hold_id'] + item['hold_status'] + item['queue_status'] + item['queue_state'][0] + item['queue_state'][1] + item['pickup_location_code']).join();
+    let newdata = data.map(item => item['hold_id'] + item['hold_status'] + item['queue_status'] + item['queue_state'][0] + item['queue_state'][1] + item['pickup_location_code']).join();
+    if (existing != newdata) {
+      this.zone.run(() => {
+        this.holds = data;
+      });
+    }
+  }
+
   process_checkouts(data) {
     let date_today = new Date().toISOString().split("T")[0];
     data.forEach(function(checkout, index) {
@@ -419,9 +427,9 @@ export class User {
         data[index]['due_words'] = 'in ' + formatDistance(new Date(checkout['due_date']), parseISO(date_today));
       }
     });
-    let existing_ids = this.checkouts.map(item => item['checkout_id']).join();
-    let new_ids = data.map(item => item['checkout_id']).join();
-    if (existing_ids != new_ids) {
+    let existing = this.checkouts.map(item => item['checkout_id'] + item['renew_attempts'] + item['due_date']).join();
+    let newdata = data.map(item => item['checkout_id'] + item['renew_attempts'] + item['due_date']).join();
+    if (existing != newdata) {
       this.zone.run(() => {
         this.checkouts = data;
       });
@@ -595,13 +603,7 @@ export class User {
         if (refresher) { refresher.target.complete(); }
         if (data['holds'] && data['user']) {
           this.update_user_object(data['user']);
-          let existing_ids = this.holds.map(item => item['hold_id']).join();
-          let new_ids = data['holds'].map(item => item['hold_id']).join();
-          if (existing_ids != new_ids) {
-            this.zone.run(() => {
-              this.holds = data['holds'];
-            });
-          }
+          this.process_holds(data['holds']);
         }
       },
       (err) => {
@@ -635,7 +637,7 @@ export class User {
       .subscribe(data => {
         this.globals.api_loading = false;
         if (data['holds'] && data['user']) {
-          this.holds = data['holds'];
+          this.process_holds(data['holds']);
           this.update_user_object(data['user']);
           this.toast.present("Successfully " + action + " hold on " + hold.title_display + ".", 5000);
         }
