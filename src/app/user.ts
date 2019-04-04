@@ -100,9 +100,9 @@ export class User {
         if (data['user']) {
           this.update_user_object(data['user']);
           this.update_stored_accounts();
+          this.preferences = data['preferences'];
           this.process_holds(data['holds']);
           this.process_checkouts(data['checkouts']);
-          this.preferences = data['preferences'];
           this.storage.set('username', this.username);
           this.storage.set('hashed_password', this.hashed_password);
           if (data['user']['holds_ready'] > 0) {
@@ -123,7 +123,7 @@ export class User {
             this.storage.remove('items_ready');
           }
           if (data['user']['overdue'] > 0) {
-            let date_today = new Date().toISOString().split("T")[0];
+            let date_today = format(new Date(), 'yyyy-MM-dd');
             let items_overdue = [];
             this.checkouts.forEach(function(item) {
               var due_date = new Date(item['due_date']);
@@ -417,7 +417,7 @@ export class User {
   }
 
   process_checkouts(data) {
-    let date_today = new Date().toISOString().split("T")[0];
+    let date_today = format(new Date(), 'yyyy-MM-dd');
     data.forEach(function(checkout, index) {
       if (isBefore(new Date(checkout['due_date']), parseISO(date_today))) {
         data[index]['overdue'] = true;
