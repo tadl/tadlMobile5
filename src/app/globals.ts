@@ -16,7 +16,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.0.35';
-  public update_version: string = '2019040500';
+  public update_version: string = '2019040501';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -225,9 +225,6 @@ export class Globals {
   /* api loading indicator */
   loading_show() {
     this.api_loading = true;
-    setTimeout(() => {
-      this.api_loading = false;
-    }, 8000);
   }
 
 }
