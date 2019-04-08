@@ -15,8 +15,8 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.0.35';
-  public update_version: string = '2019040501';
+  public app_version: string = '5.1.0';
+  public update_version: string = '2019040800';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -33,6 +33,10 @@ export class Globals {
   /* customizable strings */
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute.";
   public reset_card_label: string = "Username or Card #";
+
+  /* static assets */
+  public logo_url: string = '/assets/logo.png';
+  public square_logo_url: string = '/assets/logo-clock-only.png';
 
   /* *** Do not edit below here *** */
 
@@ -69,10 +73,6 @@ export class Globals {
   public news_api_url: string = this.website_schema + this.website_host + '/wp-json/wp/v2/posts';
   public hours_locations_url: string = this.website_schema + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
-
-  /* static assets */
-  public logo_url: string = '/assets/logo.png';
-  public square_logo_url: string = '/assets/logo-clock-only.png';
 
   /* global vars */
   public api_loading: boolean = false;
