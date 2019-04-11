@@ -26,6 +26,7 @@ export class SearchPage implements OnInit {
   format: string = "All Formats";
   location: string = this.globals.all_locations_value;
   page: any;
+  audiences: any = "All";
   limit_available: boolean = false
   limit_physical: boolean = false
   results: Array<{any}> = [];
@@ -49,6 +50,9 @@ export class SearchPage implements OnInit {
 
   get_results(page?) {
     if (!this.query) { return; }
+    if (this.type == "keyword") {
+      this.sort = this.globals.sort_options[0][1];
+    }
     this.keyboard.hide();
     if (!page || this.query != this.prev_query) {
       this.page = 0;
@@ -66,6 +70,9 @@ export class SearchPage implements OnInit {
       .set("limit_physical", this.limit_physical.toString())
       .set("limit_available", this.limit_available.toString())
       .set("fmt", this.format);
+    if (this.globals.has_audiences == true) {
+      params = params.append("audiences", this.audiences);
+    }
     var url = this.globals.catalog_search_url;
     this.globals.loading_show();
     this.http.get(url, {params: params})

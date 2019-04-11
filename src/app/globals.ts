@@ -15,8 +15,8 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.1.0';
-  public update_version: string = '2019040800';
+  public app_version: string = '5.0.99';
+  public update_version: string = '2019041100';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -29,6 +29,7 @@ export class Globals {
   /* feature toggles */
   public multi_location: boolean = true;
   public use_melcat: boolean = true;
+  public has_audiences: boolean = true;
 
   /* customizable strings */
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute.";
@@ -164,6 +165,9 @@ export class Globals {
     ['Title A to Z', 'titleAZ'],
     ['Title Z to A', 'titleZA'],
   ]
+
+  /* Audiences */
+  public audiences: Array<string> = [ "All", "Adult", "Young Adult", "Juvenile" ];
 
   /* FUNctions */
 
