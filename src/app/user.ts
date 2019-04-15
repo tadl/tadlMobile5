@@ -511,7 +511,12 @@ export class User {
       buttons: [{
         text: 'Renew All',
         handler: () => {
-          this.renew(this.checkouts.filter(item => item['renew_attempts'] > 0).map(item => item['checkout_id']).join());
+          let to_renew = this.checkouts.filter(item => item['renew_attempts'] > 0).map(item => item['checkout_id']).join();
+          if (to_renew.length > 0) {
+            this.renew(to_renew);
+          } else {
+            this.toast.present("No items eligible for renewal.", 5000);
+          }
         }
       }, {
         text: 'Cancel',
