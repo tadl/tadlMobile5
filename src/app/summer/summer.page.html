@@ -17,5 +17,98 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="this.participants.length > 0 && this.show_register == false">
+    <ion-item *ngFor="let participant of this.participants">
+      <ion-label>
+        <ion-text>
+          <h1>
+            {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
+          </h1>
+          <h2>
+            Club: {{participant.club | uppercase}}
+            <ion-button>Record Minutes</ion-button>
+          </h2>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-button>Register another participant</ion-button>
+  </div>
+  <div *ngIf="this.participants.length == 0 && this.show_register == false">
+    <ion-text>
+      <h2> Summer Reading Club is Awesome! Sign up and blah blah blah</h2>
+    </ion-text>
+    <ion-button (click)="this.display_register('true')">Register for Summer Reading</ion-button>
+  </div>
+  <div *ngIf="this.show_register == true">
+    <ion-text>
+      <h2>Summer Reading Registration</h2>
+      <ion-item>
+        <ion-label>First Name:</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Middle Name: (optional)</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Last Name: </ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Phone Number: </ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email: (optional) </ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Home Library</ion-label>
+        <ion-select placeholder="Select One" interface="action-sheet">
+          <ion-select-option value="Traverse City">Traverse City</ion-select-option>
+          <ion-select-option value="Kingsley">Kingsley</ion-select-option>
+          <ion-select-option value="Interlochen">Interlochen</ion-select-option>
+          <ion-select-option value="East Bay">East Bay</ion-select-option>
+          <ion-select-option value="Fife Lake">Fife Lake</ion-select-option>
+          <ion-select-option value="Peninsula">Peninsula</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Shirt Size</ion-label>
+        <ion-select placeholder="Select One" interface="action-sheet">
+          <ion-select-option  *ngFor="let size of this.shirt_sizes" [value]="size">
+            {{ size }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Select Club</ion-label>
+        <ion-select placeholder="Select One" interface="action-sheet">
+          <ion-select-option value="pre-readers">Pre-readers (ages 0-4)</ion-select-option>
+          <ion-select-option value="readers">Readers (ages 5-12)</ion-select-option>
+          <ion-select-option value="teens">Teens (ages 13-19)</ion-select-option>
+          <ion-select-option value="East Bay">Adults (ages 17+)</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Select School You Will Attend in Fall</ion-label>
+        <ion-select placeholder="Select One" interface="action-sheet">
+          <ion-select-option  *ngFor="let school of this.youth_schools" [value]="school.value">
+            {{ school.text }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Select School You Will Attend in Fall</ion-label>
+        <ion-select placeholder="Select One" interface="action-sheet">
+          <ion-select-option  *ngFor="let school of this.teen_schools" [value]="school.value">
+            {{ school.text }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button (click)="this.display_register('false')">Cancel</ion-button>
+    </ion-text>
+  </div>
+
 
 </ion-content>

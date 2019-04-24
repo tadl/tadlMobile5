@@ -21,7 +21,8 @@ const routes: Routes = [
   { path: 'preferences', loadChildren: './preferences/preferences.module#PreferencesPageModule' },
   { path: 'about', loadChildren: './about/about.module#AboutPageModule' },
   { path: 'password-reset', loadChildren: './password-reset/password-reset.module#PasswordResetPageModule' },
-  { path: 'summer', loadChildren: './summer/summer.module#SummerPageModule' }
+  { path: 'summer', loadChildren: './summer/summer.module#SummerPageModule' },
+  { path: 'summer-detail', loadChildren: './summer-detail/summer-detail.module#SummerDetailPageModule' }
 ];
 
 @NgModule({

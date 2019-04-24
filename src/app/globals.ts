@@ -76,6 +76,11 @@ export class Globals {
   public hours_locations_url: string = this.website_schema + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
 
+
+  /* summer reading */
+  public summer_reading_base: string = 'http://cal.lib.tadl.org:3000/';
+  public summer_reading_check_participants: string = this.summer_reading_base + 'patron_show_participants.json';
+
   /* global vars */
   public api_loading: boolean = false;
   public net_status: string = "online";
