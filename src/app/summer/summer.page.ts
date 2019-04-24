@@ -33,7 +33,7 @@ export class SummerPage implements OnInit {
         "reader": reader,
       }
     });
-    modal.onDidDismiss()then((dataReturned) => {
+    modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned !== null) {
         console.log('Modal sent data: ', dataReturned);
         this.subscription = this.platform.backButton.subscribe(() => {
