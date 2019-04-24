@@ -67,6 +67,12 @@
       </ion-col>
     </ion-row>
     <ion-row *ngIf="globals.net_status == 'online'">
+      <ion-col size="12">
+        <ion-button routerDirection="root" routerLink="/summer" expand="full">
+          <ion-icon slot="start" name="book"></ion-icon>
+          <ion-label>Summer Reading Club</ion-label>
+        </ion-button>
+      </ion-col>
       <ion-col size="6">
         <ion-list>
           <ion-button routerDirection="root" routerLink="/search" expand="full">
