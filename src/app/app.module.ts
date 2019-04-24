@@ -24,6 +24,7 @@ import { EventDetailPageModule } from './event-detail/event-detail.module';
 import { NewsDetailPageModule } from './news-detail/news-detail.module';
 import { ItemDetailPageModule } from './item-detail/item-detail.module';
 import { LocationDetailPageModule } from './location-detail/location-detail.module';
+import { SummerDetailPageModule } from './summer-detail/summer-detail.module';
 import { CardPageModule } from './card/card.module';
 
 @NgModule({
@@ -43,6 +44,7 @@ import { CardPageModule } from './card/card.module';
     NewsDetailPageModule,
     ItemDetailPageModule,
     LocationDetailPageModule,
+    SummerDetailPageModule,
     CardPageModule,
     NgxBarcodeModule,
     TruncateModule,
