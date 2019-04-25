@@ -32,6 +32,8 @@ export class SummerPage implements OnInit {
   ];
   youth_schools: Array<{text: string, value:string}>= [];
   teen_schools: Array<{text: string, value:string}>= [];
+  club: string;
+  school_type: string;
 
   constructor(
     public globals: Globals,
@@ -88,6 +90,10 @@ export class SummerPage implements OnInit {
     }else{
       this.show_register = false
     }
+  }
+
+  detect_changed_club(){
+    this.school_type = ''
   }
 
   ngOnInit() {
