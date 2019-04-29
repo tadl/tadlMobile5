@@ -4,7 +4,7 @@ import { Events, ModalController, ActionSheetController, AlertController, NavCon
 import { Storage } from '@ionic/storage';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Md5 } from 'ts-md5/dist/md5';
-import { format, formatDistance, parseISO, isBefore, isAfter } from 'date-fns';
+import { format, formatDistance, parseISO, isSameDay, isBefore, isAfter } from 'date-fns';
 import { ToastService } from './services/toast/toast.service';
 
 @Component({
@@ -417,14 +417,18 @@ export class User {
   }
 
   process_checkouts(data) {
-    let date_today = format(new Date(), 'yyyy-MM-dd');
+    let date_today = format(new Date(), 'MM/dd/yyyy');
     data.forEach(function(checkout, index) {
-      if (isBefore(new Date(checkout['due_date']), parseISO(date_today))) {
+      if (isBefore(new Date(checkout['due_date']), new Date(date_today)) && !isSameDay(new Date(checkout['due_date']), new Date(date_today))) {
         data[index]['overdue'] = true;
-        data[index]['due_words'] = formatDistance(new Date(checkout['due_date']), parseISO(date_today)) + ' ago';
+        data[index]['due_words'] = formatDistance(new Date(checkout['due_date']), new Date(date_today)) + ' ago';
       } else {
         data[index]['overdue'] = false;
-        data[index]['due_words'] = 'in ' + formatDistance(new Date(checkout['due_date']), parseISO(date_today));
+        if (isSameDay(new Date(checkout['due_date']), new Date(date_today))) {
+          data[index]['due_words'] = "today";
+        } else {
+          data[index]['due_words'] = 'in ' + formatDistance(new Date(checkout['due_date']), new Date(date_today));
+        }
       }
     });
     let existing = this.checkouts.map(item => item['checkout_id'] + item['renew_attempts'] + item['due_date']).join();
