@@ -17,6 +17,7 @@
 </ion-header>
 
 <ion-content>
+
   <div *ngIf="this.participants.length > 0 && this.show_register == false">
     <ion-item *ngFor="let participant of this.participants">
       <ion-label>
@@ -124,6 +125,5 @@
       <ion-button (click)="this.display_register('false')">Cancel</ion-button>
     </ion-text>
   </div>
-
 
 </ion-content>

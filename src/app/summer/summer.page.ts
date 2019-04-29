@@ -17,8 +17,8 @@ export class SummerPage implements OnInit {
 
   subscription: any;
   participants: Array<{any}> = [];
-  show_register: boolean = false
-  shirt_sizes: Array<string>= [
+  show_register: boolean = false;
+  shirt_sizes: Array<string> = [
     'Youth Extra Small',
     'Youth Small',
     'Youth Medium',
@@ -30,8 +30,8 @@ export class SummerPage implements OnInit {
     'Adult Extra Large',
     'Adult Double Extra Large',
   ];
-  youth_schools: Array<{text: string, value:string}>= [];
-  teen_schools: Array<{text: string, value:string}>= [];
+  youth_schools: Array<{text: string, value: string}>= [];
+  teen_schools: Array<{text: string, value: string}>= [];
   club: string;
   school_type: string;
 
@@ -72,11 +72,11 @@ export class SummerPage implements OnInit {
     this.globals.loading_show();
     this.http.get(url, {params: params})
       .subscribe(data => {
-        this.participants = data['participants']
-        this.youth_schools = data['youth_schools']
-        this.teen_schools = data['teen_schools']
-        this.youth_schools.shift()
-        this.teen_schools.shift()
+        this.participants = data['participants'];
+        this.youth_schools = data['youth_schools'];
+        this.teen_schools = data['teen_schools'];
+        this.youth_schools.shift();
+        this.teen_schools.shift();
       },
       (err) => {
         this.toast.present(this.globals.server_error_msg);
@@ -85,15 +85,15 @@ export class SummerPage implements OnInit {
   }
 
   display_register(show) {
-    if(show == 'true'){
-      this.show_register = true
-    }else{
-      this.show_register = false
+    if (show == 'true') {
+      this.show_register = true;
+    } else {
+      this.show_register = false;
     }
   }
 
-  detect_changed_club(){
-    this.school_type = ''
+  detect_changed_club() {
+    this.school_type = '';
   }
 
   ngOnInit() {
