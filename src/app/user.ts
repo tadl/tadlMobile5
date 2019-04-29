@@ -123,11 +123,10 @@ export class User {
             this.storage.remove('items_ready');
           }
           if (data['user']['overdue'] > 0) {
-            let date_today = format(new Date(), 'yyyy-MM-dd');
+            let date_today = format(new Date(), 'MM/dd/yyyy');
             let items_overdue = [];
             this.checkouts.forEach(function(item) {
-              var due_date = new Date(item['due_date']);
-              if (isBefore(due_date, parseISO(date_today))) {
+              if (isBefore(new Date(item['due_date']), new Date(date_today))) {
                 items_overdue.push(item['id']);
               }
             });
