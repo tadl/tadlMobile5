@@ -95,11 +95,27 @@ export class SummerPage implements OnInit {
     this.globals.api_loading = false;
   }
 
+  reset_values(){
+    this.first_name = '';
+    this.middle_name = '';
+    this.last_name = '';
+    this.phone_number = '';
+    this.email = '';
+    this.home_library = '';
+    this.shirt_size = '';
+    this.club = '';
+    this.school_type = '';
+    this.school = '';
+    this.send_to_school = true;
+  }
+
+
   display_register(show) {
     if (show == 'true') {
       this.show_register = true;
     } else {
       this.show_register = false;
+      this.reset_values()
     }
   }
 
@@ -107,6 +123,7 @@ export class SummerPage implements OnInit {
     this.school_type = '';
   }
 
+ 
 
   check_valid(term){
     switch (term) {
