@@ -16,7 +16,6 @@ import { User } from '../user';
 export class SummerPage implements OnInit {
 
   subscription: any;
-  participants: Array<{any}> = [];
   show_register: boolean = false;
   shirt_sizes: Array<string> = [
     'Youth Extra Small',
@@ -30,9 +29,6 @@ export class SummerPage implements OnInit {
     'Adult Extra Large',
     'Adult Double Extra Large',
   ];
-
-  youth_schools: Array<{text: string, value:string}>= [];
-  teen_schools: Array<{text: string, value:string}>= [];
   first_name: string = '';
   middle_name: string = '';
   last_name: string = '';
@@ -75,25 +71,6 @@ export class SummerPage implements OnInit {
     return await modal.present();
   }
 
-  load_participants() {
-    let params = new HttpParams()
-      .set("token", this.user.token)
-      .set("v", "5");
-    let url = this.globals.summer_reading_check_participants;
-    this.globals.loading_show();
-    this.http.get(url, {params: params})
-      .subscribe(data => {
-        this.participants = data['participants'];
-        this.youth_schools = data['youth_schools'];
-        this.teen_schools = data['teen_schools'];
-        this.youth_schools.shift();
-        this.teen_schools.shift();
-      },
-      (err) => {
-        this.toast.present(this.globals.server_error_msg);
-      });
-    this.globals.api_loading = false;
-  }
 
   reset_values(){
     this.first_name = '';
@@ -214,7 +191,7 @@ export class SummerPage implements OnInit {
         .subscribe(data => {
           if(data['message'] == 'success'){
             this.toast.present("Participant was successfully registered for Summer Reading Club!", 5000);
-            this.load_participants()
+            this.user.load_participants()
             this.reset_values()
             this.show_register = false 
           }else{
@@ -234,7 +211,7 @@ export class SummerPage implements OnInit {
 
   ngOnInit() {
     if (this.user.token) {
-      this.load_participants();
+      this.user.load_participants();
     }
   }
 

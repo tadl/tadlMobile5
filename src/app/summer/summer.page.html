@@ -17,32 +17,37 @@
 </ion-header>
 
 <ion-content>
-
-  <div *ngIf="this.participants.length > 0 && this.show_register == false">
-    <ion-item *ngFor="let participant of this.participants">
+  <ion-text *ngIf="this.show_register == false" class="ion-text-center">
+    <h1>Summer Reading Club</h1>
+    <img src="/assets/src-logo.png">
+  </ion-text>
+  <div *ngIf="this.user.participants.length > 0 && this.show_register == false">
+    <ion-text>
+      <p class="ion-padding-horizontal" *ngIf="this.user.summer_reading_reporting == false">The Summer Reading Club launches on June 17! Check back then to report your minutes and be eligible for weekly prize drawings!</p>
+    </ion-text>
+    <ion-text class="ion-text-center">
+      <h2>Registered Participants</h2>
+    </ion-text>
+    <ion-item *ngFor="let participant of this.user.participants">
       <ion-label>
         <ion-text>
-          <h1>
-            {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
-          </h1>
           <h2>
-            Club: {{participant.club | uppercase}}
-            <ion-button>Record Minutes</ion-button>
+            {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
           </h2>
+          <ion-button *ngIf="this.user.summer_reading_reporting == true">Record Minutes</ion-button>
         </ion-text>
       </ion-label>
     </ion-item>
-    <ion-button (click)="this.display_register('true')">Register another participant</ion-button>
+    <ion-button (click)="this.display_register('true')" color="success" expand="block">Register Another Participant</ion-button>
   </div>
-  <div *ngIf="this.participants.length == 0 && this.show_register == false">
-    <ion-text>
-      <h2> Summer Reading Club is Awesome! Sign up and blah blah blah</h2>
-    </ion-text>
-    <ion-button (click)="this.display_register('true')">Register for Summer Reading</ion-button>
+  <div *ngIf="this.user.participants.length == 0 && this.show_register == false">
+    <ion-button color="success" expand="block" (click)="this.display_register('true')">Register for Summer Reading Club</ion-button>
   </div>
   <div *ngIf="this.show_register == true">
     <ion-text>
-      <h2>Summer Reading Registration</h2>
+      <h3 class="ion-text-center">Summer Reading Club Registration</h3>
+    </ion-text>
+    <ion-text>
       <ion-item>
         <ion-label class="first_name_required">First Name:</ion-label>
         <ion-input [(ngModel)]="first_name" autocapitalize="true"></ion-input>
@@ -105,7 +110,7 @@
       <ion-item *ngIf="this.school_type == 'elementary'">
         <ion-label class="youth_school_required" position="stacked">Select School You Will Attend in Fall</ion-label>
         <ion-select [(ngModel)]="school" placeholder="Select One" interface="action-sheet">
-          <ion-select-option  *ngFor="let school of this.youth_schools" [value]="school.value">
+          <ion-select-option  *ngFor="let school of this.globals.youth_schools" [value]="school.value">
             {{ school.text }}
           </ion-select-option>
         </ion-select>
@@ -113,7 +118,7 @@
       <ion-item *ngIf="this.school_type == 'middle' || this.school_type == 'high'">
         <ion-label class="teen_school_required" position="stacked">Select School You Will Attend in Fall</ion-label>
         <ion-select [(ngModel)]="school" placeholder="Select One" interface="action-sheet">
-          <ion-select-option  *ngFor="let school of this.teen_schools" [value]="school.value">
+          <ion-select-option  *ngFor="let school of this.globals.teen_schools" [value]="school.value">
             {{ school.text }}
           </ion-select-option>
         </ion-select>
