@@ -124,7 +124,12 @@ export class User {
         if (data['user']) {
           this.update_user_object(data['user']);
           this.update_stored_accounts();
-          this.load_participants()
+          if(data['summer'] && data['summer']['summer_reading'] == true){
+            this.load_participants()
+            this.summer_reading = data['summer']['summer_reading']
+            this.summer_reading_registration = data['summer']['summer_reading_registration']
+            this.summer_reading_reporting = data['summer']['summer_reading_reporting']   
+          }
           this.preferences = data['preferences'];
           this.process_holds(data['holds']);
           this.process_checkouts(data['checkouts']);

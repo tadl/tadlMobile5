@@ -30,7 +30,6 @@ export class Globals {
   public multi_location: boolean = true;
   public use_melcat: boolean = true;
   public has_audiences: boolean = true;
-  public src_enabled: boolean = true;
 
   /* customizable strings */
   public server_error_msg: string = "Whoops. Something went wrong. Please check your internet connection and try again in a minute.";

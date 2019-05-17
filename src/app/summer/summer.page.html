@@ -19,7 +19,9 @@
 <ion-content>
   <ion-text *ngIf="this.show_register == false" class="ion-text-center">
     <h1>Summer Reading Club</h1>
-    <img src="/assets/src-logo.png">
+    <ion-row class="ion-justify-content-center">
+      <img src="/assets/src-logo.png">
+    </ion-row>
   </ion-text>
   <div *ngIf="this.user.participants.length > 0 && this.show_register == false">
     <ion-text>
@@ -33,14 +35,14 @@
         <ion-text>
           <h2>
             {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
+            <ion-button *ngIf="this.user.summer_reading_reporting == true">Record Minutes</ion-button>
           </h2>
-          <ion-button *ngIf="this.user.summer_reading_reporting == true">Record Minutes</ion-button>
         </ion-text>
       </ion-label>
     </ion-item>
-    <ion-button (click)="this.display_register('true')" color="success" expand="block">Register Another Participant</ion-button>
+    <ion-button *ngIf="this.user.summer_reading_registration == true" (click)="this.display_register('true')" color="success" expand="block">Register Another Participant</ion-button>
   </div>
-  <div *ngIf="this.user.participants.length == 0 && this.show_register == false">
+  <div *ngIf="this.user.participants.length == 0 && this.show_register == false && this.user.summer_reading_registration == true">
     <ion-button color="success" expand="block" (click)="this.display_register('true')">Register for Summer Reading Club</ion-button>
   </div>
   <div *ngIf="this.show_register == true">

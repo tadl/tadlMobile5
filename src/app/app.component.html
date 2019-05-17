@@ -17,7 +17,7 @@
               <ion-icon slot="start" name="search"></ion-icon>
               <ion-label>Search</ion-label>
             </ion-item>
-            <ion-item routerDirection="root" routerLink="/summer" detail="true" *ngIf="globals.src_enabled == true && globals.net_status == 'online'">
+            <ion-item routerDirection="root" routerLink="/summer" detail="true" *ngIf="user.summer_reading == true && globals.net_status == 'online'">
               <ion-icon slot="start" name="book"></ion-icon>
               <ion-label>Summer Reading</ion-label>
             </ion-item>
