@@ -41,6 +41,10 @@ export class User {
   checkout_history_retrieved: boolean = false;
   stored_accounts: any = {};
   stored_accounts_keys: Array<string> = [];
+  summer_reading: boolean = false;
+  summer_reading_registration: boolean = false;
+  summer_reading_reporting: boolean = false;
+  participants: Array<{any}> = [];
 
   constructor(
     public globals: Globals,
@@ -79,6 +83,26 @@ export class User {
     this.login(true);
   }
 
+  load_participants() {
+    let params = new HttpParams()
+      .set("token", this.token)
+      .set("v", "5");
+    let url = this.globals.summer_reading_check_participants;
+    this.globals.loading_show();
+    this.http.get(url, {params: params})
+      .subscribe(data => {
+        this.participants = data['participants'];
+        this.globals.youth_schools = data['youth_schools'];
+        this.globals.teen_schools = data['teen_schools'];
+        this.globals.youth_schools.shift();
+        this.globals.teen_schools.shift();
+      },
+      (err) => {
+        this.toast.present(this.globals.server_error_msg);
+      });
+    this.globals.api_loading = false;
+  }
+
   login(auto = false) {
     if (auto == false) {
       if (!this.username || !this.password) {
@@ -100,6 +124,12 @@ export class User {
         if (data['user']) {
           this.update_user_object(data['user']);
           this.update_stored_accounts();
+          if(data['summer'] && data['summer']['summer_reading'] == true){
+            this.load_participants()
+            this.summer_reading = data['summer']['summer_reading']
+            this.summer_reading_registration = data['summer']['summer_reading_registration']
+            this.summer_reading_reporting = data['summer']['summer_reading_reporting']   
+          }
           this.preferences = data['preferences'];
           this.process_holds(data['holds']);
           this.process_checkouts(data['checkouts']);

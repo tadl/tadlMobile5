@@ -1,0 +1,141 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="left"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Summer Reading
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-toggle menu="right">
+        <ion-button>
+          <ion-icon slot="icon-only" name="contact"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text *ngIf="this.show_register == false" class="ion-text-center">
+    <h1>Summer Reading Club</h1>
+    <ion-row class="ion-justify-content-center">
+      <img src="/assets/src-logo.png">
+    </ion-row>
+  </ion-text>
+  <div *ngIf="this.user.participants.length > 0 && this.show_register == false">
+    <ion-text>
+      <p class="ion-padding-horizontal" *ngIf="this.user.summer_reading_reporting == false">The Summer Reading Club launches on June 17! Check back then to report your minutes and be eligible for weekly prize drawings!</p>
+    </ion-text>
+    <ion-text class="ion-text-center">
+      <h2>Registered Participants</h2>
+    </ion-text>
+    <ion-item *ngFor="let participant of this.user.participants">
+      <ion-label>
+        <ion-text>
+          <h2>
+            {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
+            <ion-button *ngIf="this.user.summer_reading_reporting == true">Record Minutes</ion-button>
+          </h2>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+    <ion-button *ngIf="this.user.summer_reading_registration == true" (click)="this.display_register('true')" color="success" expand="block">Register Another Participant</ion-button>
+  </div>
+  <div *ngIf="this.user.participants.length == 0 && this.show_register == false && this.user.summer_reading_registration == true">
+    <ion-button color="success" expand="block" (click)="this.display_register('true')">Register for Summer Reading Club</ion-button>
+  </div>
+  <div *ngIf="this.show_register == true">
+    <ion-text>
+      <h3 class="ion-text-center">Summer Reading Club Registration</h3>
+    </ion-text>
+    <ion-text>
+      <ion-item>
+        <ion-label class="first_name_required">First Name:</ion-label>
+        <ion-input [(ngModel)]="first_name" autocapitalize="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Middle Name: (optional)</ion-label>
+        <ion-input [(ngModel)]="middle_name" autocapitalize="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="last_name_required">Last Name: </ion-label>
+        <ion-input [(ngModel)]="last_name" autocapitalize="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="phone_number_required">Phone Number: </ion-label>
+        <ion-input [(ngModel)]="phone_number" type="tel"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email: (optional) </ion-label>
+        <ion-input [(ngModel)]="email" type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="home_library_required">Home Library</ion-label>
+        <ion-select [(ngModel)]="home_library" placeholder="Select One" interface="action-sheet">
+          <ion-select-option value="Traverse City">Traverse City</ion-select-option>
+          <ion-select-option value="Kingsley">Kingsley</ion-select-option>
+          <ion-select-option value="Interlochen">Interlochen</ion-select-option>
+          <ion-select-option value="East Bay">East Bay</ion-select-option>
+          <ion-select-option value="Fife Lake">Fife Lake</ion-select-option>
+          <ion-select-option value="Peninsula">Peninsula</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label class="shirt_size_required">Shirt Size</ion-label>
+        <ion-select [(ngModel)]="shirt_size" placeholder="Select One" interface="action-sheet">
+          <ion-select-option  *ngFor="let size of this.shirt_sizes" [value]="size">
+            {{ size }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label class="club_required">Select Club</ion-label>
+        <ion-select [(ngModel)]="club" placeholder="Select One" interface="action-sheet" (ionChange)="detect_changed_club()">
+          <ion-select-option value="pre-readers">Pre-readers (ages 0-4)</ion-select-option>
+          <ion-select-option value="readers">Readers (ages 5-12)</ion-select-option>
+          <ion-select-option value="teens">Teens (ages 13-19)</ion-select-option>
+          <ion-select-option value="adults">Adults (ages 17+)</ion-select-option>
+        </ion-select>
+      </ion-item>      
+      <ion-item *ngIf="this.club == 'readers' || this.club == 'teens'">
+        <ion-label class="school_type_required" position="stacked">Which type of school will you be attending in the fall?</ion-label>
+        <ion-select [(ngModel)]="school_type" placeholder="Select One" interface="action-sheet">
+          <ion-select-option *ngIf="this.club != 'teens'" value="pre-school">Pre-School</ion-select-option>
+          <ion-select-option  *ngIf="this.club != 'teens'" value="elementary">Elementary School</ion-select-option>
+          <ion-select-option value="middle">Middle School</ion-select-option>
+          <ion-select-option  *ngIf="this.club == 'teens'" value="high">High School</ion-select-option>
+          <ion-select-option  *ngIf="this.club == 'teens'" value="college">College/ Trade School</ion-select-option>
+          <ion-select-option value="none">None/Other</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="this.school_type == 'elementary'">
+        <ion-label class="youth_school_required" position="stacked">Select School You Will Attend in Fall</ion-label>
+        <ion-select [(ngModel)]="school" placeholder="Select One" interface="action-sheet">
+          <ion-select-option  *ngFor="let school of this.globals.youth_schools" [value]="school.value">
+            {{ school.text }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="this.school_type == 'middle' || this.school_type == 'high'">
+        <ion-label class="teen_school_required" position="stacked">Select School You Will Attend in Fall</ion-label>
+        <ion-select [(ngModel)]="school" placeholder="Select One" interface="action-sheet">
+          <ion-select-option  *ngFor="let school of this.globals.teen_schools" [value]="school.value">
+            {{ school.text }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="(this.club == 'readers' || this.club == 'teens') && (this.school_type == 'middle' || this.school_type == 'high' || this.school_type == 'elementary')">
+         <ion-label position="stacked">Share summer reading activity with your school</ion-label>
+        <ion-checkbox [(ngModel)]="send_to_school"></ion-checkbox>
+      </ion-item>
+      <ion-button color="success" expand="block" (click)="this.register_participant()">
+        Register
+      </ion-button>
+      <ion-button color="danger" expand="block" (click)="this.display_register('false')">
+        Cancel
+      </ion-button>
+    </ion-text>
+  </div>
+
+</ion-content>

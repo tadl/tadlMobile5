@@ -75,6 +75,14 @@ export class Globals {
   public hours_locations_url: string = this.website_schema + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
 
+
+  /* summer reading */
+  public summer_reading_base: string = 'https://summer.tadl.org/';
+  public summer_reading_check_participants: string = this.summer_reading_base + 'patron_show_participants.json';
+  public summer_reading_save_participant: string = this.summer_reading_base + 'save_new_participant.json';
+  public youth_schools: Array<{text: string, value:string}>= [];
+  public teen_schools: Array<{text: string, value:string}>= [];
+
   /* global vars */
   public api_loading: boolean = false;
   public net_status: string = "online";
