@@ -183,7 +183,7 @@ export class SummerPage implements OnInit {
       }
       params = params.set("send_to_school", String(this.send_to_school))
     }
-    params = params.set("email", this.email)
+    params = params.set("email_address", this.email)
     params = params.set("library_card", String(this.user.card))
     if(this.valid == true ){
       let url = this.globals.summer_reading_save_participant;
