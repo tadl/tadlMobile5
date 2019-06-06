@@ -19,7 +19,7 @@ export class Globals {
   public update_version: string = '2019051600';
 
   /* basic information */
-  public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
+  public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
   public catalog_covers_host: string = 'catalog.tadl.org'; /* hostname for catalog extras */
   public website_host: string = 'www.tadl.org'; /* hostname for website */
   public system_short_name: string = 'TADL';
@@ -77,9 +77,10 @@ export class Globals {
 
 
   /* summer reading */
-  public summer_reading_base: string = 'https://summer.tadl.org';
+  public summer_reading_base: string = 'http://cal.lib.tadl.org:3000';
   public summer_reading_check_participants: string = this.summer_reading_base + '/patron_show_participants.json';
   public summer_reading_save_participant: string = this.summer_reading_base + '/save_new_participant.json';
+  public summer_reading_load_report_interface = this.summer_reading_base + '/patron_load_report_interface.json';
   public youth_schools: Array<{text: string, value:string}> = [];
   public teen_schools: Array<{text: string, value:string}> = [];
 

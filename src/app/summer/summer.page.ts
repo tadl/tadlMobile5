@@ -52,12 +52,12 @@ export class SummerPage implements OnInit {
     public user: User,
   ) { }
 
-  async view_details(reader) {
+  async load_reports(id) {
     this.subscription.unsubscribe();
     const modal = await this.modalController.create({
       component: SummerDetailPage,
       componentProps: {
-        "reader": reader,
+        "id": id,
       }
     });
     modal.onDidDismiss().then((dataReturned) => {
@@ -208,6 +208,24 @@ export class SummerPage implements OnInit {
     }
   }
 
+  async show_interface(id) {
+    this.subscription.unsubscribe();
+    const modal = await this.modalController.create({
+      component: SummerDetailPage,
+      componentProps: {
+        "id": id,
+      }
+    });
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        console.log('Modal sent data: ', dataReturned);
+        this.subscription = this.platform.backButton.subscribe(() => {
+          this._location.back();
+        });
+      }
+    });
+    return await modal.present();
+  }
 
 
   ngOnInit() {

@@ -35,7 +35,9 @@
         <ion-text>
           <h2>
             {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
-            <ion-button *ngIf="this.user.summer_reading_reporting == true">Record Minutes</ion-button>
+            <ion-button *ngIf="this.user.summer_reading_reporting == true" (click)="this.load_reports(participant.id)">
+              Record Minutes
+            </ion-button>
           </h2>
         </ion-text>
       </ion-label>
