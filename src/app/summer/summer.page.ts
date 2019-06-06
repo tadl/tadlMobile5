@@ -220,7 +220,7 @@ export class SummerPage implements OnInit {
       if (dataReturned !== null) {
         console.log('Modal sent data: ', dataReturned);
         this.subscription = this.platform.backButton.subscribe(() => {
-          this._location.back();
+          this.user.load_participants();
         });
       }
     });

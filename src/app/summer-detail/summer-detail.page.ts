@@ -14,7 +14,6 @@ export class SummerDetailPage implements OnInit {
 
   id: string = '';
   participant: any;
-  total_minutes: string = '';
   reports: any;
   items: any;
   weeks: any;
@@ -37,7 +36,6 @@ export class SummerDetailPage implements OnInit {
       .subscribe(data => {
         if(data['participant']){
           this.participant = data['participant']
-          this.total_minutes = data['total_minutes']
           this.reports = data['reports']
           this.weeks = data['weeks']
           this.items = data['items']
@@ -53,7 +51,8 @@ export class SummerDetailPage implements OnInit {
 
   has_week_started(date){
     let start_date = new Date(date)
-    let date_now = new Date()
+    let date_now = new Date('2019-7-10')
+    // let date_now = new Date()
     if(date_now > start_date){
       return true
     }else{
@@ -114,6 +113,7 @@ export class SummerDetailPage implements OnInit {
         if(data && data['success'] == true){
           this.fetch_report_info(this.id)
           this.toast.present("You have successfully updated your summer reading activity.", 2000);
+          this.user.load_participants()
         }else{
           this.toast.present("Something went wrong please try again later.", 5000);
         }

@@ -35,6 +35,7 @@
         <ion-text>
           <h2>
             {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
+            <span *ngIf="this.user.summer_reading_reporting == true"> - Total Minutes: {{participant.total_minutes}}</span>
             <ion-button *ngIf="this.user.summer_reading_reporting == true" (click)="this.load_reports(participant.id)">
               Record Minutes
             </ion-button>
