@@ -71,8 +71,7 @@ export class SummerPage implements OnInit {
     return await modal.present();
   }
 
-
-  reset_values(){
+  reset_values() {
     this.first_name = '';
     this.middle_name = '';
     this.last_name = '';
@@ -86,13 +85,12 @@ export class SummerPage implements OnInit {
     this.send_to_school = true;
   }
 
-
   display_register(show) {
     if (show == 'true') {
       this.show_register = true;
     } else {
       this.show_register = false;
-      this.reset_values()
+      this.reset_values();
     }
   }
 
@@ -100,9 +98,7 @@ export class SummerPage implements OnInit {
     this.school_type = '';
   }
 
- 
-
-  check_valid(term){
+  check_valid(term) {
     switch (term) {
       case "":
       case null:
@@ -113,89 +109,88 @@ export class SummerPage implements OnInit {
       }
   }
 
-
-  register_participant(){
-    let params = new HttpParams().set("v", "5")
-    this.valid = true
-    if(this.check_valid(this.last_name)){
+  register_participant() {
+    let params = new HttpParams().set("v", "5");
+    this.valid = true;
+    if (this.check_valid(this.last_name)) {
       document.getElementsByClassName('last_name_required')[0].setAttribute('style', 'color: black');
-      params = params.set("last_name", this.last_name)
-    }else{
+      params = params.set("last_name", this.last_name);
+    } else {
       document.getElementsByClassName('last_name_required')[0].setAttribute('style', 'color: red');
-      this.valid = false
+      this.valid = false;
     }
-    if(this.check_valid(this.first_name)){
+    if (this.check_valid(this.first_name)) {
       document.getElementsByClassName('first_name_required')[0].setAttribute('style', 'color: black');
-      params = params.set("first_name", this.first_name)
-    }else{
+      params = params.set("first_name", this.first_name);
+    } else {
       document.getElementsByClassName('first_name_required')[0].setAttribute('style', 'color: red');
-      this.valid = false
+      this.valid = false;
     }
-    if(this.check_valid(this.phone_number)){
+    if (this.check_valid(this.phone_number)) {
       document.getElementsByClassName('phone_number_required')[0].setAttribute('style', 'color: black');
-      params = params.set("phone_number", this.phone_number)
-    }else{
+      params = params.set("phone_number", this.phone_number);
+    } else {
       document.getElementsByClassName('phone_number_required')[0].setAttribute('style', 'color: red');
-      this.valid = false
+      this.valid = false;
     }
-    if(this.check_valid(this.home_library)){
+    if (this.check_valid(this.home_library)) {
       document.getElementsByClassName('home_library_required')[0].setAttribute('style', 'color: black');
-      params = params.set("home_library", this.home_library)
-    }else{
+      params = params.set("home_library", this.home_library);
+    } else {
       document.getElementsByClassName('home_library_required')[0].setAttribute('style', 'color: red');
-      this.valid = false
+      this.valid = false;
     }
-    if(this.check_valid(this.shirt_size)){
+    if (this.check_valid(this.shirt_size)) {
       document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: black');
-      params = params.set("shirt_size", this.shirt_size)
-    }else{
+      params = params.set("shirt_size", this.shirt_size);
+    } else {
       document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: red');
-      this.valid = false
+      this.valid = false;
     }
-    if(this.check_valid(this.club)){
+    if (this.check_valid(this.club)) {
       document.getElementsByClassName('club_required')[0].setAttribute('style', 'color: black');
-      params = params.set("club", this.club)
-    }else{
+      params = params.set("club", this.club);
+    } else {
       document.getElementsByClassName('club_required')[0].setAttribute('style', 'color: red');
-      this.valid = false
+      this.valid = false;
     }
-    if(this.club == 'teens' || this.club == 'readers'){
-      if(this.check_valid(this.school_type)){
+    if (this.club == 'teens' || this.club == 'readers') {
+      if (this.check_valid(this.school_type)) {
         document.getElementsByClassName('school_type_required')[0].setAttribute('style', 'color: black');
-        if(this.check_valid(this.school)){
-          if(this.club == 'readers'){
+        if (this.check_valid(this.school)) {
+          if (this.club == 'readers') {
             document.getElementsByClassName('youth_school_required')[0].setAttribute('style', 'color: black');
-          }else{
+          } else {
             document.getElementsByClassName('teen_school_required')[0].setAttribute('style', 'color: black');
           }
-          params = params.set("school", this.school)
-        }else{
-          if(this.club == 'readers'){
+          params = params.set("school", this.school);
+        } else {
+          if (this.club == 'readers') {
             document.getElementsByClassName('youth_school_required')[0].setAttribute('style', 'color: red');
-          }else{
+          } else {
             document.getElementsByClassName('teen_school_required')[0].setAttribute('style', 'color: red');
           }
-          this.valid = false
+          this.valid = false;
         }
-      }else{
+      } else {
         document.getElementsByClassName('school_type_required')[0].setAttribute('style', 'color: red');
-        this.valid = false
+        this.valid = false;
       }
-      params = params.set("send_to_school", String(this.send_to_school))
+      params = params.set("send_to_school", String(this.send_to_school));
     }
-    params = params.set("email_address", this.email)
-    params = params.set("library_card", String(this.user.card))
-    if(this.valid == true ){
+    params = params.set("email_address", this.email);
+    params = params.set("library_card", String(this.user.card));
+    if (this.valid == true ) {
       let url = this.globals.summer_reading_save_participant;
       this.globals.loading_show();
       this.http.get(url, {params: params})
         .subscribe(data => {
-          if(data['message'] == 'success'){
+          if (data['message'] == 'success') {
             this.toast.present("Participant was successfully registered for Summer Reading Club!", 5000);
-            this.user.load_participants()
-            this.reset_values()
-            this.show_register = false 
-          }else{
+            this.user.load_participants();
+            this.reset_values();
+            this.show_register = false;
+          } else {
             this.toast.present("Something went wrong please try again later.", 5000);
           }
         },
@@ -203,7 +198,7 @@ export class SummerPage implements OnInit {
           this.toast.present(this.globals.server_error_msg);
         });
       this.globals.api_loading = false;
-    }else{
+    } else {
       this.toast.present("Missing required fields.", 5000);
     }
   }
@@ -226,7 +221,6 @@ export class SummerPage implements OnInit {
     });
     return await modal.present();
   }
-
 
   ngOnInit() {
     if (this.user.token) {

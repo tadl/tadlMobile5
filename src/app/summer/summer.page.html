@@ -27,22 +27,19 @@
     <ion-text>
       <p class="ion-padding-horizontal" *ngIf="this.user.summer_reading_reporting == false">The Summer Reading Club launches on June 17! Check back then to report your minutes and be eligible for weekly prize drawings!</p>
     </ion-text>
-    <ion-text class="ion-text-center">
-      <h2>Registered Participants</h2>
-    </ion-text>
-    <ion-item *ngFor="let participant of this.user.participants">
-      <ion-label>
-        <ion-text>
-          <h2>
-            {{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}
-            <span *ngIf="this.user.summer_reading_reporting == true"> - Total Minutes: {{participant.total_minutes}}</span>
-            <ion-button *ngIf="this.user.summer_reading_reporting == true" (click)="this.load_reports(participant.id)">
-              Record Minutes
-            </ion-button>
-          </h2>
-        </ion-text>
-      </ion-label>
-    </ion-item>
+    <ion-list *ngIf="this.user.summer_reading_reporting == true">
+      <ion-list-header>
+        <ion-label>Registered Participants</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let participant of this.user.participants" detail="true" (click)="this.load_reports(participant.id)">
+        <ion-label>
+          <ion-text><h2>{{participant.first_name}} {{participant.middle_name}} {{participant.last_name}}</h2></ion-text>
+          <ion-text>
+            <p>Total minutes: {{ participant.total_minutes }}</p>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
     <ion-button *ngIf="this.user.summer_reading_registration == true" (click)="this.display_register('true')" color="success" expand="block">Register Another Participant</ion-button>
   </div>
   <div *ngIf="this.user.participants.length == 0 && this.show_register == false && this.user.summer_reading_registration == true">

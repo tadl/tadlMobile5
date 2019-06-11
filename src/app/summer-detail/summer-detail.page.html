@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title *ngIf="participant">{{participant['first_name']}} {{participant['last_name']}} </ion-title>
+    <ion-title *ngIf="participant">{{ participant['first_name'] }} {{ participant['last_name'] }}</ion-title>
     <ion-title *ngIf="!participant">Loading...</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="globals.close_modal()" class="button button-clear">Close</ion-button>
@@ -11,13 +11,13 @@
     <ion-grid no-margin no-padding>
       <ion-row no-margin no-padding>
         <ion-col size="12">
-          <h3 text-center style="margin-top: 0;">Total Minutes Reported: {{participant.total_minutes}} </h3>
+          <h3 text-center no-margin>Total Minutes Reported: {{ participant.total_minutes }}</h3>
         </ion-col>
       </ion-row>
       <div *ngFor="let week of this.weeks">
         <div *ngIf="this.has_week_started(week.start_date)"> 
           <ion-row>
-            <h4>{{week.name}} - {{ this.date_to_month(week.start_date)}} to {{ this.date_to_month(week.end_date)}}  </h4>
+            <h4>{{ week.name }} - {{ this.date_format(week.start_date) }} to {{ this.date_format(week.end_date) }}</h4>
           </ion-row>
           <ion-item>
             <ion-label>Monday</ion-label>

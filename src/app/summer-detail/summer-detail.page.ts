@@ -3,6 +3,7 @@ import { Globals } from '../globals';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../services/toast/toast.service';
 import { User } from '../user';
+import { format, isBefore, isAfter, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-summer-detail',
@@ -17,7 +18,6 @@ export class SummerDetailPage implements OnInit {
   reports: any;
   items: any;
   weeks: any;
-  months: Array<string> = ["January", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
   constructor(
     public globals: Globals,
@@ -26,18 +26,18 @@ export class SummerDetailPage implements OnInit {
     public user: User,
   ) { }
 
-  fetch_report_info(id){
+  fetch_report_info(id) {
     this.globals.loading_show();
     let params = new HttpParams().set("v", "5")
-    params = params.set("participant_id", id)
-    params = params.set("token", this.user.token)
+      .set("participant_id", id)
+      .set("token", this.user.token);
     let url = this.globals.summer_reading_load_report_interface;
     this.http.get(url, {params: params})
       .subscribe(data => {
         if(data['participant']){
           this.participant = data['participant']
           this.reports = data['reports']
-          this.weeks = data['weeks']
+          this.weeks = data['weeks'].reverse();
           this.items = data['items']
         }else{
           this.toast.present("Something went wrong please try again later.", 5000);
@@ -60,11 +60,8 @@ export class SummerDetailPage implements OnInit {
     }
   }
 
-  date_to_month(data_string){
-    let raw_date = new Date(data_string)
-    let month = raw_date.getMonth()
-    let day = raw_date.getDate()
-    return this.months[month] + " " + day
+  date_format(date_string) {
+    return format(parseISO(date_string), 'LLL d');
   }
 
   get_day_total(day, week_id){
