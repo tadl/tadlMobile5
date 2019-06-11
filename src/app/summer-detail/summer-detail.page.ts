@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Globals } from '../globals';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../services/toast/toast.service';
+import { Globals } from '../globals';
 import { User } from '../user';
 import { format, isBefore, isAfter, isSameWeek, parseISO } from 'date-fns';
 
@@ -21,10 +21,10 @@ export class SummerDetailPage implements OnInit {
   active_card: any;
 
   constructor(
-    public globals: Globals,
     public toast: ToastService,
-    private http: HttpClient,
+    public globals: Globals,
     public user: User,
+    private http: HttpClient,
   ) { }
 
   fetch_report_info(id) {
@@ -36,7 +36,11 @@ export class SummerDetailPage implements OnInit {
     this.http.get(url, {params: params})
       .subscribe(data => {
         if (data['participant']) {
-          var temp_active = 0;
+          if (!this.active_card) {
+            var temp_active = 0;
+          } else {
+            var temp_active = this.active_card;
+          }
           this.participant = data['participant'];
           this.reports = data['reports'];
           this.weeks = data['weeks'].reverse();
@@ -45,7 +49,7 @@ export class SummerDetailPage implements OnInit {
             let start = parseISO(week.start_date);
             let now = parseISO('2019-07-15');
             // let now = parseISO(format(new Date(), 'yyyy-MM-dd'));
-            if (isSameWeek(start, now, { weekStartsOn: 1 }) == true) {
+            if (isSameWeek(start, now, { weekStartsOn: 1 }) == true && !temp_active) {
               temp_active = week.id;
             }
           });
