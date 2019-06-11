@@ -37,9 +37,9 @@ export class SummerDetailPage implements OnInit {
       .subscribe(data => {
         if (data['participant']) {
           if (!this.active_card) {
-            var temp_active = 0;
+            var temp_active: number = 0;
           } else {
-            var temp_active = this.active_card;
+            var temp_active: number = this.active_card;
           }
           this.participant = data['participant'];
           this.reports = data['reports'];
