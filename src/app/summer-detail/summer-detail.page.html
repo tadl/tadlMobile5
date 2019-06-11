@@ -7,57 +7,58 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-  <ion-content padding *ngIf="participant">
-    <ion-grid no-margin no-padding>
-      <ion-row no-margin no-padding>
-        <ion-col size="12">
-          <h3 text-center no-margin>Total Minutes Reported: {{ participant.total_minutes }}</h3>
-        </ion-col>
-      </ion-row>
-      <div *ngFor="let week of this.weeks">
-        <div *ngIf="this.has_week_started(week.start_date)"> 
-          <ion-row>
-            <h4>{{ week.name }} - {{ this.date_format(week.start_date) }} to {{ this.date_format(week.end_date) }}</h4>
-          </ion-row>
-          <ion-item>
-            <ion-label>Monday</ion-label>
-            <ion-input attr.id="monday_{{week.id}}" type="number" maxlength="3" value="{{this.get_day_total('monday', week.id)}}"></ion-input> 
-          </ion-item>
-          <ion-item>
-            <ion-label>Tuesday</ion-label>
-            <ion-input attr.id="tuesday_{{week.id}}" type="number" maxlength="3" value="{{this.get_day_total('tuesday', week.id)}}"></ion-input> 
-          </ion-item>
-          <ion-item>
-            <ion-label>Wednesday</ion-label>
-            <ion-input attr.id="wednesday_{{week.id}}" type="number" maxlength="3" value="{{this.get_day_total('wednesday', week.id)}}"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Thursday</ion-label>
-            <ion-input attr.id="thursday_{{week.id}}" type="number" maxlength="3" value="{{this.get_day_total('thursday', week.id)}}"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Friday</ion-label>
-            <ion-input attr.id="friday_{{week.id}}" type="number" maxlength="3" value="{{this.get_day_total('friday', week.id)}}"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Saturday</ion-label>
-            <ion-input attr.id="saturday_{{week.id}}" type="number" maxlength="3" value="{{this.get_day_total('saturday', week.id)}}"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Sunday</ion-label>
-            <ion-input attr.id="sunday_{{week.id}}" type="number" maxlength="3" value="{{this.get_day_total('sunday', week.id)}}"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              What did you read this week?(optional)
-            </ion-label>
-            <ion-textarea attr.id="items_{{week.id}}" rows="3" auto-grow="true" value="{{this.get_week_items(week.id)}}">
-            </ion-textarea>
-          </ion-item>
-          <ion-button expand="full" color="success" (click)="this.update_week(week.id)">
-            Update {{week.name}}
-          </ion-button>
-        </div>
-      </div>
-    </ion-grid>
-  </ion-content>
+<ion-content padding *ngIf="participant">
+
+  <h2 text-center no-margin-horizontal no-padding>Total Minutes Reported: {{ participant.total_minutes }}</h2>
+
+  <div *ngFor="let week of weeks">
+    <div *ngIf="has_week_started(week.start_date, week.id)">
+
+      <ion-item detail="false" (click)="active_card = (active_card == week.id) ? 0 : week.id">
+        <ion-label>
+          <h2>{{ week.name }} - {{ date_format(week.start_date) }} to {{ date_format(week.end_date) }}</h2>
+          <p *ngIf="get_week_total(week.id)">Minutes Reported: {{ get_week_total(week.id) }}</p>
+        </ion-label>
+        <ion-icon name="add" slot="end" *ngIf="active_card != week.id"></ion-icon>
+        <ion-icon name="close" slot="end" *ngIf="active_card == week.id"></ion-icon>
+      </ion-item>
+      <ion-card *ngIf="active_card == week.id" no-margin-horizontal>
+        <ion-item>
+          <ion-label position="start">Monday</ion-label>
+          <ion-input attr.id="monday_{{ week.id }}" type="number" maxlength="3" value="{{ get_day_total('monday', week.id) }}"></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label position="start">Tuesday</ion-label>
+          <ion-input attr.id="tuesday_{{ week.id }}" type="number" maxlength="3" value="{{ get_day_total('tuesday', week.id) }}"></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label position="start">Wednesday</ion-label>
+          <ion-input attr.id="wednesday_{{ week.id }}" type="number" maxlength="3" value="{{ get_day_total('wednesday', week.id) }}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="start">Thursday</ion-label>
+          <ion-input attr.id="thursday_{{ week.id }}" type="number" maxlength="3" value="{{ get_day_total('thursday', week.id) }}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="start">Friday</ion-label>
+          <ion-input attr.id="friday_{{ week.id }}" type="number" maxlength="3" value="{{ get_day_total('friday', week.id) }}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="start">Saturday</ion-label>
+          <ion-input attr.id="saturday_{{ week.id }}" type="number" maxlength="3" value="{{ get_day_total('saturday', week.id) }}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="start">Sunday</ion-label>
+          <ion-input attr.id="sunday_{{ week.id }}" type="number" maxlength="3" value="{{ get_day_total('sunday', week.id) }}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">What did you read this week?(optional)</ion-label>
+          <ion-textarea attr.id="items_{{ week.id }}" rows="3" auto-grow="true" value="{{ get_week_items(week.id) }}"></ion-textarea>
+        </ion-item>
+        <ion-button expand="full" color="success" (click)="update_week(week.id)">Update {{ week.name }}</ion-button>
+      </ion-card>
+
+    </div>
+  </div>
+
+</ion-content>
