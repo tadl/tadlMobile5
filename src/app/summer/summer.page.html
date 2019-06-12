@@ -40,10 +40,10 @@
         </ion-label>
       </ion-item>
     </ion-list>
-    <ion-button *ngIf="this.user.summer_reading_registration == true" (click)="this.display_register('true')" color="success" expand="block">Register Another Participant</ion-button>
+    <ion-button *ngIf="this.user.summer_reading_registration == true" (click)="this.display_register('true')" color="success" expand="full">Register Another Participant</ion-button>
   </div>
   <div *ngIf="this.user.participants.length == 0 && this.show_register == false && this.user.summer_reading_registration == true">
-    <ion-button color="success" expand="block" (click)="this.display_register('true')">Register for Summer Reading Club</ion-button>
+    <ion-button color="success" expand="full" (click)="this.display_register('true')">Register for Summer Reading Club</ion-button>
   </div>
   <div *ngIf="this.show_register == true">
     <ion-text>
@@ -72,7 +72,7 @@
       </ion-item>
       <ion-item>
         <ion-label class="home_library_required">Home Library</ion-label>
-        <ion-select [(ngModel)]="home_library" placeholder="Select One" interface="action-sheet">
+        <ion-select [(ngModel)]="home_library" placeholder="Select One" interface="alert">
           <ion-select-option value="Woodmere">Traverse City</ion-select-option>
           <ion-select-option value="Kingsley">Kingsley</ion-select-option>
           <ion-select-option value="Interlochen">Interlochen</ion-select-option>
@@ -83,7 +83,7 @@
       </ion-item>
       <ion-item>
         <ion-label class="shirt_size_required">Shirt Size</ion-label>
-        <ion-select [(ngModel)]="shirt_size" placeholder="Select One" interface="action-sheet">
+        <ion-select [(ngModel)]="shirt_size" placeholder="Select One" interface="alert">
           <ion-select-option  *ngFor="let size of this.shirt_sizes" [value]="size">
             {{ size }}
           </ion-select-option>
@@ -91,7 +91,7 @@
       </ion-item>
       <ion-item>
         <ion-label class="club_required">Select Club</ion-label>
-        <ion-select [(ngModel)]="club" placeholder="Select One" interface="action-sheet" (ionChange)="detect_changed_club()">
+        <ion-select [(ngModel)]="club" placeholder="Select One" interface="alert" (ionChange)="detect_changed_club()">
           <ion-select-option value="pre-readers">Pre-readers (ages 0-4)</ion-select-option>
           <ion-select-option value="readers">Readers (ages 5-12)</ion-select-option>
           <ion-select-option value="teens">Teens (ages 13-19)</ion-select-option>
@@ -100,7 +100,7 @@
       </ion-item>      
       <ion-item *ngIf="this.club == 'readers' || this.club == 'teens'">
         <ion-label class="school_type_required" position="stacked">Which type of school will you be attending in the fall?</ion-label>
-        <ion-select [(ngModel)]="school_type" placeholder="Select One" interface="action-sheet">
+        <ion-select [(ngModel)]="school_type" placeholder="Select One" interface="alert">
           <ion-select-option *ngIf="this.club != 'teens'" value="pre-school">Pre-School</ion-select-option>
           <ion-select-option  *ngIf="this.club != 'teens'" value="elementary">Elementary School</ion-select-option>
           <ion-select-option value="middle">Middle School</ion-select-option>
@@ -111,7 +111,7 @@
       </ion-item>
       <ion-item *ngIf="this.school_type == 'elementary'">
         <ion-label class="youth_school_required" position="stacked">Select School You Will Attend in Fall</ion-label>
-        <ion-select [(ngModel)]="school" placeholder="Select One" interface="action-sheet">
+        <ion-select [(ngModel)]="school" placeholder="Select One" interface="alert">
           <ion-select-option  *ngFor="let school of this.globals.youth_schools" [value]="school.value">
             {{ school.text }}
           </ion-select-option>
@@ -119,7 +119,7 @@
       </ion-item>
       <ion-item *ngIf="this.school_type == 'middle' || this.school_type == 'high'">
         <ion-label class="teen_school_required" position="stacked">Select School You Will Attend in Fall</ion-label>
-        <ion-select [(ngModel)]="school" placeholder="Select One" interface="action-sheet">
+        <ion-select [(ngModel)]="school" placeholder="Select One" interface="alert">
           <ion-select-option  *ngFor="let school of this.globals.teen_schools" [value]="school.value">
             {{ school.text }}
           </ion-select-option>
@@ -129,10 +129,10 @@
          <ion-label position="stacked">Share summer reading activity with your school</ion-label>
         <ion-checkbox [(ngModel)]="send_to_school"></ion-checkbox>
       </ion-item>
-      <ion-button color="success" expand="block" (click)="this.register_participant()">
+      <ion-button color="success" expand="full" (click)="this.register_participant()">
         Register
       </ion-button>
-      <ion-button color="danger" expand="block" (click)="this.display_register('false')">
+      <ion-button color="danger" expand="full" (click)="this.display_register('false')">
         Cancel
       </ion-button>
     </ion-text>
