@@ -47,8 +47,7 @@ export class SummerDetailPage implements OnInit {
           this.items = data['items'];
           this.weeks.forEach(function(week) {
             let start = parseISO(week.start_date);
-            let now = parseISO('2019-07-15');
-            // let now = parseISO(format(new Date(), 'yyyy-MM-dd'));
+            let now = parseISO(format(new Date(), 'yyyy-MM-dd'));
             if (isSameWeek(start, now, { weekStartsOn: 1 }) == true && !temp_active) {
               temp_active = week.id;
             }
@@ -66,8 +65,7 @@ export class SummerDetailPage implements OnInit {
   
   has_week_started(date,id) {
     let start_date = parseISO(date);
-    // let date_now = parseISO(format(new Date(), 'yyyy-MM-dd'));
-    let date_now = parseISO('2019-07-15');
+    let date_now = parseISO(format(new Date(), 'yyyy-MM-dd'));
     return !isAfter(start_date, date_now);
   }
 
