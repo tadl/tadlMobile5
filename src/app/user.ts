@@ -593,6 +593,7 @@ export class User {
             this.update_user_object(data['user']);
           }
         }
+        this.get_holds()
       },
       (err) => {
         if (this.action_retry == true) {
@@ -643,6 +644,7 @@ export class User {
           this.update_user_object(data['user']);
           this.process_holds(data['holds']);
         }
+        this.events.publish('got_holds');
       },
       (err) => {
         this.globals.api_loading = false;
@@ -679,6 +681,7 @@ export class User {
           this.update_user_object(data['user']);
           this.toast.present("Successfully " + action + " hold on " + hold.title_display + ".", 5000);
         }
+        this.events.publish('manage_hold_complete'); 
       },
       (err) => {
         this.globals.api_loading = false;

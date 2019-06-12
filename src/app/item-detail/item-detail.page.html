@@ -58,9 +58,9 @@
               <span *ngIf="item.hold_status == 'Suspended'"><ion-text color="danger">{{ item.hold_status }}</ion-text></span>
               <span *ngIf="item.hold_status == 'Active'"><ion-text color="success">{{ item.hold_status }}<span *ngIf="item.queue_status != ''"> - <ion-text color="primary">{{ item.queue_status }}</ion-text></span></ion-text></span>
             </p>
-            <ion-button expand="full" *ngIf="item.hold_status == 'Suspended'" (click)="user.manage_hold(item, 'activate')">Activate</ion-button>
-            <ion-button expand="full" *ngIf="item.hold_status != 'Suspended' && !item.queue_status.startsWith('Ready')" (click)="user.manage_hold(item, 'suspend')">Suspend</ion-button>
-            <ion-button expand="full" (click)="user.cancel_hold(item)">Cancel</ion-button>
+            <ion-button expand="full" *ngIf="item.hold_status == 'Suspended'" (click)="this.manage_hold_from_details('activate')">Activate</ion-button>
+            <ion-button expand="full" *ngIf="item.hold_status != 'Suspended' && !item.queue_status.startsWith('Ready')" (click)="this.manage_hold_from_details('suspend')">Suspend</ion-button>
+            <ion-button expand="full" (click)="this.cancel_hold_from_details()">Cancel</ion-button>
           </ion-card-content>
         </ion-card>
         <ion-card class="detail-checkout" *ngIf="item.checkout_id">
@@ -72,7 +72,7 @@
             <p>Copy number {{ item.barcode }}</p>
             <p>Due {{ item.due_date }} ({{ item.due_words }})</p>
             <p><span *ngIf="item.renew_attempts <= 0">No </span><span *ngIf="item.renew_attempts > 0">{{ item.renew_attempts }} </span>Renewal<span *ngIf="(item.renew_attempts > 1) || (item.renew_attempts <= 0)">s</span> remaining</p>
-            <ion-button expand="full" *ngIf="item.renew_attempts > 0" (click)="user.renew(item.checkout_id)">Renew</ion-button>
+            <ion-button expand="full" *ngIf="item.renew_attempts > 0" (click)="this.renew_from_details()">Renew</ion-button>
           </ion-card-content>
         </ion-card>
         <ion-card class="detail-history" *ngIf="item.barcode && item.checkout_date && item.return_date">
@@ -91,7 +91,7 @@
         <p class="detail-electronic" *ngIf="item.electronic == true">Electronic resource from {{ item.source }}</p>
         <p class="detail-availability" *ngIf="item.availability.copies_all > 0"><span *ngIf="item.hold_count > 0">{{ item.hold_count }} hold<span *ngIf="item.hold_count > 1">s</span> on </span>{{ item.availability.copies_all }} cop<span *ngIf="item.availability.copies_all == 1">y</span><span *ngIf="item.availability.copies_all > 1">ies</span><span *ngIf="item.availability.copies_all_available > 0">, {{ item.availability.copies_all_available }} available</span>.</p>
         <ion-button expand="full" *ngIf="item.electronic == true" [href]="item.eresource_link">View Resource</ion-button>
-        <ion-button expand="full" *ngIf="user.logged_in && item.electronic != true && item.holdable == true && !item.hold_id" (click)="user.place_hold(item.id)">Place Hold</ion-button>
+        <ion-button expand="full" *ngIf="user.logged_in && item.electronic != true && item.holdable == true && !item.hold_id" (click)="this.place_hold_from_details()">Place Hold</ion-button>
         <ion-button expand="full" *ngIf="!user.logged_in && item.electronic != true && item.holdable == true && !item.hold_id" (click)="user.login_and_place_hold(item.id)">Log In to Place Hold</ion-button>
       </ion-col>
     </ion-row>
