@@ -521,6 +521,7 @@ export class User {
           });
           this.toast.present(message);
         }
+        this.events.publish('renew_attempt_complete');
       },
       (err) => {
         this.globals.api_loading = false;
