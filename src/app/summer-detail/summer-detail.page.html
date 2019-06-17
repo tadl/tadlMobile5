@@ -25,11 +25,11 @@
       <ion-card *ngIf="active_card == week.id" no-margin-horizontal>
         <ion-item>
           <ion-label position="start">Monday</ion-label>
-          <ion-input attr.id="monday_{{ week.id }}" type="number" (keydown.e)="$event.preventDefault()" maxlength="3" value="{{ get_day_total('monday', week.id) }}"></ion-input> 
+          <ion-input attr.id="monday_{{ week.id }}" type="number" (keydown.e)="$event.preventDefault()" maxlength="3" value="{{ get_day_total('monday', week.id) }}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="start">Tuesday</ion-label>
-          <ion-input attr.id="tuesday_{{ week.id }}" type="number" (keydown.e)="$event.preventDefault()" maxlength="3" value="{{ get_day_total('tuesday', week.id) }}"></ion-input> 
+          <ion-input attr.id="tuesday_{{ week.id }}" type="number" (keydown.e)="$event.preventDefault()" maxlength="3" value="{{ get_day_total('tuesday', week.id) }}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="start">Wednesday</ion-label>

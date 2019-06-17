@@ -97,7 +97,7 @@
           <ion-select-option value="teens">Teens (ages 13-19)</ion-select-option>
           <ion-select-option value="adults">Adults (ages 17+)</ion-select-option>
         </ion-select>
-      </ion-item>      
+      </ion-item>
       <ion-item *ngIf="this.club == 'readers' || this.club == 'teens'">
         <ion-label class="school_type_required" position="stacked">Which type of school will you be attending in the fall?</ion-label>
         <ion-select [(ngModel)]="school_type" placeholder="Select One" interface="alert">

@@ -124,11 +124,11 @@ export class User {
         if (data['user']) {
           this.update_user_object(data['user']);
           this.update_stored_accounts();
-          if(data['summer'] && data['summer']['summer_reading'] == true){
-            this.load_participants()
-            this.summer_reading = data['summer']['summer_reading']
-            this.summer_reading_registration = data['summer']['summer_reading_registration']
-            this.summer_reading_reporting = data['summer']['summer_reading_reporting']   
+          if (data['summer'] && data['summer']['summer_reading'] == true) {
+            this.load_participants();
+            this.summer_reading = data['summer']['summer_reading'];
+            this.summer_reading_registration = data['summer']['summer_reading_registration'];
+            this.summer_reading_reporting = data['summer']['summer_reading_reporting'];
           }
           this.preferences = data['preferences'];
           this.process_holds(data['holds']);
@@ -268,6 +268,10 @@ export class User {
       this.fines = [];
       this.holds = [];
       this.checkouts = [];
+      this.summer_reading = false;
+      this.summer_reading_registration = false;
+      this.summer_reading_reporting = false;
+      this.participants = [];
       this.storage.remove('hashed_password');
       this.storage.remove('username');
     });
@@ -682,7 +686,7 @@ export class User {
           this.update_user_object(data['user']);
           this.toast.present("Successfully " + action + " hold on " + hold.title_display + ".", 5000);
         }
-        this.events.publish('manage_hold_complete'); 
+        this.events.publish('manage_hold_complete');
       },
       (err) => {
         this.globals.api_loading = false;

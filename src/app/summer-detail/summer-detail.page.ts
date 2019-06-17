@@ -62,7 +62,7 @@ export class SummerDetailPage implements OnInit {
       });
     this.globals.api_loading = false;
   }
-  
+
   has_week_started(date,id) {
     let start_date = parseISO(date);
     let date_now = parseISO(format(new Date(), 'yyyy-MM-dd'));
