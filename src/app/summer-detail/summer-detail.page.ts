@@ -96,7 +96,7 @@ export class SummerDetailPage implements OnInit {
       return item.week_id == week_id;
     });
     if (target_item != undefined) {
-      return decodeURIComponent(target_item.name);
+      return target_item.name;
     }
   }
 
@@ -121,7 +121,8 @@ export class SummerDetailPage implements OnInit {
     let sunday = (<HTMLInputElement>document.getElementById('sunday_' + week_id)).value;
     params = params.set("sunday", sunday);
     let items = (<HTMLInputElement>document.getElementById('items_' + week_id)).value;
-    params = params.set("item", encodeURIComponent(items));
+    items = items.replace(/;/g, ' ');
+    params = params.set("item", items);
     let url = this.globals.summer_reading_update_week;
     this.http.get(url, {params: params})
       .subscribe(data => {
