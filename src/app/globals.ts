@@ -16,10 +16,10 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.1.0';
-  public update_version: string = '2019061701';
+  public update_version: string = '2019073000';
 
   /* basic information */
-  public catalog_host: string = 'catalog-preview.appstwo.tadl.org'; /* hostname for catalog api */
+  public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
   public catalog_covers_host: string = 'catalog.tadl.org'; /* hostname for catalog extras */
   public website_host: string = 'www.tadl.org'; /* hostname for website */
   public system_short_name: string = 'TADL';
