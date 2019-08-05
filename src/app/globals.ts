@@ -16,7 +16,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.1.0';
-  public update_version: string = '2019073000';
+  public update_version: string = '2019080500';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -96,7 +96,7 @@ export class Globals {
     { name: 'Traverse City', code: '23' },
     { name: 'Interlochen', code: '24' },
     { name: 'Kingsley', code: '25' },
-    { name: 'Peninsula', code: '26' },
+    { name: 'Peninsula (Closed until the end of August)', code: '26' },
     { name: 'Fife Lake', code: '27' },
     { name: 'East Bay', code: '28' },
   ];
@@ -107,7 +107,7 @@ export class Globals {
     { name: 'Traverse City', code: '23' },
     { name: 'Interlochen', code: '24' },
     { name: 'Kingsley', code: '25' },
-    { name: 'Peninsula', code: '26' },
+    { name: 'Peninsula (Closed until the end of August)', code: '26' },
     { name: 'Fife Lake', code: '27' },
     { name: 'East Bay', code: '28' },
   ];
@@ -116,7 +116,7 @@ export class Globals {
   public short_to_friendly_name = new Map<string, string>([
     ['TADL-EBB', 'East Bay'],
     ['TADL-KBL', 'Kingsley'],
-    ['TADL-PCL', 'Peninsula'],
+    ['TADL-PCL', 'Peninsula (Closed until the end of August)'],
     ['TADL-IPL', 'Interlochen'],
     ['TADL-FLPL', 'Fife Lake'],
     ['TADL-WOOD', 'Traverse City'],

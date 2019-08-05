@@ -116,7 +116,7 @@
         </ion-item>
         <div *ngFor="let location of item.availability.by_location">
           <div *ngIf="location.copies_available > 0">
-            <ion-item-divider *ngIf="globals.multi_location == true">{{ location.name }}</ion-item-divider>
+            <ion-item-divider *ngIf="globals.multi_location == true">{{ globals.short_to_friendly_name.get(location.name_compact) }}</ion-item-divider>
             <ion-item *ngFor="let shelf of location.shelving_locations" text-wrap>
               {{ shelf.available_copies }} in {{ shelf.shelving_location }}
               <ion-badge slot="end">{{ shelf.call_number }}</ion-badge>
