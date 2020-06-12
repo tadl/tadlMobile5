@@ -17,25 +17,12 @@ export class SummerPage implements OnInit {
 
   subscription: any;
   show_register: boolean = false;
-  shirt_sizes: Array<string> = [
-    'Youth Extra Small',
-    'Youth Small',
-    'Youth Medium',
-    'Youth Large',
-    'Youth Extra Large',
-    'Adult Small',
-    'Adult Medium',
-    'Adult Large',
-    'Adult Extra Large',
-    'Adult Double Extra Large',
-  ];
   first_name: string = '';
   middle_name: string = '';
   last_name: string = '';
   phone_number: string = '';
   email: string = '';
   home_library: string = '';
-  shirt_size: string = '';
   club: string = '';
   school_type: string = '';
   school: string = '';
@@ -78,7 +65,6 @@ export class SummerPage implements OnInit {
     this.phone_number = '';
     this.email = '';
     this.home_library = '';
-    this.shirt_size = '';
     this.club = '';
     this.school_type = '';
     this.school = '';
@@ -138,13 +124,6 @@ export class SummerPage implements OnInit {
       params = params.set("home_library", this.home_library);
     } else {
       document.getElementsByClassName('home_library_required')[0].setAttribute('style', 'color: red');
-      this.valid = false;
-    }
-    if (this.check_valid(this.shirt_size)) {
-      document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: black');
-      params = params.set("shirt_size", this.shirt_size);
-    } else {
-      document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: red');
       this.valid = false;
     }
     if (this.check_valid(this.club)) {
