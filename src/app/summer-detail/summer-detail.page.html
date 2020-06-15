@@ -17,7 +17,13 @@
       <ion-item detail="false" (click)="active_card = (active_card == week.id) ? 0 : week.id">
         <ion-label>
           <h2>{{ week.name }} - {{ date_format(week.start_date) }} to {{ date_format(week.end_date) }}</h2>
-          <p *ngIf="get_week_total(week.id)">Minutes Reported: {{ get_week_total(week.id) }}</p>
+          <p *ngIf="get_week_total(week.id)">
+            <span *ngFor="let badge of get_week_badges(week.id)">
+              <img [src]="this.globals.summer_reading_base + '/' + badge" style="z-index:9999;max-width:64px;">
+            </span>
+            <br>
+            Minutes Reported: {{ get_week_total(week.id) }}
+          </p>
         </ion-label>
         <ion-icon name="add" slot="end" *ngIf="active_card != week.id"></ion-icon>
         <ion-icon name="close" slot="end" *ngIf="active_card == week.id"></ion-icon>

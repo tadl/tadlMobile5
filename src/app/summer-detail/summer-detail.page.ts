@@ -82,6 +82,15 @@ export class SummerDetailPage implements OnInit {
     }
   }
 
+  get_week_badges(week_id) {
+    let target_report = this.reports.find(report => {
+      return report.week_id == week_id;
+    });
+    if (target_report) {
+      return target_report['badges'];
+    }
+  }
+
   get_day_total(day, week_id) {
     let target_report = this.reports.find(report => {
       return report.week_id == week_id;

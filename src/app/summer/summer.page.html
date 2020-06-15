@@ -25,7 +25,7 @@
   </ion-text>
   <div *ngIf="this.user.participants.length > 0 && this.show_register == false">
     <ion-text>
-      <p class="ion-padding-horizontal" *ngIf="this.user.summer_reading_reporting == false">The Summer Reading Club launches on June 17! Check back then to report your minutes and be eligible for weekly prize drawings!</p>
+      <p class="ion-padding-horizontal" *ngIf="this.user.summer_reading_reporting == false">The Summer Reading Club launches on June 15! Check back then to report your minutes and be eligible for weekly prize drawings!</p>
     </ion-text>
     <ion-list *ngIf="this.user.summer_reading_reporting == true">
       <ion-list-header>
@@ -79,14 +79,6 @@
           <ion-select-option value="East Bay">East Bay</ion-select-option>
           <ion-select-option value="Fife Lake">Fife Lake</ion-select-option>
           <ion-select-option value="Peninsula">Peninsula</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label class="shirt_size_required">Shirt Size</ion-label>
-        <ion-select [(ngModel)]="shirt_size" placeholder="Select One" interface="alert">
-          <ion-select-option  *ngFor="let size of this.shirt_sizes" [value]="size">
-            {{ size }}
-          </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
