@@ -25,6 +25,11 @@
         <a href="tel:{{ location.phone }}">{{ location.phone }}</a> &bull; <a href="mailto:{{ location.email }}">{{ location.email }}</a>
       </ion-text>
     </p>
+    <div *ngIf="location.hoursnote" text-center>
+      <ion-text>
+        <strong>{{ location.hoursnote }}</strong>
+      </ion-text>
+    </div>
     <ion-grid>
       <ion-row>
         <ion-col size="5" text-right padding-horizontal>Sunday</ion-col>
