@@ -17,12 +17,28 @@ export class SummerPage implements OnInit {
 
   subscription: any;
   show_register: boolean = false;
+  shirt_sizes: Array<string> = [
+    'Patch',
+    'Youth Extra Small',
+    'Youth Small',
+    'Youth Medium',
+    'Youth Large',
+    'Youth Extra Large',
+    'Adult Small',
+    'Adult Medium',
+    'Adult Large',
+    'Adult Extra Large',
+    'Adult Double Extra Large',
+    'No thanks, I don\'t need a shirt or a patch',
+  ];
+  wants_craft_kit: boolean = false;
   first_name: string = '';
   middle_name: string = '';
   last_name: string = '';
   phone_number: string = '';
   email: string = '';
   home_library: string = '';
+  shirt_size: string = '';
   club: string = '';
   school_type: string = '';
   school: string = '';
@@ -65,10 +81,12 @@ export class SummerPage implements OnInit {
     this.phone_number = '';
     this.email = '';
     this.home_library = '';
+    this.shirt_size = '';
     this.club = '';
     this.school_type = '';
     this.school = '';
     this.send_to_school = true;
+    this.wants_craft_kit = false;
   }
 
   display_register(show) {
@@ -112,6 +130,7 @@ export class SummerPage implements OnInit {
       document.getElementsByClassName('first_name_required')[0].setAttribute('style', 'color: red');
       this.valid = false;
     }
+    params = params.set("middle_name", this.middle_name);
     if (this.check_valid(this.phone_number)) {
       document.getElementsByClassName('phone_number_required')[0].setAttribute('style', 'color: black');
       params = params.set("phone_number", this.phone_number);
@@ -124,6 +143,13 @@ export class SummerPage implements OnInit {
       params = params.set("home_library", this.home_library);
     } else {
       document.getElementsByClassName('home_library_required')[0].setAttribute('style', 'color: red');
+      this.valid = false;
+    }
+    if (this.check_valid(this.shirt_size)) {
+      document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: black');
+      params = params.set("shirt_size", this.shirt_size);
+    } else {
+      document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: red');
       this.valid = false;
     }
     if (this.check_valid(this.club)) {
@@ -158,6 +184,7 @@ export class SummerPage implements OnInit {
       params = params.set("send_to_school", String(this.send_to_school));
     }
     params = params.set("email_address", this.email);
+    params = params.set("wants_craft_kit", String(this.wants_craft_kit));
     params = params.set("library_card", String(this.user.card));
     if (this.valid == true ) {
       let url = this.globals.summer_reading_save_participant;

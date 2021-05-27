@@ -20,12 +20,12 @@
   <ion-text *ngIf="this.show_register == false" class="ion-text-center">
     <h1>Summer Reading Club</h1>
     <ion-row>
-      <img src="https://www.tadl.org/wp-content/uploads/2020/06/facebookbanner_SRC20.jpg" style="width: 100%">
+      <img src="https://www.tadl.org/wp-content/uploads/2021/05/app-summer-Reading-Club-2021.png" style="width: 100%">
     </ion-row>
   </ion-text>
   <div *ngIf="this.user.participants.length > 0 && this.show_register == false">
     <ion-text>
-      <p class="ion-padding-horizontal" *ngIf="this.user.summer_reading_reporting == false">The Summer Reading Club launches on June 15! Check back then to report your minutes and be eligible for weekly prize drawings!</p>
+      <p class="ion-padding-horizontal" *ngIf="this.user.summer_reading_reporting == false">The Summer Reading Club launches on June 21! Check back then to report your minutes and be eligible for weekly prize drawings!</p>
     </ion-text>
     <ion-list *ngIf="this.user.summer_reading_reporting == true">
       <ion-list-header>
@@ -71,6 +71,9 @@
         <ion-input [(ngModel)]="email" type="email"></ion-input>
       </ion-item>
       <ion-item>
+        <ion-note ion-padding-start text-wrap>We will only use your email address to send weekly updates (6 emails in total) and to inform you when you have won a prize.</ion-note>
+      </ion-item>
+      <ion-item>
         <ion-label class="home_library_required">Home Library</ion-label>
         <ion-select [(ngModel)]="home_library" placeholder="Select One" interface="alert">
           <ion-select-option value="Woodmere">Traverse City</ion-select-option>
@@ -80,6 +83,18 @@
           <ion-select-option value="Fife Lake">Fife Lake</ion-select-option>
           <ion-select-option value="Peninsula">Peninsula</ion-select-option>
         </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label class="shirt_size_required">Shirt Size</ion-label>
+        <ion-select [(ngModel)]="shirt_size" placeholder="Select One" interface="alert">
+          <ion-select-option  *ngFor="let size of this.shirt_sizes" [value]="size">
+            {{ size }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Receive a special Summer Reading Club craft kit</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="wants_craft_kit"></ion-checkbox>
       </ion-item>
       <ion-item>
         <ion-label class="club_required">Select Club</ion-label>
