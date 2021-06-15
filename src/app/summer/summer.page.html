@@ -93,10 +93,6 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label>Receive a special Summer Reading Club craft kit</ion-label>
-        <ion-checkbox slot="end" [(ngModel)]="wants_craft_kit"></ion-checkbox>
-      </ion-item>
-      <ion-item>
         <ion-label class="club_required">Select Club</ion-label>
         <ion-select [(ngModel)]="club" placeholder="Select One" interface="alert" (ionChange)="detect_changed_club()">
           <ion-select-option value="pre-readers">Pre-readers (ages 0-4)</ion-select-option>
@@ -115,6 +111,10 @@
           <ion-select-option  *ngIf="this.club == 'teens'" value="college">College/ Trade School</ion-select-option>
           <ion-select-option value="none">None/Other</ion-select-option>
         </ion-select>
+      </ion-item>
+      <ion-item *ngIf="this.club != 'adults' && (this.home_library == 'Woodmere' || this.home_library == 'East Bay')">
+        <ion-label text-wrap>Receive a special Summer Reading Club craft kit</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="wants_craft_kit"></ion-checkbox>
       </ion-item>
       <ion-item *ngIf="this.school_type == 'elementary'">
         <ion-label class="youth_school_required" position="stacked">Select School You Will Attend in Fall</ion-label>
