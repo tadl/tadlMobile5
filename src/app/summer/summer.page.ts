@@ -145,13 +145,6 @@ export class SummerPage implements OnInit {
       document.getElementsByClassName('home_library_required')[0].setAttribute('style', 'color: red');
       this.valid = false;
     }
-    if (this.check_valid(this.shirt_size)) {
-      document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: black');
-      params = params.set("shirt_size", this.shirt_size);
-    } else {
-      document.getElementsByClassName('shirt_size_required')[0].setAttribute('style', 'color: red');
-      this.valid = false;
-    }
     if (this.check_valid(this.club)) {
       document.getElementsByClassName('club_required')[0].setAttribute('style', 'color: black');
       params = params.set("club", this.club);
@@ -184,7 +177,6 @@ export class SummerPage implements OnInit {
       params = params.set("send_to_school", String(this.send_to_school));
     }
     params = params.set("email_address", this.email);
-    params = params.set("wants_craft_kit", String(this.wants_craft_kit));
     params = params.set("library_card", String(this.user.card));
     if (this.valid == true ) {
       let url = this.globals.summer_reading_save_participant;
