@@ -16,7 +16,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.1.0';
-  public update_version: string = '2021062400';
+  public update_version: string = '2022011400';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -72,7 +72,7 @@ export class Globals {
   public website_schema: string = 'https://';
   public events_api_url: string = this.website_schema + this.website_host + '/wp-json/tribe/events/v1/events';
   public news_api_url: string = this.website_schema + this.website_host + '/wp-json/wp/v2/posts';
-  public hours_locations_url: string = this.website_schema + this.website_host + '/wp-content/uploads/json/parsed-hours.json';
+  public hours_locations_url: string = 'https://www.tadl.org/locations.json';
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
 
 
