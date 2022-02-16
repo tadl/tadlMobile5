@@ -18,15 +18,6 @@
 
 <ion-content>
 
-  <ion-refresher slot="fixed" (ionRefresh)="refresh_events($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
-
   <div *ngIf="!this.web_events" text-center>
     <ion-grid>
       <ion-row>
@@ -46,17 +37,17 @@
 
     <ion-item *ngIf="globals.multi_location == true">
       <ion-label class="location-label">Location</ion-label>
-      <ion-select [(ngModel)]="location" interface="popover" (ionChange)="get_events(1, location)" class="location-select">
+      <ion-select [(ngModel)]="location" interface="popover" (ionChange)="get_events(location)" class="location-select">
         <ion-select-option value="">All Locations</ion-select-option>
         <ion-select-option *ngFor="let venue of globals.event_venues" [value]="venue.venue">{{ venue.name }}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item *ngFor="let event of this.web_events" (click)="view_details(event)" detail="true">
-      <ion-thumbnail slot="start" *ngIf="event.image && event.image.extension != 'pdf'">
-        <ion-img [src]="event.image.sizes.thumbnail.url"></ion-img>
+      <ion-thumbnail slot="start" *ngIf="event.image">
+        <ion-img [src]="event.image"></ion-img>
       </ion-thumbnail>
-      <ion-thumbnail slot="start" *ngIf="!event.image || event.image.extension == 'pdf'">
+      <ion-thumbnail slot="start" *ngIf="!event.image">
       </ion-thumbnail>
       <ion-label>
         <ion-text>
@@ -65,17 +56,12 @@
         <ion-text>
           <p [innerHTML]="globals.format_date(event.start_date, 'event')"></p>
         </ion-text>
-        <ion-text color="medium" *ngIf="event.venue">
-          <p>{{event.venue.venue}}</p>
+        <ion-text color="medium" *ngIf="event.branch">
+          <p>{{event.branchname}}</p>
         </ion-text>
       </ion-label>
     </ion-item>
 
   </ion-list>
-
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="load_more_data($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more events ...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 
 </ion-content>

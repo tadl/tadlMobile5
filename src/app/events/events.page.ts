@@ -18,12 +18,7 @@ export class EventsPage implements OnInit {
   url: string = this.globals.events_api_url;
   web_events: any;
   location: any = '';
-  location_previous: any = '';
-  page: any = 1;
-  loading_more: boolean = false;
-  infinite: any;
   subscription: any;
-  more_web_events: boolean = true;
 
   constructor(
     public globals: Globals,
@@ -34,83 +29,29 @@ export class EventsPage implements OnInit {
     private http: HttpClient,
   ) { }
 
-  refresh_events(event) {
-    let loc;
-    if (this.location) {
-      loc = this.location;
-    } else {
-      loc = null;
-    }
-    this.get_events(1, loc, event);
-  }
-
-  load_more_data(infiniteScroll) {
-    if (this.location == this.location_previous) {
-      this.page++;
-    } else {
-      this.page = 2;
-      this.location_previous = this.location;
-    }
-    this.loading_more = true;
-    this.infinite = infiniteScroll;
-    if (this.more_web_events == false) {
-      this.infinite.target.complete();
-      this.loading_more = false;
-      this.infinite.target.disabled = true;
-    } else {
-      this.get_events(this.page, this.location);
-    }
-  }
-
-  get_events(page, loc?, refresher?) {
+  get_events(loc?) {
     let params = new HttpParams()
-      .set("page", page)
-      .set("per_page", "20")
-      .set("start_date", "now");
-    if (loc) { params = params.append("venue", loc); }
-    if (this.loading_more == false && this.infinite) {
-      this.infinite.target.disabled = false;
-    }
+      .set("ongoing_events", "show")
+      .set("start", "12:00am")
+      .set("end", "1month");
+    if (loc) { params = params.append("branches", loc); }
     this.globals.loading_show();
-    this.http.get(this.url, {params: params})
+    this.http.get<any[]>(this.url, {params: params})
       .subscribe(data => {
         this.globals.api_loading = false;
-        if (refresher) {
-          refresher.target.complete();
-          if (this.infinite) {
-            this.infinite.target.disabled = false;
-          }
-        }
-        if (data['events']) {
-          if (this.loading_more) {
-            this.web_events.push.apply(this.web_events, data['events']);
-            this.infinite.target.complete();
-            this.loading_more = false;
-            if (!data['next_rest_url']) { this.infinite.target.disabled = true; }
-          } else {
-            this.web_events = data['events'];
-            if (!data['next_rest_url']) {
-              this.more_web_events = false;
-            } else {
-              this.more_web_events = true;
+        if (data) {
+          data.forEach(function(item, index) {
+            if (item['branch']) {
+              data[index]['branchid'] = Object.keys(item['branch'])[0];
+              data[index]['branchname'] = Object.values(item['branch'])[0];
             }
-          }
+          });
+          this.web_events = data;
         } else {
-          if (this.loading_more) {
-            this.infinite.target.complete();
-            this.loading_more = false;
-          } else {
-          }
           this.toast.present(this.globals.server_error_msg);
         }
       }, (err) => {
         this.globals.api_loading = false;
-        if (this.infinite) {
-          this.infinite.target.complete();
-          this.infinite.target.disabled = true;
-          this.loading_more = false;
-        } else {
-        }
         this.toast.present(this.globals.server_error_msg);
       });
   }
@@ -135,7 +76,7 @@ export class EventsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.get_events(this.page, this.location);
+    this.get_events(this.location);
   }
 
   ionViewDidEnter() {

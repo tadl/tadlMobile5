@@ -16,7 +16,7 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.1.0';
-  public update_version: string = '2022011400';
+  public update_version: string = '2022021600';
 
   /* basic information */
   public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
@@ -70,7 +70,9 @@ export class Globals {
 
   /* website things */
   public website_schema: string = 'https://';
-  public events_api_url: string = this.website_schema + this.website_host + '/wp-json/tribe/events/v1/events';
+
+  public events_api_url: string = this.website_schema + 'events.tadl.org/events/feed/json';
+
   public news_api_url: string = this.website_schema + this.website_host + '/wp-json/wp/v2/posts';
   public hours_locations_url: string = 'https://www.tadl.org/locations.json';
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
@@ -124,13 +126,23 @@ export class Globals {
 
   /* Used for filtering events by location */
   public event_venues: Array<{venue: number, name: string}> = [
+    { venue: 89, name: 'Traverse City' },
+    { venue: 132, name: 'East Bay' },
+    { venue: 133, name: 'Fife Lake' },
+    { venue: 134, name: 'Kingsley' },
+    { venue: 135, name: 'Interlochen' },
+    { venue: 136, name: 'Peninsula' },
+    { venue: 160, name: 'Online' },
+  ];
+
+/*
     { venue: 97, name: 'Traverse City' },
     { venue: 98, name: 'East Bay' },
     { venue: 99, name: 'Fife Lake' },
     { venue: 100, name: 'Interlochen' },
     { venue: 101, name: 'Kingsley' },
     { venue: 102, name: 'Peninsula' },
-  ];
+  ]; */
 
   /* Formats */
   public formats: string[] = [
