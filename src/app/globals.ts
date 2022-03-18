@@ -16,18 +16,18 @@ export class Globals {
 
   /* app version */
   public app_version: string = '5.1.0';
-  public update_version: string = '2022011400';
+  public update_version: string = '2022032100';
 
   /* basic information */
-  public catalog_host: string = 'apiv4.catalog.tadl.org'; /* hostname for catalog api */
-  public catalog_covers_host: string = 'catalog.tadl.org'; /* hostname for catalog extras */
-  public website_host: string = 'www.tadl.org'; /* hostname for website */
-  public system_short_name: string = 'TADL';
-  public all_locations_value: string = '22';
-  public news_category_exclude: string = '93'; /* 93=Announcement */
+  public catalog_host: string = 'sbbdlmobile.app.tadl.org'; /* hostname for catalog api */
+  public catalog_covers_host: string = 'catalog.sbbdl.org'; /* hostname for catalog extras */
+  public website_host: string = 'www.sbbdl.org'; /* hostname for website */
+  public system_short_name: string = 'SBBDL';
+  public all_locations_value: string = '46';
+  public news_category_exclude: string = '0'; /* 93=Announcement */
 
   /* feature toggles */
-  public multi_location: boolean = true;
+  public multi_location: boolean = false;
   public use_melcat: boolean = true;
   public has_audiences: boolean = true;
 
