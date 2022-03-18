@@ -25,6 +25,7 @@ export class Globals {
   public system_short_name: string = 'SBBDL';
   public all_locations_value: string = '46';
   public news_category_exclude: string = '0'; /* 93=Announcement */
+  public system_name: string = 'Suttons Bay-Bingham District Library';
 
   /* feature toggles */
   public multi_location: boolean = false;
@@ -37,7 +38,7 @@ export class Globals {
 
   /* static assets */
   public logo_url: string = '/assets/logo.png';
-  public square_logo_url: string = '/assets/logo-clock-only.png';
+  public square_logo_url: string = '/assets/logo-square.jpg';
 
   /* *** Do not edit below here *** */
 
@@ -72,7 +73,7 @@ export class Globals {
   public website_schema: string = 'https://';
   public events_api_url: string = this.website_schema + this.website_host + '/wp-json/tribe/events/v1/events';
   public news_api_url: string = this.website_schema + this.website_host + '/wp-json/wp/v2/posts';
-  public hours_locations_url: string = 'https://www.tadl.org/locations.json';
+  public hours_locations_url: string = this.website_schema + this.website_host + '/locations.json';
   public pay_fines_url: string = this.website_schema + this.website_host + '/pay/pay.cgi'; /* redirected by nginx */
 
 
