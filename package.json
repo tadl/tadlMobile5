@@ -1,5 +1,5 @@
 {
-  "name": "tadlMobile5",
+  "name": "SBBDL",
   "version": "5.1.0",
   "author": "Traverse Area District Library Technology Team",
   "homepage": "https://www.tadl.org/",
@@ -82,7 +82,7 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-ionic": {
-        "APP_ID": "24d4815d",
+        "APP_ID": "8f01b6bc",
         "CHANNEL_NAME": "Production",
         "UPDATE_METHOD": "auto"
       },
