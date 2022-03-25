@@ -15,8 +15,8 @@ export class Globals {
   /* CUSTOMIZABLE VARIABLES */
 
   /* app version */
-  public app_version: string = '5.1.0';
-  public update_version: string = '2022032100';
+  public app_version: string = '5.1.1';
+  public update_version: string = '2022032500';
 
   /* basic information */
   public catalog_host: string = 'sbbdlmobile.app.tadl.org'; /* hostname for catalog api */
